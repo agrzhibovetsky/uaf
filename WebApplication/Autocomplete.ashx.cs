@@ -1,0 +1,174 @@
+﻿using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Configuration;
+using System.Web.Script.Serialization;
+using UaFootball.AppCode;
+using UaFootball.DB;
+
+namespace UaFootball.WebApplication
+{
+    
+    public class Autocomplete : IHttpHandler
+    {
+
+        public void ProcessRequest(HttpContext context)
+        {
+            context.Response.ContentType = "text/plain"; 
+
+            string searchTerm = context.Request["term"];
+            string searchType = context.Request["type"];
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            List<AutoCompleteResponse> result = new List<AutoCompleteResponse>();
+
+            AutocompleteType type = (AutocompleteType) Enum.Parse(typeof(AutocompleteType), searchType, true); 
+
+            if (!searchTerm.IsEmpty() && !searchType.IsEmpty())
+            {
+                switch (type)
+                {
+                    default:
+                        {
+                            context.Response.Write(string.Empty);
+                            break;
+                        }
+                    case AutocompleteType.Logo:  
+                    case AutocompleteType.PlayerPhoto:
+                        {
+                            DirectoryInfo logosDirInfo = new DirectoryInfo(Constants.Paths.DropBoxPath);
+                            if (logosDirInfo.Exists)
+                            {
+                                FileInfo[] files = logosDirInfo.GetFiles(searchTerm + "*");
+                                result.AddRange(files.Select(f => new AutoCompleteResponse { id = 1, value = f.Name }));
+                                context.Response.Write(serializer.Serialize(result));
+                            }
+                            else
+                            {
+                                context.Response.Write(string.Empty);
+                            }
+
+                            break;
+                        }
+                    case AutocompleteType.Club:
+                        {
+                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            {
+                                IQueryable<AutoCompleteResponse> searchMatches = db.Clubs.Where(c => c.Club_Name.Contains(searchTerm)).Select(c => new AutoCompleteResponse { id = c.Club_ID, value = string.Concat(c.Club_Name, " (", c.City.City_Name, ")") });
+                                result.AddRange(searchMatches);
+                                context.Response.Write(serializer.Serialize(result));
+                            }
+                            break;
+                        }
+                    case AutocompleteType.NationalTeam:
+                        {
+                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            {
+                                var searchMatches =
+                                    from natTeam in db.NationalTeams
+                                    join country in db.Countries on natTeam.Country_Id equals country.Country_ID
+                                    where country.Country_Name.Contains(searchTerm)
+                                    select new { id = natTeam.NationalTeam_Id, value = country.Country_Name, code = natTeam.NationalTeamType_Cd };
+
+                                foreach (var item in searchMatches)
+                                {
+                                    result.Add(new AutoCompleteResponse { id = item.id, value = item.value + " " + UIHelper.FormatNationalTeamType(item.code) });
+                                }
+
+                                context.Response.Write(serializer.Serialize(result));
+                            }
+                            break;
+                        }
+                    case AutocompleteType.Referee:
+                        {
+                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            {
+                                IQueryable<AutoCompleteResponse> searchMatches = db.Referees.Where(r => r.LastName.Contains(searchTerm)).Select(r => new AutoCompleteResponse { id = r.Referee_Id, value = r.FirstName + " " + r.LastName });
+                                result.AddRange(searchMatches);
+                                context.Response.Write(serializer.Serialize(result));
+                            }
+                            break;
+                        }
+                    case AutocompleteType.Player:
+                        {
+                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            {
+                                IQueryable<AutoCompleteResponse> searchMatches = db.Players.Where(r => r.Last_Name.StartsWith(searchTerm) || r.Display_Name.StartsWith(searchTerm) || r.Last_Name_Int.StartsWith(searchTerm)).Select(r => new AutoCompleteResponse { id = r.Player_Id, value = string.Concat(r.First_Name??"", " ", r.Last_Name??"") });
+                                result.AddRange(searchMatches);
+                                context.Response.Write(serializer.Serialize(result));
+                            }
+                            break;
+                        }
+                    case AutocompleteType.SearchPlayerByShirtNum:
+                        {
+                            string[] parameters = searchTerm.Split(';');
+                            if (parameters.Length == 4)
+                            {
+                                int teamId = int.Parse(parameters[0]);
+                                int shirtNum = int.Parse(parameters[1]);
+                                bool isNationalTeamMatch = bool.Parse(parameters[2]);
+                                bool searchBackward = bool.Parse(parameters[3]);
+                                using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                                {
+                                    IQueryable<MatchLineup> dbLineups = null;
+
+                                    if (!isNationalTeamMatch)
+                                    {
+                                        dbLineups = (from lineup in db.MatchLineups
+                                             where lineup.ShirtNumber == shirtNum && (lineup.IsHomeTeamPlayer && lineup.Match.HomeClub_Id == teamId || !lineup.IsHomeTeamPlayer && lineup.Match.AwayClub_Id == teamId)
+                                             //orderby lineup.Match.Date descending 
+                                             select lineup);//.FirstOrDefault();
+                                              
+                                    }
+                                    else
+                                    {
+                                        dbLineups = (from lineup in db.MatchLineups
+                                                     where lineup.ShirtNumber == shirtNum && (lineup.IsHomeTeamPlayer && lineup.Match.HomeNationalTeam_Id == teamId || !lineup.IsHomeTeamPlayer && lineup.Match.AwayNationalTeam_Id == teamId)
+                                                     //orderby lineup.Match.Date descending
+                                                     select lineup);//.FirstOrDefault();
+                                    }
+
+                                    if (searchBackward)
+                                        dbLineups = dbLineups.OrderBy(l=>l.Match.Date);
+                                    else
+                                        dbLineups = dbLineups.OrderByDescending(l=>l.Match.Date);
+
+                                    MatchLineup lu = dbLineups.FirstOrDefault();
+                                    AutoCompleteResponse resp = null;
+                                    if (lu != null)
+                                    {
+                                        resp = new AutoCompleteResponse { id = lu.Player_Id, value = lu.Player.First_Name + " " + lu.Player.Last_Name };
+                                    }
+                                    else
+                                    {
+                                        resp = new AutoCompleteResponse();
+                                    }
+                                    context.Response.Write(serializer.Serialize(resp));
+                                }
+                            }
+                            break;
+                        }
+                }
+            }
+            else
+            {
+                context.Response.Write(string.Empty);
+            }
+        }
+
+        public bool IsReusable
+        {
+            get
+            {
+                return false;
+            }
+        }
+    }
+
+    public class AutoCompleteResponse
+    {
+        public string value { get; set; }
+        public int id { get; set; }
+    } 
+}

@@ -1,0 +1,177 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WebApplication/Site.master" AutoEventWireup="true" CodeBehind="Game.aspx.cs" Inherits="UaFootball.WebApplication.Game" %>
+<%@ Register TagPrefix="UaFootball" TagName="MatchEvent" Src="~/WebApplication/Controls/MatchEvent.ascx" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <link rel="Stylesheet" href="../Styles/colorbox.css" />
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<table width="100%">
+    <tr>
+        <td align="center">
+            <table width="70%" style="border: 1px solid black">
+                <tr>
+                    <td>
+                        <asp:Label ID="lblSpecialNotes" runat="server" CssClass="matchSpecialNote"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td width="200" align="center" class="matchReportClubName"><%=DataItem.HomeTeamName%></td>
+                                <td align="center" class="matchReportClubName"><%=FormatScore(DataItem.HomeScore, DataItem.AwayScore, DataItem.HomePenaltyScore, DataItem.AwayPenaltyScore)%></td>
+                                <td width="200" align="center" class="matchReportClubName"><%=DataItem.AwayTeamName%></td>
+                            </tr>
+                            <tr>
+                                <td  align="center">
+                                    <asp:Image ID="iHomeTeamLogo" runat="server" />
+                                </td>
+                                <td>
+                                    <table width="100%">
+                                        <tr>
+                                            <td>
+                                                Дата
+                                            </td>
+                                            <td>
+                                                <%=FormatDate(DataItem.Date)%>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Город
+                                            </td>
+                                            <td>
+                                                <%=DataItem.Stadium.City_Name%>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Стадион
+                                            </td>
+                                            <td>
+                                                <a href="Stadium.aspx?objectId=<%=DataItem.Stadium.Stadium_ID%>">
+                                                <%=DataItem.Stadium.Stadium_Name%>
+                                                </a>
+                                                <asp:Label ID="lblNeutralField" runat="server" Text="***" ToolTip="Нейтральное поле" ForeColor="Red" Visible="false"></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Зрители
+                                            </td>
+                                            <td>
+                                                <%=FormatInt(DataItem.Spectators) %>
+                                                <asp:Label ID="lblStadiumDisq" runat="server" Text="***" ToolTip="Стадион подвергнут санкциям, матч проходил без зрителей" ForeColor="Red" Visible="false"></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Судья
+                                            </td>
+                                            <td>
+                                                <a href="Referee.aspx?objectId=<%=DataItem.Referee.Referee_Id%>">
+                                                <%= FormatName(DataItem.Referee.FirstName, DataItem.Referee.LastName, null) %>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"><asp:HyperLink ID="hlPhoto" runat="server" ClientIDMode="Static"></asp:HyperLink>&nbsp;
+                                                            <asp:HyperLink ID="hlVideo" runat="server"></asp:HyperLink></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td align="center">
+                                    <asp:Image ID="iAwayTeamLogo" runat="server" />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        <table width="100%" cellpadding="5">
+                            <tr>
+                                <td colspan="2" align="center"></td>
+                                <td colspan="2" align="center"></td>
+                            </tr>
+                            <asp:Repeater ID="rptLineup" runat="server" 
+                                onitemdatabound="rptLineup_ItemDataBound">
+                                <ItemTemplate>
+                                    <tr id="trPlayerRow" runat="server">
+                                        <td width="5%" valign="top">
+                                            <asp:Label ID="lblHPlayerNum" runat="server"></asp:Label>
+                                        </td>
+                                        <td width="45%" valign="top">
+                                            <asp:Panel ID="pHomePlayer" runat="server">
+                                                <asp:HyperLink ID="aHomePlayer" runat="server" CssClass="default"></asp:HyperLink>
+                                            </asp:Panel>
+                                            <asp:Panel ID="pHomePlayerSubst" runat="server" Visible="false">
+                                                <asp:HyperLink ID="aHomePlayerSubst" runat="server" CssClass="default"></asp:HyperLink>
+                                            </asp:Panel>
+                                        </td>
+                                        <td width="5%" valign="top">
+                                            <asp:Label ID="lblAPlayerNum" runat="server"></asp:Label>
+                                        </td>
+                                        <td width="45%" valign="top">
+                                            <asp:Panel ID="pAwayPlayer" runat="server">
+                                                <asp:HyperLink ID="aAwayPlayer" runat="server" CssClass="default"></asp:HyperLink>
+                                            </asp:Panel>
+                                            <asp:Panel ID="pAwayPlayerSubst" runat="server" Visible="false">
+                                                <asp:HyperLink ID="aAwayPlayerSubst" runat="server" CssClass="default"></asp:HyperLink>
+                                            </asp:Panel>
+                                        </td>
+                                    </tr>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid black;">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <asp:Repeater ID="rptEvents" runat="server" OnItemDataBound="rptEvents_ItemDataBound">
+                                <ItemTemplate>
+                                    <tr>
+                                        <td width="30" valign="top">
+                                            <UaFootball:MatchEvent ID="meHome" runat="server" Visible="false" />
+                                        </td>
+                                    
+                                        <td valign="top">
+                                            <asp:Label ID="lblHomeEvent" runat="server"></asp:Label>
+                                        </td>
+                                    
+                                        <td width="30" valign="top">
+                                            <UaFootball:MatchEvent ID="meAway" runat="server" Visible="false" />
+                                        </td>
+                                    
+                                        <td valign="top">
+                                            <asp:Label ID="lblAwayEvent" runat="server"></asp:Label>
+                                        </td>
+                                    </tr>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td onclick='window.open(document.location.href.replace("Public/Game", "Admin/MatchEdit"))' style="height:5px; background-color:#EEEEEE;"  >
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#hlPhoto").colorbox({ width: "900px", height: "800px" });
+    });
+</script>
+</asp:Content>

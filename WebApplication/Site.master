@@ -1,0 +1,57 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="SiteMaster" Codebehind="Site.master.cs" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title>Ua Football - v3.0</title>
+    <link href="~/WebApplication/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/UaFootball/WebApplication/Scripts/UaFootball.js"></script>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server">
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>
+                    Ua Football 3.0
+                </h1>
+            </div>
+            
+            <div class="clear hideSkiplink">
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">
+                    <Items>
+                        <asp:MenuItem NavigateUrl="~/WebApplication/Default.aspx" Text="Admin">
+                            <asp:MenuItem NavigateUrl="~/WebApplication/Admin/CityList.aspx" Text="Город"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebApplication/Admin/ClubList.aspx" Text="Клуб"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebApplication/Admin/MatchList.aspx" Text="Матч"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebApplication/Admin/StadiumList.aspx" Text="Стадион"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebApplication/Admin/CountryList.aspx" Text="Страна"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebApplication/Admin/RefereeList.aspx" Text="Судья"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebApplication/Admin/PlayerList.aspx" Text="Футболист"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebApplication/Admin/PlayerReviewList.aspx" Text="Футболисты (ревью)"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebApplication/Admin/Multimedia.aspx" Text="Мультимедиа"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/WebApplication/Public/Players.aspx" Text="Public">
+                            <asp:MenuItem NavigateUrl="~/WebApplication/Public/Players.aspx" Text="Игроки"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebApplication/Public/Countries.aspx" Text="Страны"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebApplication/Public/Games.aspx?nt=1" Text="Матчи (сборная)"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebApplication/Public/Games.aspx?nt=0" Text="Матчи (еврокубки)"></asp:MenuItem>
+                        </asp:MenuItem>
+                    </Items>
+                </asp:Menu>
+            </div>
+        </div>
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="footer">
+        
+    </div>
+    </form>
+</body>
+</html>
