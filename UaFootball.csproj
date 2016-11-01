@@ -20,6 +20,10 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -64,7 +68,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -75,6 +81,8 @@
     <Content Include="WebApplication\Admin\CityEdit.aspx" />
     <Content Include="WebApplication\Admin\ClubList.aspx" />
     <Content Include="WebApplication\Admin\ClubEdit.aspx" />
+    <Content Include="WebApplication\Admin\CoachEdit.aspx" />
+    <Content Include="WebApplication\Admin\CoachList.aspx" />
     <Content Include="WebApplication\Admin\CountryList.aspx" />
     <Content Include="WebApplication\Admin\CountryEdit.aspx" />
     <Content Include="WebApplication\Admin\MatchList.aspx" />
@@ -338,6 +346,8 @@
     <Compile Include="AppCode\DTOs\CityDTOHelper.cs" />
     <Compile Include="AppCode\DTOs\ClubDTO.cs" />
     <Compile Include="AppCode\DTOs\ClubDTOHelper.cs" />
+    <Compile Include="AppCode\DTOs\CoachDTO.cs" />
+    <Compile Include="AppCode\DTOs\CoachDTOHelper.cs" />
     <Compile Include="AppCode\DTOs\CountryDTO.cs" />
     <Compile Include="AppCode\DTOs\CountryDTOHelper.cs" />
     <Compile Include="AppCode\DTOs\MatchDTO.cs" />
@@ -358,6 +368,20 @@
     <Compile Include="AppCode\IDTOHelper.cs" />
     <Compile Include="DB\Multimedia.cs" />
     <Compile Include="DB\MultimediaTag.cs" />
+    <Compile Include="WebApplication\Admin\CoachEdit.aspx.cs">
+      <DependentUpon>CoachEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\CoachEdit.aspx.designer.cs">
+      <DependentUpon>CoachEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\CoachList.aspx.cs">
+      <DependentUpon>CoachList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\CoachList.aspx.designer.cs">
+      <DependentUpon>CoachList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WebApplication\Utils\BitmapHelper.cs" />
     <Compile Include="WebApplication\Utils\PathHelper.cs" />
     <Compile Include="AppCode\SearchParameters.cs" />

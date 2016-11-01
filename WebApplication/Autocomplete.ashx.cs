@@ -90,6 +90,16 @@ namespace UaFootball.WebApplication
                             }
                             break;
                         }
+                    case AutocompleteType.Coach:
+                        {
+                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            {
+                                IQueryable<AutoCompleteResponse> searchMatches = db.Coaches.Where(r => r.LastName.Contains(searchTerm)).Select(r => new AutoCompleteResponse { id = r.CoachId, value = r.FirstName + " " + r.LastName });
+                                result.AddRange(searchMatches);
+                                context.Response.Write(serializer.Serialize(result));
+                            }
+                            break;
+                        }
                     case AutocompleteType.Player:
                         {
                             using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
@@ -138,7 +148,7 @@ namespace UaFootball.WebApplication
                                     AutoCompleteResponse resp = null;
                                     if (lu != null)
                                     {
-                                        resp = new AutoCompleteResponse { id = lu.Player_Id, value = lu.Player.First_Name + " " + lu.Player.Last_Name };
+                                        resp = new AutoCompleteResponse { id = lu.Player_Id.Value, value = lu.Player.First_Name + " " + lu.Player.Last_Name };
                                     }
                                     else
                                     {

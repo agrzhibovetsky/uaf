@@ -29,8 +29,8 @@ namespace UaFootball.AppCode
             All
         }
 
-        public const string normalSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -aaaaaaaAEеeeeeeeeuuuuooooOOOiiiIcccCCCsssssSnnrllLyDZzzttd";
-        public const string extraSymbols =  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -āäăáãâàÁÉæēéëèěęêúūüůóöôøÖÓØîíïÍćčçČĆÇšßşșśŠñńřļłŁýĎŽźžţțđ";
+        public const string normalSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -aaaaaaaAEеeeeeeeeuuuuUooooOOOiiiiIIccccCCCCsssssSSnnrllLyDZzzttdg";
+        public const string extraSymbols =  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -āäăáãâàÁÉæēéëèěęêúūüůÜóöôøÖÓØıîíïÍİćčçҫČĆÇҪšßşșśŠŞñńřļłŁýĎŽźžţțđğ";
 
         public const string CountryCodeUA = "UA";
 
@@ -49,6 +49,8 @@ namespace UaFootball.AppCode
             public const string Edit_Player = "~/WebApplication/Admin/PlayerEdit.aspx";
             public const string List_Referee = "~/WebApplication/Admin/RefereeList.aspx";
             public const string Edit_Referee = "~/WebApplication/Admin/RefereeEdit.aspx";
+            public const string List_Coach = "~/WebApplication/Admin/CoachList.aspx";
+            public const string Edit_Coach = "~/WebApplication/Admin/CoachEdit.aspx";
             public const string List_Match = "~/WebApplication/Admin/MatchList.aspx";
             public const string Edit_Match = "~/WebApplication/Admin/MatchEdit.aspx";
             public const string Autocomplete = "~/WebApplication/Autocomplete.ashx";
@@ -130,6 +132,8 @@ namespace UaFootball.AppCode
                 public const int Combinacia = 0x40000;
                 public const int GoalClass4 = 0x80000;
                 public const int OtherBodyPart = 0x100000;
+                public const int GoalPass = 0x200000;
+                public const int Pyatka = 0x400000;
 
                 //Substitution
                 public const int Injury = 0x01;
@@ -226,7 +230,8 @@ namespace UaFootball.AppCode
                 public const string Combinacia = "Комбинация";
                 public const string GoalClass4 = "Хороший гол";
                 public const string OtherBodyPart = "Другой частью";
-
+                public const string GoalPass = "Отличный голевой пас";
+                public const string Pyatka = "Пас/удар пяткой";
                 //Substitution
                 public const string Injury = "Травма";
 
@@ -283,8 +288,8 @@ namespace UaFootball.AppCode
             public const string JQueryUICSSPath = "~/WebApplication/Styles/jquery-ui-1.10.0.custom.css";
 
             //file system
-            public const string DropBoxPath = @"D:\Andrey\Projects\UaFootball 3\UaFootball\WebApplication\Dropbox\";
-            public const string MultimediaStorageRoot = @"D:\Andrey\Projects\UaFootball 3\UaFootball\WebApplication\Multimedia\";
+            public const string DropBoxPath = @"D:\Andrey\Projects\git\UaFootball\WebApplication\Dropbox\";
+            public const string MultimediaStorageRoot = @"D:\Andrey\Projects\git\UaFootball\WebApplication\Multimedia\";
 
             public const string JQueryKey = "JQuery";
             public const string JQueryUIKey = "JQueryUI";

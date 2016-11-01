@@ -277,6 +277,17 @@
                             </tr>
                         </ItemTemplate>
                     </asp:Repeater>
+
+                     <tr>
+                        <td colspan="2">
+                            <UaFootball:AutocompleteTextBox runat="server" ID="actbHomeCoach" BehaviorId="actbHomeCoach" AutocompleteType="Coach" />
+                            <asp:HiddenField ID="hfHomeCoachLineupId" runat="server"  />
+                        </td>
+                        <td colspan="2">
+                            <UaFootball:AutocompleteTextBox ID="actbAwayCoach" runat="server" BehaviorId="actbAwayCoach" AutocompleteType="Coach" />
+                            <asp:HiddenField ID="hfAwayCoachLineupId" runat="server" />
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>

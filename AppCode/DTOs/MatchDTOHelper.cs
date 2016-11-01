@@ -111,7 +111,7 @@ namespace UaFootball.AppCode
                 }
                 else //add new record
                 {
-                    if (l.Player_Id > 0)
+                    if (l.Player_Id > 0 || l.CoachId > 0)
                     {
                         MatchLineup mlToAdd = new MatchLineup();
                         l.CopyDTOToDbObject(mlToAdd);
@@ -171,8 +171,8 @@ namespace UaFootball.AppCode
                 {
                     ret.HomeTeamName = db.Clubs.Single(c => c.Club_ID == ret.HomeClub_Id).Club_Name;
                     ret.AwayTeamName = db.Clubs.Single(c => c.Club_ID == ret.AwayClub_Id).Club_Name;
-                    ret.HomeTeamLogo = db.MultimediaTags.Where(t => t.Club_ID == ret.HomeClub_Id && t.Multimedia.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.ClubLogo).Select(m => m.Multimedia.ToDTO()).FirstOrDefault();
-                    ret.AwayTeamLogo = db.MultimediaTags.Where(t => t.Club_ID == ret.AwayClub_Id && t.Multimedia.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.ClubLogo).Select(m => m.Multimedia.ToDTO()).FirstOrDefault();
+                    ret.HomeTeamLogo = db.MultimediaTags.Where(t => t.Club_ID == ret.HomeClub_Id && t.Multimedia.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.ClubLogo).OrderByDescending(m => m.Multimedia_ID).Select(m => m.Multimedia.ToDTO()).FirstOrDefault();
+                    ret.AwayTeamLogo = db.MultimediaTags.Where(t => t.Club_ID == ret.AwayClub_Id && t.Multimedia.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.ClubLogo).OrderByDescending(m => m.Multimedia_ID).Select(m => m.Multimedia.ToDTO()).FirstOrDefault();
                 }
 
                 IQueryable<MatchLineupDTO> lineup = from matchLineup in db.MatchLineups
@@ -190,7 +190,10 @@ namespace UaFootball.AppCode
                                                      Player_DisplayName = matchLineup.Player.Display_Name,
                                                      Player_FirstName_Int = matchLineup.Player.First_Name_Int,
                                                      Player_LastName_Int = matchLineup.Player.Last_Name_Int,
-                                                     ShirtNum = matchLineup.ShirtNumber
+                                                     ShirtNum = matchLineup.ShirtNumber,
+                                                     CoachId = matchLineup.Coach_Id,
+                                                     Coach_FirstName = matchLineup.Coach.FirstName,
+                                                     Coach_LastName = matchLineup.Coach.LastName
                                                  };
                 ret.Lineup.AddRange(lineup.AsEnumerable());
 

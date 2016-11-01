@@ -52,7 +52,7 @@ namespace UaFootball.AppCode
                                 DB.Match match = db.Matches.Single(m => m.Match_Id == matchId);
                                 string clubTypeString = match.HomeNationalTeam_Id.HasValue ? "NationalTeam" : "Eurocups";
 
-                                path = string.Format("\\{0}\\{1}\\{2}\\{3}\\", "Matches", clubTypeString, match.Season.Season_Description, match.Competition.Competition_Cd);
+                                path = string.Format("\\{0}\\{1}\\{2}\\{3}\\", "Matches", clubTypeString, match.Season.Season_Cd, match.Competition.Competition_Cd);
                             }
                         }
                         break;

@@ -164,7 +164,7 @@ namespace UaFootball.WebApplication.Admin
                                     vwMatch match = db.vwMatches.Single(v => v.Match_ID == matchTag.Match_ID);
                                     bool homeTeamPriority = match.HomeTeamCountryCode == Constants.CountryCodeUA;
                                     var players = from matchLineup in db.MatchLineups
-                                                  where matchLineup.Match_Id == matchTag.Match_ID
+                                                  where matchLineup.Match_Id == matchTag.Match_ID && matchLineup.Player_Id!=null
                                                   select new { Player = matchLineup.Player, IsHomeTeam = matchLineup.IsHomeTeamPlayer, IsSubstitute = matchLineup.IsSubstitute, No = matchLineup.ShirtNumber };
 
                                     if (homeTeamPriority)
@@ -241,6 +241,20 @@ namespace UaFootball.WebApplication.Admin
                 {
                     switch (ddlTagType.SelectedValue)
                     {
+                        case _tagTypeClub:
+                            {
+                                Club c = db.Clubs.SingleOrDefault(cl=>cl.Club_ID == id);
+                                if (c != null)
+                                {
+                                    ListItem li = new ListItem();
+                                    li.Text = c.Club_Name;
+                                    li.Value = c.Club_ID.ToString();
+                                    ddlTagValue.Items.Insert(0, li);
+                                    ddlTagValue.SelectedIndex = 0;
+
+                                }
+                                break;
+                            }
                         case _tagTypeGame:
                             {
                                 vwMatch match = db.vwMatches.SingleOrDefault(m => m.Match_ID == id);

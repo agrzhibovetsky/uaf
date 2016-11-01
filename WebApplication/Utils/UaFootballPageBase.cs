@@ -229,6 +229,10 @@ namespace UaFootball.WebApplication
                     {
                         return new MatchDTOHelper() as IDTOHelper<T>;
                     }
+                case "CoachDTO":
+                    {
+                        return new CoachDTOHelper() as IDTOHelper<T>;
+                    }
             }
         }
 

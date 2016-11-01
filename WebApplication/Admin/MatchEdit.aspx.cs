@@ -112,8 +112,8 @@ namespace UaFootball.WebApplication
             }
             else
             {
-                List<MatchLineupDTO> homePlayers = DataItem.Lineup.Where(l => l.IsHomeTeamPlayer).ToList();
-                List<MatchLineupDTO> awayPlayers = DataItem.Lineup.Where(l => !l.IsHomeTeamPlayer).ToList();
+                List<MatchLineupDTO> homePlayers = DataItem.Lineup.Where(l => l.IsHomeTeamPlayer && l.Player_Id != null).ToList();
+                List<MatchLineupDTO> awayPlayers = DataItem.Lineup.Where(l => !l.IsHomeTeamPlayer && l.Player_Id != null).ToList();
 
                 for (int i = 0; i < 30; i++)
                 {
@@ -143,6 +143,21 @@ namespace UaFootball.WebApplication
 
             rptLineup.DataSource = uiLineup;
             rptLineup.DataBind();
+
+            MatchLineupDTO homeCoach = DataItem.Lineup.SingleOrDefault(l => l.IsHomeTeamPlayer && l.CoachId != null);
+            MatchLineupDTO awayCoach = DataItem.Lineup.SingleOrDefault(l => !l.IsHomeTeamPlayer && l.CoachId != null);
+            if (homeCoach != null)
+            {
+                hfHomeCoachLineupId.Value = homeCoach.MatchLineup_Id.ToString();
+                actbHomeCoach.Value = homeCoach.CoachId.ToString();
+                actbHomeCoach.Text = FormatName(homeCoach.Coach_FirstName, homeCoach.Coach_LastName, "");
+            }
+            if (awayCoach != null)
+            {
+                hfAwayCoachLineupId.Value = awayCoach.MatchLineup_Id.ToString();
+                actbAwayCoach.Value = awayCoach.CoachId.ToString();
+                actbAwayCoach.Text = FormatName(awayCoach.Coach_FirstName, awayCoach.Coach_LastName, "");
+            }
 
             for (int i = 0; i < 16; i++)
             {
@@ -248,6 +263,34 @@ namespace UaFootball.WebApplication
                     MatchLineupDTO apml = GetLineup(actbAwayPlayer, awayCountryId, int.Parse(tbAwayPlayerShirtNumber.Text), int.Parse(hfAwayPlayerLineupId.Value), ri.ItemIndex > 10, false);
                     MatchToSave.Lineup.Add(apml);
                 }
+            }
+
+            if (!string.IsNullOrEmpty(actbHomeCoach.Value) && !string.IsNullOrEmpty(actbHomeCoach.Text))
+            {
+                MatchLineupDTO homeCoachLineupDTO = new MatchLineupDTO
+                {
+                    IsHomeTeamPlayer = true,
+                    Match_Id = DataItem.Match_Id,
+                    IsSubstitute = false,
+                    CoachId = int.Parse(actbHomeCoach.Value),
+                    ShirtNum = null,
+                    MatchLineup_Id = string.IsNullOrEmpty(hfHomeCoachLineupId.Value) ? 0 : int.Parse(hfHomeCoachLineupId.Value)
+                };
+                MatchToSave.Lineup.Add(homeCoachLineupDTO);
+            }
+
+            if (!string.IsNullOrEmpty(actbAwayCoach.Value) && !string.IsNullOrEmpty(actbAwayCoach.Text))
+            {
+                MatchLineupDTO awayCoachLineupDTO = new MatchLineupDTO
+                {
+                    IsHomeTeamPlayer = false,
+                    Match_Id = DataItem.Match_Id,
+                    IsSubstitute = false,
+                    CoachId = int.Parse(actbAwayCoach.Value),
+                    ShirtNum = null,
+                    MatchLineup_Id = string.IsNullOrEmpty(hfAwayCoachLineupId.Value) ? 0 : int.Parse(hfAwayCoachLineupId.Value)
+                };
+                MatchToSave.Lineup.Add(awayCoachLineupDTO);
             }
 
             foreach (RepeaterItem ri in rptEvents.Items)

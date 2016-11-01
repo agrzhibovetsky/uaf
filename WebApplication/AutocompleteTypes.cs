@@ -13,6 +13,7 @@ namespace UaFootball.WebApplication
         NationalTeam,
         Referee,
         Player,
-        SearchPlayerByShirtNum
+        SearchPlayerByShirtNum,
+        Coach
     }
 }

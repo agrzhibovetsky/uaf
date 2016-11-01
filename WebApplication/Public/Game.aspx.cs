@@ -55,8 +55,8 @@ namespace UaFootball.WebApplication
                     hlPhoto.NavigateUrl = ResolveClientUrl("~/WebApplication/Public/Photo.aspx?MatchId=") + DataItem.Match_Id.ToString();
                     hlVideo.NavigateUrl = ResolveClientUrl("~/WebApplication/Public/Video.aspx?MatchId=") + DataItem.Match_Id.ToString();
 
-                    List<MatchLineupDTO> homePlayers = DataItem.Lineup.Where(l => l.IsHomeTeamPlayer).ToList();
-                    List<MatchLineupDTO> awayPlayers = DataItem.Lineup.Where(l => !l.IsHomeTeamPlayer).ToList();
+                    List<MatchLineupDTO> homePlayers = DataItem.Lineup.Where(l => l.IsHomeTeamPlayer && l.CoachId == null).ToList();
+                    List<MatchLineupDTO> awayPlayers = DataItem.Lineup.Where(l => !l.IsHomeTeamPlayer && l.CoachId == null).ToList();
 
                     int rowsCount = Math.Max(homePlayers.Count, awayPlayers.Count);
                     List<Pair> uiLineup = new List<Pair>(rowsCount);
