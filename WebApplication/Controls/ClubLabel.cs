@@ -13,7 +13,7 @@ namespace UaFootball.WebApplication.Controls
 
         private const string _UATeamClass = "uaTeam";
 
-        protected override void OnLoad(EventArgs e)
+        protected override void OnPreRender (EventArgs e)
         {
             if (CountryCode != null)
             {

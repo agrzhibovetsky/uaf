@@ -13,7 +13,7 @@
                         <asp:DropDownList ID="ddlCompetitions" runat="server" CssClass="default"></asp:DropDownList>
                     </td>
                     <td>
-                        <asp:DropDownList ID="ddlSeasons" runat="server" CssClass="default"></asp:DropDownList>
+                        <asp:DropDownList ID="ddlSeasons" runat="server" AutoPostBack="true" OnSelectedIndexChanged="btnGo_Click" CssClass="default"></asp:DropDownList>
                     </td>
                     <td>
                         <asp:Button ID="btnGo" runat="server" Text="Отобразить" onclick="btnGo_Click" />

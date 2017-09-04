@@ -224,19 +224,6 @@
       <Association Name="Competition_Match" Member="Matches" ThisKey="Competition_Id" OtherKey="Competition_Id" Type="Match" />
     </Type>
   </Table>
-  <Table Name="dbo.Multimedia" Member="Multimedias">
-    <Type Name="Multimedia">
-      <Column Name="Multimedia_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="MultimediaType_CD" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
-      <Column Name="MultimediaSubType_CD" Type="System.String" DbType="VarChar(3) NOT NULL" CanBeNull="false" />
-      <Column Name="FilePath" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="FileName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Source" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Author" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Association Name="Multimedia_MultimediaTag" Member="MultimediaTags" ThisKey="Multimedia_ID" OtherKey="Multimedia_ID" Type="MultimediaTag" />
-    </Type>
-  </Table>
   <Table Name="dbo.Coaches" Member="Coaches">
     <Type Name="Coach">
       <Column Name="CoachId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -272,6 +259,20 @@
       <Column Name="CompetitionLevel_Cd" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
       <Column Name="Season_Cd" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
       <Association Name="Season_Match" Member="Matches" ThisKey="Season_Id" OtherKey="Season_Id" Type="Match" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Multimedia" Member="Multimedias">
+    <Type Name="Multimedia">
+      <Column Name="Multimedia_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MultimediaType_CD" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
+      <Column Name="MultimediaSubType_CD" Type="System.String" DbType="VarChar(3) NOT NULL" CanBeNull="false" />
+      <Column Name="FilePath" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FileName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Source" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Author" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Flags" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Association Name="Multimedia_MultimediaTag" Member="MultimediaTags" ThisKey="Multimedia_ID" OtherKey="Multimedia_ID" Type="MultimediaTag" />
     </Type>
   </Table>
 </Database>

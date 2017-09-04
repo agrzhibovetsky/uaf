@@ -72,9 +72,6 @@ namespace UaFootball.DB
     partial void InsertCompetition(Competition instance);
     partial void UpdateCompetition(Competition instance);
     partial void DeleteCompetition(Competition instance);
-    partial void InsertMultimedia(Multimedia instance);
-    partial void UpdateMultimedia(Multimedia instance);
-    partial void DeleteMultimedia(Multimedia instance);
     partial void InsertCoach(Coach instance);
     partial void UpdateCoach(Coach instance);
     partial void DeleteCoach(Coach instance);
@@ -84,6 +81,9 @@ namespace UaFootball.DB
     partial void InsertSeason(Season instance);
     partial void UpdateSeason(Season instance);
     partial void DeleteSeason(Season instance);
+    partial void InsertMultimedia(Multimedia instance);
+    partial void UpdateMultimedia(Multimedia instance);
+    partial void DeleteMultimedia(Multimedia instance);
     #endregion
 		
 		public UaFootball_DBDataContext() : 
@@ -236,14 +236,6 @@ namespace UaFootball.DB
 			}
 		}
 		
-		public System.Data.Linq.Table<Multimedia> Multimedias
-		{
-			get
-			{
-				return this.GetTable<Multimedia>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Coach> Coaches
 		{
 			get
@@ -265,6 +257,14 @@ namespace UaFootball.DB
 			get
 			{
 				return this.GetTable<Season>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Multimedia> Multimedias
+		{
+			get
+			{
+				return this.GetTable<Multimedia>();
 			}
 		}
 	}
@@ -5176,264 +5176,6 @@ namespace UaFootball.DB
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Multimedia")]
-	public partial class Multimedia : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Multimedia_ID;
-		
-		private char _MultimediaType_CD;
-		
-		private string _MultimediaSubType_CD;
-		
-		private string _FilePath;
-		
-		private string _FileName;
-		
-		private string _Source;
-		
-		private string _Author;
-		
-		private string _Description;
-		
-		private EntitySet<MultimediaTag> _MultimediaTags;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnMultimedia_IDChanging(int value);
-    partial void OnMultimedia_IDChanged();
-    partial void OnMultimediaType_CDChanging(char value);
-    partial void OnMultimediaType_CDChanged();
-    partial void OnMultimediaSubType_CDChanging(string value);
-    partial void OnMultimediaSubType_CDChanged();
-    partial void OnFilePathChanging(string value);
-    partial void OnFilePathChanged();
-    partial void OnFileNameChanging(string value);
-    partial void OnFileNameChanged();
-    partial void OnSourceChanging(string value);
-    partial void OnSourceChanged();
-    partial void OnAuthorChanging(string value);
-    partial void OnAuthorChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    #endregion
-		
-		public Multimedia()
-		{
-			this._MultimediaTags = new EntitySet<MultimediaTag>(new Action<MultimediaTag>(this.attach_MultimediaTags), new Action<MultimediaTag>(this.detach_MultimediaTags));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Multimedia_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Multimedia_ID
-		{
-			get
-			{
-				return this._Multimedia_ID;
-			}
-			set
-			{
-				if ((this._Multimedia_ID != value))
-				{
-					this.OnMultimedia_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Multimedia_ID = value;
-					this.SendPropertyChanged("Multimedia_ID");
-					this.OnMultimedia_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MultimediaType_CD", DbType="Char(1) NOT NULL")]
-		public char MultimediaType_CD
-		{
-			get
-			{
-				return this._MultimediaType_CD;
-			}
-			set
-			{
-				if ((this._MultimediaType_CD != value))
-				{
-					this.OnMultimediaType_CDChanging(value);
-					this.SendPropertyChanging();
-					this._MultimediaType_CD = value;
-					this.SendPropertyChanged("MultimediaType_CD");
-					this.OnMultimediaType_CDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MultimediaSubType_CD", DbType="VarChar(3) NOT NULL", CanBeNull=false)]
-		public string MultimediaSubType_CD
-		{
-			get
-			{
-				return this._MultimediaSubType_CD;
-			}
-			set
-			{
-				if ((this._MultimediaSubType_CD != value))
-				{
-					this.OnMultimediaSubType_CDChanging(value);
-					this.SendPropertyChanging();
-					this._MultimediaSubType_CD = value;
-					this.SendPropertyChanged("MultimediaSubType_CD");
-					this.OnMultimediaSubType_CDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FilePath", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string FilePath
-		{
-			get
-			{
-				return this._FilePath;
-			}
-			set
-			{
-				if ((this._FilePath != value))
-				{
-					this.OnFilePathChanging(value);
-					this.SendPropertyChanging();
-					this._FilePath = value;
-					this.SendPropertyChanged("FilePath");
-					this.OnFilePathChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileName", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string FileName
-		{
-			get
-			{
-				return this._FileName;
-			}
-			set
-			{
-				if ((this._FileName != value))
-				{
-					this.OnFileNameChanging(value);
-					this.SendPropertyChanging();
-					this._FileName = value;
-					this.SendPropertyChanged("FileName");
-					this.OnFileNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Source", DbType="VarChar(50)")]
-		public string Source
-		{
-			get
-			{
-				return this._Source;
-			}
-			set
-			{
-				if ((this._Source != value))
-				{
-					this.OnSourceChanging(value);
-					this.SendPropertyChanging();
-					this._Source = value;
-					this.SendPropertyChanged("Source");
-					this.OnSourceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Author", DbType="VarChar(50)")]
-		public string Author
-		{
-			get
-			{
-				return this._Author;
-			}
-			set
-			{
-				if ((this._Author != value))
-				{
-					this.OnAuthorChanging(value);
-					this.SendPropertyChanging();
-					this._Author = value;
-					this.SendPropertyChanged("Author");
-					this.OnAuthorChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(500)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Multimedia_MultimediaTag", Storage="_MultimediaTags", ThisKey="Multimedia_ID", OtherKey="Multimedia_ID")]
-		public EntitySet<MultimediaTag> MultimediaTags
-		{
-			get
-			{
-				return this._MultimediaTags;
-			}
-			set
-			{
-				this._MultimediaTags.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_MultimediaTags(MultimediaTag entity)
-		{
-			this.SendPropertyChanging();
-			entity.Multimedia = this;
-		}
-		
-		private void detach_MultimediaTags(MultimediaTag entity)
-		{
-			this.SendPropertyChanging();
-			entity.Multimedia = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Coaches")]
 	public partial class Coach : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -6221,6 +5963,288 @@ namespace UaFootball.DB
 		{
 			this.SendPropertyChanging();
 			entity.Season = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Multimedia")]
+	public partial class Multimedia : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Multimedia_ID;
+		
+		private char _MultimediaType_CD;
+		
+		private string _MultimediaSubType_CD;
+		
+		private string _FilePath;
+		
+		private string _FileName;
+		
+		private string _Source;
+		
+		private string _Author;
+		
+		private string _Description;
+		
+		private System.Nullable<long> _Flags;
+		
+		private EntitySet<MultimediaTag> _MultimediaTags;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnMultimedia_IDChanging(int value);
+    partial void OnMultimedia_IDChanged();
+    partial void OnMultimediaType_CDChanging(char value);
+    partial void OnMultimediaType_CDChanged();
+    partial void OnMultimediaSubType_CDChanging(string value);
+    partial void OnMultimediaSubType_CDChanged();
+    partial void OnFilePathChanging(string value);
+    partial void OnFilePathChanged();
+    partial void OnFileNameChanging(string value);
+    partial void OnFileNameChanged();
+    partial void OnSourceChanging(string value);
+    partial void OnSourceChanged();
+    partial void OnAuthorChanging(string value);
+    partial void OnAuthorChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnFlagsChanging(System.Nullable<long> value);
+    partial void OnFlagsChanged();
+    #endregion
+		
+		public Multimedia()
+		{
+			this._MultimediaTags = new EntitySet<MultimediaTag>(new Action<MultimediaTag>(this.attach_MultimediaTags), new Action<MultimediaTag>(this.detach_MultimediaTags));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Multimedia_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Multimedia_ID
+		{
+			get
+			{
+				return this._Multimedia_ID;
+			}
+			set
+			{
+				if ((this._Multimedia_ID != value))
+				{
+					this.OnMultimedia_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Multimedia_ID = value;
+					this.SendPropertyChanged("Multimedia_ID");
+					this.OnMultimedia_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MultimediaType_CD", DbType="Char(1) NOT NULL")]
+		public char MultimediaType_CD
+		{
+			get
+			{
+				return this._MultimediaType_CD;
+			}
+			set
+			{
+				if ((this._MultimediaType_CD != value))
+				{
+					this.OnMultimediaType_CDChanging(value);
+					this.SendPropertyChanging();
+					this._MultimediaType_CD = value;
+					this.SendPropertyChanged("MultimediaType_CD");
+					this.OnMultimediaType_CDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MultimediaSubType_CD", DbType="VarChar(3) NOT NULL", CanBeNull=false)]
+		public string MultimediaSubType_CD
+		{
+			get
+			{
+				return this._MultimediaSubType_CD;
+			}
+			set
+			{
+				if ((this._MultimediaSubType_CD != value))
+				{
+					this.OnMultimediaSubType_CDChanging(value);
+					this.SendPropertyChanging();
+					this._MultimediaSubType_CD = value;
+					this.SendPropertyChanged("MultimediaSubType_CD");
+					this.OnMultimediaSubType_CDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FilePath", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string FilePath
+		{
+			get
+			{
+				return this._FilePath;
+			}
+			set
+			{
+				if ((this._FilePath != value))
+				{
+					this.OnFilePathChanging(value);
+					this.SendPropertyChanging();
+					this._FilePath = value;
+					this.SendPropertyChanged("FilePath");
+					this.OnFilePathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileName", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string FileName
+		{
+			get
+			{
+				return this._FileName;
+			}
+			set
+			{
+				if ((this._FileName != value))
+				{
+					this.OnFileNameChanging(value);
+					this.SendPropertyChanging();
+					this._FileName = value;
+					this.SendPropertyChanged("FileName");
+					this.OnFileNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Source", DbType="VarChar(50)")]
+		public string Source
+		{
+			get
+			{
+				return this._Source;
+			}
+			set
+			{
+				if ((this._Source != value))
+				{
+					this.OnSourceChanging(value);
+					this.SendPropertyChanging();
+					this._Source = value;
+					this.SendPropertyChanged("Source");
+					this.OnSourceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Author", DbType="VarChar(50)")]
+		public string Author
+		{
+			get
+			{
+				return this._Author;
+			}
+			set
+			{
+				if ((this._Author != value))
+				{
+					this.OnAuthorChanging(value);
+					this.SendPropertyChanging();
+					this._Author = value;
+					this.SendPropertyChanged("Author");
+					this.OnAuthorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(500)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Flags", DbType="BigInt")]
+		public System.Nullable<long> Flags
+		{
+			get
+			{
+				return this._Flags;
+			}
+			set
+			{
+				if ((this._Flags != value))
+				{
+					this.OnFlagsChanging(value);
+					this.SendPropertyChanging();
+					this._Flags = value;
+					this.SendPropertyChanged("Flags");
+					this.OnFlagsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Multimedia_MultimediaTag", Storage="_MultimediaTags", ThisKey="Multimedia_ID", OtherKey="Multimedia_ID")]
+		public EntitySet<MultimediaTag> MultimediaTags
+		{
+			get
+			{
+				return this._MultimediaTags;
+			}
+			set
+			{
+				this._MultimediaTags.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_MultimediaTags(MultimediaTag entity)
+		{
+			this.SendPropertyChanging();
+			entity.Multimedia = this;
+		}
+		
+		private void detach_MultimediaTags(MultimediaTag entity)
+		{
+			this.SendPropertyChanging();
+			entity.Multimedia = null;
 		}
 	}
 }

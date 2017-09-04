@@ -134,6 +134,13 @@
     </tr>
     <tr>
         <td colspan="2">
+            Флаги: <asp:CheckBoxList ID="cbl1" runat="server">
+                       
+                   </asp:CheckBoxList>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
             <img id="imgMultimedia" alt=""/>
             <div style="display: none; width:425px;height:300px;" id="player"></div>
         </td>

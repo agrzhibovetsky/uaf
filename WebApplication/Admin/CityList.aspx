@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
-
+<asp:Button ID="btnNewCountry" runat="server" PostBackUrl="~/WebApplication/Admin/CityEdit.aspx" Text="Добавить" />
 <asp:DataGrid ID="dgData" runat="server" AutoGenerateColumns="false" CellPadding="5" CssClass="data">
     <Columns>
         <asp:TemplateColumn HeaderText="Название">
@@ -23,7 +23,7 @@
     </Columns>
 </asp:DataGrid>
 <br />
-<asp:Button ID="btnNewCountry" runat="server" PostBackUrl="~/WebApplication/Admin/CityEdit.aspx" Text="Добавить" />
+
 
 </asp:Content>
 

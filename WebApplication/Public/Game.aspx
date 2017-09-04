@@ -126,6 +126,10 @@
                                     </tr>
                                 </ItemTemplate>
                             </asp:Repeater>
+                            <tr>
+                                <td colspan="2"><br />Тренер: <asp:Label ID="lblHomeTeamCoach" runat="server"></asp:Label></td>
+                                <td colspan="2"><br />Тренер: <asp:Label ID="lblAwayCoach" runat="server"></asp:Label></td>
+                            </tr>
                         </table>
                     </td>
                 </tr>
@@ -140,19 +144,19 @@
                             <asp:Repeater ID="rptEvents" runat="server" OnItemDataBound="rptEvents_ItemDataBound">
                                 <ItemTemplate>
                                     <tr>
-                                        <td width="30" valign="top">
+                                        <td width="5%" valign="top">
                                             <UaFootball:MatchEvent ID="meHome" runat="server" Visible="false" />
                                         </td>
                                     
-                                        <td valign="top">
+                                        <td width="45%" valign="top">
                                             <asp:Label ID="lblHomeEvent" runat="server"></asp:Label>
                                         </td>
                                     
-                                        <td width="30" valign="top">
+                                        <td width="5%" valign="top">
                                             <UaFootball:MatchEvent ID="meAway" runat="server" Visible="false" />
                                         </td>
                                     
-                                        <td valign="top">
+                                        <td width="45%" valign="top">
                                             <asp:Label ID="lblAwayEvent" runat="server"></asp:Label>
                                         </td>
                                     </tr>

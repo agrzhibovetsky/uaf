@@ -27,6 +27,7 @@ namespace UaFootball.WebApplication.Controls
 
         protected void rptGames_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
+            
             if (!string.IsNullOrEmpty(ExtraColumn))
             {
                 Label lblExtraColumnText = e.Item.FindControl("lblExtraColumnText") as Label;

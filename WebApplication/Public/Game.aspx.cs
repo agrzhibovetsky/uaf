@@ -57,6 +57,16 @@ namespace UaFootball.WebApplication
 
                     List<MatchLineupDTO> homePlayers = DataItem.Lineup.Where(l => l.IsHomeTeamPlayer && l.CoachId == null).ToList();
                     List<MatchLineupDTO> awayPlayers = DataItem.Lineup.Where(l => !l.IsHomeTeamPlayer && l.CoachId == null).ToList();
+                    MatchLineupDTO homeCoachDTO = DataItem.Lineup.FirstOrDefault(l => l.CoachId.HasValue && l.IsHomeTeamPlayer);
+                    MatchLineupDTO awayCoachDTO = DataItem.Lineup.FirstOrDefault(l => l.CoachId.HasValue && !l.IsHomeTeamPlayer);
+                    if (homeCoachDTO != null)
+                    {
+                        lblHomeTeamCoach.Text = string.Concat(homeCoachDTO.Coach_FirstName, " ", homeCoachDTO.Coach_LastName);
+                    }
+                    if (awayCoachDTO != null)
+                    {
+                        lblAwayCoach.Text = string.Concat(awayCoachDTO.Coach_FirstName, " ", awayCoachDTO.Coach_LastName);
+                    }
 
                     int rowsCount = Math.Max(homePlayers.Count, awayPlayers.Count);
                     List<Pair> uiLineup = new List<Pair>(rowsCount);

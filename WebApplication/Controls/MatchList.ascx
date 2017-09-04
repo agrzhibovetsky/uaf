@@ -53,8 +53,8 @@
                                 <%#Eval("CompetitionStageName")%>
                             </td>
                             <td>
-                                <UaFootball:ClubLabel runat="server" CountryCode='<%#Eval("HomeTeamCountryCode")%>' Text='<%#Eval("HomeTeamName")%>'/> - 
-                                <UaFootball:ClubLabel runat="server" CountryCode='<%#Eval("AwayTeamCountryCode")%>' Text='<%#Eval("AwayTeamName")%>'/>
+                                <UaFootball:ClubLabel ID="clHome" runat="server" CountryCode='<%#Eval("HomeTeamCountryCode")%>' Text='<%#Eval("HomeTeamName")%>'/> - 
+                                <UaFootball:ClubLabel ID="clAway" runat="server" CountryCode='<%#Eval("AwayTeamCountryCode")%>' Text='<%#Eval("AwayTeamName")%>'/>
                             </td>
                             <td>
                                 <%# UIHelper.FormatScore(Eval("HomeScore"), Eval("AwayScore"), Eval("HomePenaltyScore"), Eval("AwayPenaltyScore"))%>

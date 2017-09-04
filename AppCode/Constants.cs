@@ -134,6 +134,7 @@ namespace UaFootball.AppCode
                 public const int OtherBodyPart = 0x100000;
                 public const int GoalPass = 0x200000;
                 public const int Pyatka = 0x400000;
+                public const int Razvorot = 0x800000;
 
                 //Substitution
                 public const int Injury = 0x01;
@@ -153,6 +154,11 @@ namespace UaFootball.AppCode
                 public const int Center = 0x100;
                 public const int PanenkaStle = 0x40;
                 public const int PostMatchPenalty = 0x80;
+            }
+
+            public static class MultimediaTags
+            {
+                public const int BadQuality = 0x01;
             }
 
             public static class MatchFlags
@@ -232,6 +238,8 @@ namespace UaFootball.AppCode
                 public const string OtherBodyPart = "Другой частью";
                 public const string GoalPass = "Отличный голевой пас";
                 public const string Pyatka = "Пас/удар пяткой";
+                public const string Razvorot = "Удар с разворота/через себя";
+
                 //Substitution
                 public const string Injury = "Травма";
 
@@ -249,6 +257,11 @@ namespace UaFootball.AppCode
                 public const string Center = "По центру";
                 public const string PanenkaStle = "В стиле Паненки";
                 public const string PostMatchPenalty = "Послематчевый";
+            }
+
+            public static class MultimediaTags
+            {
+                public const string BadQuality = "Плохое качество";
             }
 
             public static class MatchFlags

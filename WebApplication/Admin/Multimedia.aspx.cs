@@ -69,6 +69,8 @@ namespace UaFootball.WebApplication.Admin
 
                 ddlMultimediaSubType.SelectedIndex = 3;
                 ddlMultimediaSubType_SelectedIndexChanged(ddlMultimediaSubType, new EventArgs());
+
+                cbl1.Items.Add(new ListItem(Constants.UI.MultimediaTags.BadQuality, Constants.DB.MultimediaTags.BadQuality.ToString()));
             }
         }
 
@@ -377,6 +379,15 @@ namespace UaFootball.WebApplication.Admin
                     newMM.Author = tbAuthor.Text;
                     newMM.Source = tbSource.Text;
                     newMM.Description = tbDescription.Text;
+                    newMM.Flags = 0;
+                    foreach (ListItem li in cbl1.Items)
+                    {
+                        if (li.Selected)
+                        {
+                            newMM.Flags = newMM.Flags | long.Parse(li.Value);
+                        }
+                    }
+
                     foreach (MultimediaTagDTO mmTag in TagsCache)
                     {
                         MultimediaTag mt = new MultimediaTag

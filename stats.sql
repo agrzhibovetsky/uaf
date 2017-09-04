@@ -51,8 +51,9 @@ order by c desc
 
 
 /* UNT goals without uploaded video*/
-select * from MatchEvents me
+select m.Match_ID, m.HomeTeam, m.AwayTeam, p.First_Name, p.Last_Name from MatchEvents me
 join Players p on me.Player1_Id = p.Player_Id
+join vwMatches m on me.Match_Id = m.Match_Id
 left outer join MultimediaTags mt on mt.MatchEvent_ID = me.MatchEvent_Id
 where me.Match_Id in
 (
@@ -77,7 +78,7 @@ join Countries acn on act.Country_ID = acn.Country_ID
 join MatchLineups ml on ml.Match_Id = m.Match_ID and ml.Player_Id = me.Player1_Id
 where me.Match_Id in 
 (
-select Match_Id from Matches where Season_Id=10
+select Match_Id from Matches where Season_Id=17
 )
 and (Event_Cd='G' or Event_Cd='P') and ((ml.IsHomeTeamPlayer = 1 and hcn.Country_ID=1) or (ml.IsHomeTeamPlayer = 0 and acn.Country_ID=1))
 and EventFlags & 128 =0 and MultimediaTag_ID is null
@@ -89,7 +90,7 @@ order by me.Match_Id
 select distinct(p.Player_Id), p.First_Name, p.Last_Name, p.Display_Name, ml.ShirtNumber from MatchLineups ml
 join Matches m on ml.Match_Id = m.Match_Id
 join Players p on ml.Player_Id = p.Player_Id
-where ((m.HomeClub_Id = 17 and ml.IsHomeTeamPlayer = 1) or (m.AwayClub_Id = 17 and ml.IsHomeTeamPlayer = 0))
+where ((m.HomeClub_Id = 2 and ml.IsHomeTeamPlayer = 1) or (m.AwayClub_Id = 2 and ml.IsHomeTeamPlayer = 0))
 order by ShirtNumber
 
 

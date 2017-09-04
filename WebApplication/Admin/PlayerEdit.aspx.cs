@@ -158,11 +158,21 @@ namespace UaFootball.WebApplication
             TextInfo textInfo = cultureInfo.TextInfo;
             string First_Name_Int = textInfo.ToTitleCase(tbFirstNameInt.Text.Trim().ToLower());
             string Last_Name_Int = textInfo.ToTitleCase(tbLastNameInt.Text.Trim().ToLower());
+            string LastName = textInfo.ToTitleCase(tbLastName.Text.Trim().ToLower());
             if (hl != null && data != null)
             {
                 //hl.Text = data.NameSearchString;
-                hl.Text = (data.Last_Name_Int.ToNormalizedASCIIString() + ", " + data.First_Name_Int.ToNormalizedASCIIString());
-                hl.TextToHighlight = (First_Name_Int + ' ' + Last_Name_Int).ToNormalizedASCIIString();
+                if (string.IsNullOrWhiteSpace(tbLastNameInt.Text))
+                {
+                    hl.Text = data.Last_Name + ", " + data.First_Name;
+                    hl.TextToHighlight = (LastName);
+                }
+                else
+                {
+                    hl.Text = (data.Last_Name_Int.ToNormalizedASCIIString() + ", " + data.First_Name_Int.ToNormalizedASCIIString());
+                    hl.TextToHighlight = (First_Name_Int + ' ' + Last_Name_Int).ToNormalizedASCIIString();
+                }
+                
             }
         }
 
@@ -212,6 +222,11 @@ namespace UaFootball.WebApplication
                     foreach (string name in nameChecks)
                     {
                         candidates.AddRange(db.Players.Where(p => (p.NameSearchString.Contains(name))));
+                    }
+                    //для кириллических имен - поиск по кириллическому имени
+                    if (string.IsNullOrWhiteSpace(playerToSave.Last_Name_Int))
+                    {
+                        candidates.AddRange(db.Players.Where(p=>p.Last_Name == playerToSave.Last_Name));
                     }
 
                     candidates.RemoveAll(p => p.Player_Id == playerToSave.Player_Id);
