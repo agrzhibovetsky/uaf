@@ -305,7 +305,13 @@ namespace UaFootball.AppCode
                                                join m in db.Multimedias on tag.Multimedia_ID equals m.Multimedia_ID
                                                where tag.Player_ID == playerId
                                                select m).ToList();
-                
+                List<Multimedia> multimediaVideo = (from tag in db.MultimediaTags
+                                                    join matchEvent in db.MatchEvents on tag.MatchEvent_ID equals matchEvent.MatchEvent_Id
+                                                    join m in db.Multimedias on tag.Multimedia_ID equals m.Multimedia_ID
+                                                    where (matchEvent.Player1_Id == playerId || matchEvent.Player2_Id == playerId) && m.MultimediaType_CD == Constants.DB.MutlimediaTypes.Video
+                                                    select m).ToList();
+                                                   
+                multimedia.AddRange(multimediaVideo);
                 p.Multimedia = multimedia.Select(m => m.ToDTO()).ToList();
 
                 foreach (Multimedia m in multimedia.Where(mm=>mm.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.MatchPhoto || mm.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.MatchVideo))
@@ -315,8 +321,77 @@ namespace UaFootball.AppCode
                         p.Matches.SingleOrDefault(match=>match.Match_Id == matchId).PhotoCount++;
                     else p.Matches.SingleOrDefault(match=>match.Match_Id == matchId).VideoCount++;
                 }
+
+                foreach (MatchDTO match in p.Matches)
+                {
+                    MatchLineupDTO lineup = match.Lineup[0];
+
+                    lineup.didntPlay = false;
+                    lineup.cameAsSubstitute = false;
+                    lineup.wasSubstituted = false;
+                    
+                    int startMinute = -1;
+                    if (lineup.IsSubstitute)
+                    {
+                        MatchEventDTO playerInEvent = match.Events.FirstOrDefault(me => (me.Event_Cd == Constants.DB.EventTypeCodes.Substitution) && (me.Player2_Id == playerId));
+                        if (playerInEvent != null)
+                        {
+                            startMinute = playerInEvent.Minute == 46 ? 45 : playerInEvent.Minute;
+                            lineup.cameAsSubstitute = true;
+                        }
+                        else
+                        {
+                            lineup.didntPlay = true;
+                        }
+                    }
+                    else
+                    {
+                        startMinute = 0;
+                    }
+
+                    int finishMinute = 90;
+                    if (match.Flags.HasValue && (match.Flags & Constants.DB.MatchFlags.Duration120Minutes) > 0) finishMinute = 120;
+
+                    MatchEventDTO playerOutEvent = match.Events.FirstOrDefault(me => (me.Event_Cd == Constants.DB.EventTypeCodes.Substitution) && (me.Player1_Id == playerId));
+                    if (playerOutEvent != null)
+                    {
+                        finishMinute = playerOutEvent.Minute == 46 ? 45 : playerOutEvent.Minute;
+                        lineup.wasSubstituted = true;
+                    }
+
+                    MatchEventDTO redCardEvent = match.Events.FirstOrDefault(me => (me.Event_Cd == Constants.DB.EventTypeCodes.RedCard || me.Event_Cd == Constants.DB.EventTypeCodes.SecondYellowCard));
+                    if (redCardEvent != null)
+                    {
+                        finishMinute = redCardEvent.Minute;
+                    }
+
+                    lineup.minutesPlayed = finishMinute - startMinute;
+                    if (lineup.minutesPlayed == 0) lineup.minutesPlayed++;
+                    
+                }
+
+                List<MatchDTO> orderedMatches = p.Matches.OrderBy(m => m.Date).ToList();
+                int matchNo = 0;
+                for (var i = 0; i < orderedMatches.Count; i++)
+                {
+                    if ((orderedMatches[i].Lineup[0].Flags & Constants.DB.LineupFlags.Debut) > 0)
+                    {
+                        matchNo = 1;
+                        orderedMatches[i].Lineup[0].MatchNo = 1;
+                    }
+                    else
+                    {
+                        if (matchNo > 0 && !orderedMatches[i].Lineup[0].didntPlay && orderedMatches[i].CompetitionLevelCode==Constants.DB.CompetitionLevelCd_NationalTeam)
+                        {
+                            
+                            matchNo++;
+                            orderedMatches[i].Lineup[0].MatchNo = matchNo;
+                            //p.Matches.Find(m => m.Match_Id == orderedMatches[i].Match_Id).Lineup[0].MatchNo = 3;
+                        }
+                    }
+                }
+
                 return p;
-                
             }
         }
 

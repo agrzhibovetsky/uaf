@@ -104,8 +104,15 @@ namespace UaFootball.WebApplication
                         {
                             using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
                             {
-                                IQueryable<AutoCompleteResponse> searchMatches = db.Players.Where(r => r.Last_Name.StartsWith(searchTerm) || r.Display_Name.StartsWith(searchTerm) || r.Last_Name_Int.StartsWith(searchTerm)).Select(r => new AutoCompleteResponse { id = r.Player_Id, value = string.Concat(r.First_Name??"", " ", r.Last_Name??"") });
-                                result.AddRange(searchMatches);
+                                List<DB.Player> searchMatches = db.Players.Where(r => r.Last_Name.StartsWith(searchTerm) || r.Display_Name.StartsWith(searchTerm) || r.Last_Name_Int.StartsWith(searchTerm)).ToList();
+                                foreach (DB.Player p in searchMatches)
+                                {
+                                    AutoCompleteResponse r = new AutoCompleteResponse { id = p.Player_Id };
+                                    string formattedName = string.Format("{0} {1} '{2}'", p.First_Name, p.Last_Name, p.Display_Name);
+                                    formattedName = formattedName.Replace("''", "").Trim();
+                                    r.value = formattedName;
+                                    result.Add(r);
+                                }
                                 context.Response.Write(serializer.Serialize(result));
                             }
                             break;
@@ -148,7 +155,17 @@ namespace UaFootball.WebApplication
                                     AutoCompleteResponse resp = null;
                                     if (lu != null)
                                     {
-                                        resp = new AutoCompleteResponse { id = lu.Player_Id.Value, value = lu.Player.First_Name + " " + lu.Player.Last_Name };
+                                        DB.Player p = lu.Player;
+                                        string formattedName = string.Empty;
+                                        if (!string.IsNullOrEmpty(p.Display_Name))
+                                        {
+                                            formattedName = string.Format("{0} ({1} {2})", p.Display_Name.ToUpper(), p.First_Name, p.Last_Name);
+                                        }
+                                        else
+                                        {
+                                            formattedName = string.Format("{0} {1}", p.First_Name, p.Last_Name);
+                                        }
+                                        resp = new AutoCompleteResponse { id = p.Player_Id, value = formattedName };
                                     }
                                     else
                                     {

@@ -141,7 +141,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            <img id="imgMultimedia" alt=""/>
+            <img id="imgMultimedia" style="max-width:90%" alt=""/>
             <div style="display: none; width:425px;height:300px;" id="player"></div>
         </td>
     </tr>

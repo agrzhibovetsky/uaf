@@ -37,7 +37,10 @@ namespace UaFootball.AppCode
                 Stadium = new StadiumDTO {Stadium_ID = dbObj.Stadium_Id},
                 IsNationalTeamMatch = dbObj.AwayNationalTeam_Id.HasValue,
                 Flags = dbObj.Flags,
-                SpecialNote = dbObj.SpecialNote
+                SpecialNote = dbObj.SpecialNote,
+                AdminNotes = dbObj.AdminNotes,
+                Sources = dbObj.Sources,
+                CreatedAt = dbObj.CreatedDate
             };
 
             return dtoObj;
@@ -100,6 +103,8 @@ namespace UaFootball.AppCode
             dbObj.Spectators = dtoObj.Spectators;
             dbObj.Flags = dtoObj.Flags;
             dbObj.SpecialNote = dtoObj.SpecialNote;
+            dbObj.AdminNotes = dtoObj.AdminNotes;
+            dbObj.Sources = dtoObj.Sources;
 
             foreach (MatchLineupDTO l in dtoObj.Lineup)
             {
@@ -193,7 +198,8 @@ namespace UaFootball.AppCode
                                                      ShirtNum = matchLineup.ShirtNumber,
                                                      CoachId = matchLineup.Coach_Id,
                                                      Coach_FirstName = matchLineup.Coach.FirstName,
-                                                     Coach_LastName = matchLineup.Coach.LastName
+                                                     Coach_LastName = matchLineup.Coach.LastName,
+                                                     Flags = matchLineup.Flags ?? 0
                                                  };
                 ret.Lineup.AddRange(lineup.AsEnumerable());
 
@@ -254,6 +260,7 @@ namespace UaFootball.AppCode
                 }
                 else
                 {
+                    dbObj.CreatedDate = DateTime.Now;
                     db.Matches.InsertOnSubmit(dbObj);
                 }
 
@@ -343,6 +350,12 @@ namespace UaFootball.AppCode
                 if (searchParam.Stadium_Id > 0)
                 {
                     dbData = dbData.Where(d => d.Stadium_Id == searchParam.Stadium_Id);
+                }
+
+                if (searchParam.Coach_Id > 0)
+                {
+                    List<int> lineups = db.MatchLineups.Where(ml => ml.Coach_Id == searchParam.Coach_Id).Select(ml=>ml.Match_Id).ToList();
+                    dbData = dbData.Where(d => lineups.Contains(d.Match_ID));
                 }
 
                 dbData = dbData.OrderByDescending(d => d.Date);

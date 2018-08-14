@@ -400,6 +400,14 @@ tr.new_competition td
     border-top: 1px dashed #666666;
 }
 
+.duplicate_rank_2, .duplicate_rank_3 {
+    background-color: lightgreen;
+}
+
+.duplicate_rank_4, .duplicate_rank_5, .duplicate_rank_6 {
+    background-color: lightseagreen;
+} 
+
 .matchReportClubName
 {
     font-size:large;

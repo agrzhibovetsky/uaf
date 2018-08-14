@@ -30,6 +30,7 @@ namespace UaFootball.WebApplication
         protected int EuropcupsMatchesCount { get; set; }
         protected int NationalTeamMatchesCount { get; set; }
         protected int PhotoCount { get; set; }
+        protected int VideoCount { get; set; }
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -75,7 +76,7 @@ namespace UaFootball.WebApplication
                     NationalTeamMatchesCount = nationalTeamMatches.Count();
                     EuropcupsMatchesCount = europcupMatches.Count();
                     PhotoCount = DataItem.Multimedia.Count(mm => mm.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.MatchPhoto);
-
+                    VideoCount = DataItem.Multimedia.Count(mm => mm.MultimediaType_CD == Constants.DB.MutlimediaTypes.Video);
                 }
             }
         }

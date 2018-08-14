@@ -127,8 +127,8 @@
                                 </ItemTemplate>
                             </asp:Repeater>
                             <tr>
-                                <td colspan="2"><br />Тренер: <asp:Label ID="lblHomeTeamCoach" runat="server"></asp:Label></td>
-                                <td colspan="2"><br />Тренер: <asp:Label ID="lblAwayCoach" runat="server"></asp:Label></td>
+                                <td colspan="2"><br />Тренер: <asp:HyperLink ID="hlHomeTeamCoach" runat="server"></asp:HyperLink> </td>
+                                <td colspan="2"><br />Тренер: <asp:HyperLink ID="hlAwayTeamCoach" runat="server"></asp:HyperLink></td>
                             </tr>
                         </table>
                     </td>

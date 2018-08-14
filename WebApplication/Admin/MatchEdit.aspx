@@ -253,7 +253,17 @@
 
                     <tr>
                         <td colspan="2">Команда хозяев</td>
+                        <td>
+                            <span style="width:20px">Вр</span>
+                            <span style="width:20px">Кэп</span>
+                            <span style="width:20px">Деб</span>
+                        </td>
                         <td colspan="2">Команда гостей</td>
+                        <td>
+                            <span style="width:20px">Вр</span>
+                            <span style="width:20px">Кэп</span>
+                            <span style="width:20px">Деб</span>
+                        </td>
                     </tr>
 
                     <asp:Repeater runat="server" ID="rptLineup" 
@@ -263,28 +273,38 @@
                                 <td width="5%">
                                     <asp:TextBox ID="tbHomePlayerShirtNumber" autocomplete="off" runat="server" ClientIDMode="Static" CssClass="short1 tbPlayerShirtNumberSelector"></asp:TextBox>
                                 </td>
-                                <td width="45%">
+                                <td width="30%">
                                     <UaFootball:AutocompleteTextBox runat="server" ID="actbHomePlayer" AutocompleteType="Player" />
                                     <asp:HiddenField ID="hfHomePlayerLineupId" runat="server" />
+                                </td>
+                                <td width="15%">
+                                    <span style="width:20px"><asp:CheckBox ID="cbHGoalkeeper" runat="server" /></span>
+                                    <span style="width:20px"><asp:CheckBox ID="cbHCaptain" runat="server" /></span>
+                                    <span style="width:20px"><asp:CheckBox ID="cbHDebut" runat="server" /></span>
                                 </td>
                                 <td width="5%">
                                     <asp:TextBox ID="tbAwayPlayerShirtNumber" autocomplete="off"  runat="server" CssClass="short1 tbPlayerShirtNumberSelector"></asp:TextBox>
                                 </td>
-                                <td width="45%">
+                                <td width="30%">
                                     <UaFootball:AutocompleteTextBox ID="actbAwayPlayer" runat="server" AutocompleteType="Player" />
                                     <asp:HiddenField ID="hfAwayPlayerLineupId" runat="server" />
+                                </td>
+                                <td width="15%">
+                                    <asp:CheckBox ID="cbAGoalkeeper" runat="server" />
+                                    <asp:CheckBox ID="cbACaptain" runat="server" />
+                                    <asp:CheckBox ID="cbADebut" runat="server" />
                                 </td>
                             </tr>
                         </ItemTemplate>
                     </asp:Repeater>
 
                      <tr>
-                        <td colspan="2">
-                            <UaFootball:AutocompleteTextBox runat="server" ID="actbHomeCoach" BehaviorId="actbHomeCoach" AutocompleteType="Coach" />
+                        <td colspan="3">
+                            <UaFootball:AutocompleteTextBox runat="server" ID="actbHomeCoach" Placeholder="Валерий Лобановский" BehaviorId="actbHomeCoach" AutocompleteType="Coach" />
                             <asp:HiddenField ID="hfHomeCoachLineupId" runat="server"  />
                         </td>
-                        <td colspan="2">
-                            <UaFootball:AutocompleteTextBox ID="actbAwayCoach" runat="server" BehaviorId="actbAwayCoach" AutocompleteType="Coach" />
+                        <td colspan="3">
+                            <UaFootball:AutocompleteTextBox ID="actbAwayCoach" runat="server" Placeholder="Луи ван Гаал" BehaviorId="actbAwayCoach" AutocompleteType="Coach" />
                             <asp:HiddenField ID="hfAwayCoachLineupId" runat="server" />
                         </td>
                     </tr>
@@ -380,7 +400,22 @@
 
          <tr>
             <td colspan="4">
+                <div>Особые отметки:</div>
                 <asp:TextBox TextMode="MultiLine" runat="server" ID="tbSpecialNotes" Width="400"></asp:TextBox>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="4">
+                <div>Прочие отметки:</div>
+                <asp:TextBox TextMode="MultiLine" runat="server" ID="tbAdminNotes" Width="400"></asp:TextBox>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="4">
+                <div>Источники:</div>
+                <asp:TextBox TextMode="MultiLine" runat="server" ID="tbSources" Width="400"></asp:TextBox>
             </td>
 
         </tr>

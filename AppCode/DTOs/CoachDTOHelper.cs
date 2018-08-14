@@ -18,7 +18,7 @@ namespace UaFootball.AppCode
                 LastName = dbObj.LastName,
                 CoachId = dbObj.CoachId,
                 LastName_EN = dbObj.LastNameInt,
-                FirstName_EN = dbObj.LastNameInt,
+                FirstName_EN = dbObj.FirstNameInt,
                 ModifiedDate = dbObj.ModifiedDate
             };
 

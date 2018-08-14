@@ -71,6 +71,8 @@ namespace UaFootball.WebApplication.Admin
                 ddlMultimediaSubType_SelectedIndexChanged(ddlMultimediaSubType, new EventArgs());
 
                 cbl1.Items.Add(new ListItem(Constants.UI.MultimediaTags.BadQuality, Constants.DB.MultimediaTags.BadQuality.ToString()));
+                cbl1.Items.Add(new ListItem(Constants.UI.MultimediaTags.AwayTeamPhoto, Constants.DB.MultimediaTags.AwayTeamPhoto.ToString()));
+                cbl1.Items.Add(new ListItem(Constants.UI.MultimediaTags.HomeTeamPhoto, Constants.DB.MultimediaTags.HomeTeamPhoto.ToString()));
             }
         }
 
@@ -484,6 +486,11 @@ namespace UaFootball.WebApplication.Admin
                         TagsCache.RemoveAll(mt => mt.Type != _tagTypeGame);
                         rptTags.DataSource = TagsCache;
                         rptTags.DataBind();
+
+                        foreach (ListItem li in cbl1.Items)
+                        {
+                            li.Selected = false;
+                        }
                     }
                 }
                 else

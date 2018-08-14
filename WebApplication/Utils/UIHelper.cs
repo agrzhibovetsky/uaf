@@ -114,9 +114,17 @@ namespace UaFootball.WebApplication
             else return string.Empty;
         }
 
+        public static string FormatLineupFlags(int flags)
+        {
+            string val = string.Empty;
+            if ((flags & Constants.DB.LineupFlags.Captain) != 0)
+            {
+                val = "(К)";
+            }
 
+            return val;
+        }
 
-        
 
         static UIHelper()
         {
@@ -170,6 +178,7 @@ namespace UaFootball.WebApplication
             _cardEventFlagsMap.Add(Constants.DB.EventFlags.UnsportingBehavior, Constants.UI.EventFlags.UnsportingBehavior);
             _cardEventFlagsMap.Add(Constants.DB.EventFlags.Talks, Constants.UI.EventFlags.Talks);
             _cardEventFlagsMap.Add(Constants.DB.EventFlags.FoulOfLastHope, Constants.UI.EventFlags.FoulOfLastHope);
+            _cardEventFlagsMap.Add(Constants.DB.EventFlags.AfterFinalWhistle, Constants.UI.EventFlags.AfterFinalWhistle);
 
             _substitutionEventFlagsMap = new Dictionary<int, string>();
             _substitutionEventFlagsMap.Add(Constants.DB.EventFlags.Injury, Constants.UI.EventFlags.Injury);

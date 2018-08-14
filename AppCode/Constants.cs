@@ -108,6 +108,7 @@ namespace UaFootball.AppCode
                 public const int UnsportingBehavior = 0x10;
                 public const int Talks = 0x20;
                 public const int FoulOfLastHope = 0x40;
+                public const int AfterFinalWhistle = 0x80;
 
                 //Goal, PenaltyShootoutScored
                 public const int LeftLeg = 0x01;
@@ -159,6 +160,8 @@ namespace UaFootball.AppCode
             public static class MultimediaTags
             {
                 public const int BadQuality = 0x01;
+                public const int AwayTeamPhoto = 0x02;
+                public const int HomeTeamPhoto = 0x04;
             }
 
             public static class MatchFlags
@@ -170,6 +173,13 @@ namespace UaFootball.AppCode
                 public const int Duration120Minutes = 0x10;
                 public const int IWasOnStadium = 0x20;
                 public const int IWatchedMatchOnTV = 0x40;
+            }
+
+            public static class LineupFlags
+            {
+                public const int Goalkeeper = 0x01;
+                public const int Captain = 0x02;
+                public const int Debut = 0x04;
             }
         }
 
@@ -213,6 +223,7 @@ namespace UaFootball.AppCode
                 public const string UnsportingBehavior = "Неспортивное поведение";
                 public const string Talks = "Разговоры с судьей";
                 public const string FoulOfLastHope = "Фол последней надежды";
+                public const string AfterFinalWhistle = "После финального свистка";
 
                 //Goal, PenaltyShootoutScored
                 public const string LeftLeg = "Левой ногой";
@@ -262,6 +273,8 @@ namespace UaFootball.AppCode
             public static class MultimediaTags
             {
                 public const string BadQuality = "Плохое качество";
+                public const string AwayTeamPhoto = "Командное фото (гость)";
+                public const string HomeTeamPhoto = "Командное фото (хозяин)";
             }
 
             public static class MatchFlags

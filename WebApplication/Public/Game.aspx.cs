@@ -61,11 +61,13 @@ namespace UaFootball.WebApplication
                     MatchLineupDTO awayCoachDTO = DataItem.Lineup.FirstOrDefault(l => l.CoachId.HasValue && !l.IsHomeTeamPlayer);
                     if (homeCoachDTO != null)
                     {
-                        lblHomeTeamCoach.Text = string.Concat(homeCoachDTO.Coach_FirstName, " ", homeCoachDTO.Coach_LastName);
+                        hlHomeTeamCoach.Text = string.Concat(homeCoachDTO.Coach_FirstName, " ", homeCoachDTO.Coach_LastName);
+                        hlHomeTeamCoach.NavigateUrl = ResolveClientUrl("~/WebApplication/Public/Coach.aspx?objectId=" + homeCoachDTO.CoachId);
                     }
                     if (awayCoachDTO != null)
                     {
-                        lblAwayCoach.Text = string.Concat(awayCoachDTO.Coach_FirstName, " ", awayCoachDTO.Coach_LastName);
+                        hlAwayTeamCoach.Text = string.Concat(awayCoachDTO.Coach_FirstName, " ", awayCoachDTO.Coach_LastName);
+                        hlAwayTeamCoach.NavigateUrl = ResolveClientUrl("~/WebApplication/Public/Coach.aspx?objectId=" + awayCoachDTO.CoachId);
                     }
 
                     int rowsCount = Math.Max(homePlayers.Count, awayPlayers.Count);
@@ -114,6 +116,18 @@ namespace UaFootball.WebApplication
         protected void FormatPlayerHyperLink(HyperLink h, MatchLineupDTO pl)
         {
             h.Text = FormatName(pl.Player_FirstName, pl.Player_LastName, pl.Player_DisplayName);
+            if ((pl.Flags & Constants.DB.LineupFlags.Goalkeeper) > 0)
+            {
+                h.Text += " (Вр) ";
+            }
+            if ((pl.Flags & Constants.DB.LineupFlags.Captain) > 0)
+            {
+                h.Text += " (K) ";
+            }
+            if ((pl.Flags & Constants.DB.LineupFlags.Debut) > 0)
+            {
+                h.Text += " (Дебют) ";
+            }
             h.ToolTip = FormatName(pl.Player_FirstName_Int, pl.Player_LastName_Int, null);
             h.NavigateUrl = string.Format("Player.aspx?{0}={1}", Constants.QueryParam.PlayerId, pl.Player_Id);
         }

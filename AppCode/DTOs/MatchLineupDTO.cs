@@ -37,6 +37,18 @@ namespace UaFootball.AppCode
 
         public string Coach_LastName { get; set; }
 
+        public int Flags { get; set; }
+
+        public int MatchNo { get; set; }
+
+        public bool didntPlay { get; set; }
+
+        public bool cameAsSubstitute { get; set; }
+
+        public bool wasSubstituted { get; set; }
+
+        public int minutesPlayed { get; set; }
+
         public void CopyDTOToDbObject(MatchLineup dbObj)
         {
             dbObj.Match_Id = Match_Id;
@@ -46,6 +58,7 @@ namespace UaFootball.AppCode
             dbObj.ShirtNumber = ShirtNum;
             dbObj.MatchLineup_Id = MatchLineup_Id;
             dbObj.Coach_Id = CoachId;
+            dbObj.Flags = Flags;
         }
 
         public MatchLineupDTO ConvertDBObjectToDTO(MatchLineup dbObj)
@@ -58,7 +71,8 @@ namespace UaFootball.AppCode
                 MatchLineup_Id = dbObj.MatchLineup_Id,
                 Player_Id = dbObj.Player_Id,
                 ShirtNum = dbObj.ShirtNumber,
-                CoachId = dbObj.Coach_Id
+                CoachId = dbObj.Coach_Id,
+                Flags = dbObj.Flags ?? 0
             };
         }
     }

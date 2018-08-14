@@ -38,7 +38,7 @@ namespace UaFootball.WebApplication
                     ddlCompetitions.DataValueField = "Value";
                     ddlCompetitions.DataBind();
 
-                    IEnumerable<GenericReferenceObject> seasons = GetGenericReferenceData(db, Constants.ObjectType.Season).Where(grd => grd.GenericStringValue.Equals(competitionLevelCode)).OrderByDescending(g=>g.Value);
+                    IEnumerable<GenericReferenceObject> seasons = GetGenericReferenceData(db, Constants.ObjectType.Season).Where(grd => grd.GenericStringValue.Equals(competitionLevelCode));
                     ddlSeasons.DataSource = seasons;
                     ddlSeasons.DataTextField = "Name";
                     ddlSeasons.DataValueField = "Value";

@@ -44,11 +44,21 @@ namespace UaFootball.WebApplication
             set { _isRequired = value; }
         }
 
+        public string Placeholder
+        {
+            get;
+            set;
+        }
+
 
         protected override void OnInit(EventArgs e)
         {
             tb.ID = "tb" + BehaviorId;
             hf.ID = "hf" + BehaviorId;
+            if (!string.IsNullOrEmpty(Placeholder))
+            {
+                tb.Attributes.Add("placeholder", Placeholder);
+            }
             try
             {
                 Page.ClientScript.RegisterExpandoAttribute(cvAutocomplete.ClientID, "valueHolderId", hf.ClientID);

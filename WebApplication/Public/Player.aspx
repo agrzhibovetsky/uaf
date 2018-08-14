@@ -64,6 +64,13 @@
                                    <a id="hlPhoto" class="colorbox_selector" href='/UaFootball/WebApplication/Public/Photo.aspx?PlayerId=<%= DataItem.Player_Id%>'>Фото (<%=PhotoCount%>)</a> 
                                 </td>
                             </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <br />
+                                   <a id="hlVideo" class="" href='/UaFootball/WebApplication/Public/Videos.aspx?PlayerId=<%= DataItem.Player_Id%>'>Видео (<%=VideoCount%>)</a> 
+                                </td>
+                            </tr>
                         </table>
                     </td>
                 </tr>

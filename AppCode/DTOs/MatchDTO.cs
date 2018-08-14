@@ -82,9 +82,15 @@ namespace UaFootball.AppCode
 
         public string SpecialNote { get; set; }
 
+        public string AdminNotes { get; set; }
+
+        public string Sources { get; set; }
+
         public int PhotoCount { get; set; }
 
         public int VideoCount { get; set; }
+
+        public DateTime? CreatedAt { get; set; }
 
         public List<MultimediaDTO> Multimedia { get; set; }
 

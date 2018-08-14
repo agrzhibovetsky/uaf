@@ -303,6 +303,8 @@
     <Content Include="WebApplication\Images\players\zubov.jpg" />
     <Content Include="WebApplication\Images\players\лднгсршл.jpg" />
     <Content Include="WebApplication\Images\video.gif" />
+    <Content Include="WebApplication\Public\Coach.aspx" />
+    <Content Include="WebApplication\Public\Coaches.aspx" />
     <Content Include="WebApplication\Public\Countries.aspx" />
     <Content Include="WebApplication\Public\Country.aspx" />
     <Content Include="WebApplication\Public\Game.aspx" />
@@ -313,6 +315,8 @@
     <Content Include="WebApplication\Public\Referee.aspx" />
     <Content Include="WebApplication\Public\Stadium.aspx" />
     <Content Include="WebApplication\Public\Video.aspx" />
+    <Content Include="WebApplication\Public\Videos.aspx" />
+    <Content Include="WebApplication\Public\Referees.aspx" />
     <Content Include="WebApplication\Scripts\autocomplete.js" />
     <Content Include="WebApplication\Scripts\jquery-1.9.0.js" />
     <Content Include="WebApplication\Scripts\jquery-ui-1.10.0.custom.min.js" />
@@ -381,6 +385,34 @@
     </Compile>
     <Compile Include="WebApplication\Admin\CoachList.aspx.designer.cs">
       <DependentUpon>CoachList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Coach.aspx.cs">
+      <DependentUpon>Coach.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Coach.aspx.designer.cs">
+      <DependentUpon>Coach.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Coaches.aspx.cs">
+      <DependentUpon>Coaches.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Coaches.aspx.designer.cs">
+      <DependentUpon>Coaches.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Videos.aspx.cs">
+      <DependentUpon>Videos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Videos.aspx.designer.cs">
+      <DependentUpon>Videos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Referees.aspx.cs">
+      <DependentUpon>Referees.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Referees.aspx.designer.cs">
+      <DependentUpon>Referees.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebApplication\Utils\BitmapHelper.cs" />
     <Compile Include="WebApplication\Utils\PathHelper.cs" />

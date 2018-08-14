@@ -319,6 +319,24 @@ namespace UaFootball.WebApplication {
         protected global::System.Web.UI.WebControls.TextBox tbSpecialNotes;
         
         /// <summary>
+        /// tbAdminNotes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbAdminNotes;
+        
+        /// <summary>
+        /// tbSources control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbSources;
+        
+        /// <summary>
         /// btnSave control.
         /// </summary>
         /// <remarks>

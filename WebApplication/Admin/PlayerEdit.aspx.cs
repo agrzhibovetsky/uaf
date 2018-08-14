@@ -209,7 +209,7 @@ namespace UaFootball.WebApplication
 
                     List<string> nameChecks = new List<string>();
                     //ищем по имени только если оно составное
-                    if (playerToSave.First_Name_Int.Length > 0 && playerToSave.First_Name.Trim().IndexOf(' ') > 0)
+                    if (playerToSave.First_Name_Int.Length > 0 && playerToSave.First_Name_Int.Trim().IndexOf(' ') > 0)
                     {
                         nameChecks.AddRange(playerToSave.First_Name_Int.ToNormalizedASCIIString().Split(' '));
                     }
@@ -230,10 +230,37 @@ namespace UaFootball.WebApplication
                     }
 
                     candidates.RemoveAll(p => p.Player_Id == playerToSave.Player_Id);
+
+                    foreach (DB.Player pl in candidates)
+                    {
+                        pl.Weight = 0;
+                        
+                        if (!string.IsNullOrEmpty(pl.NameSearchString))
+                        {
+                            string[] nameSplit = pl.NameSearchString.Split(' ');
+                            int intersectCount = (nameSplit.Intersect(nameChecks)).Count();
+                            
+                            if (pl.DOB == playerToSave.DOB)
+                            {
+                                pl.Weight +=2;
+                            }
+                            if (pl.Country_Id.ToString() == ddlCountries.SelectedValue)
+                            {
+                                pl.Weight++;
+                            }
+                            pl.Weight += intersectCount > 0 ?  intersectCount : -1;
+                            if (pl.First_Name_Int == tbFirstNameInt.Text.Trim() && pl.Last_Name_Int == tbLastNameInt.Text.Trim())
+                            {
+                                pl.Weight++;
+                            }
+
+                            if (pl.Weight < 0) pl.Weight = 0;
+                        }
+                    }
                     if (candidates.Count > 0)
                     {
                         rptDuplicates.Visible = true;
-                        rptDuplicates.DataSource = candidates.Distinct().OrderBy(c => c.Last_Name_Int).ThenBy(c=>c.First_Name_Int);
+                        rptDuplicates.DataSource = candidates.Distinct().OrderByDescending(c => c.Weight).ThenBy(c=>c.Last_Name_Int).ThenBy(c=>c.First_Name_Int);
                         rptDuplicates.DataBind();
                         btnSaveOverride.Visible = true;
                         rptSearchPlayers.DataSource = null;

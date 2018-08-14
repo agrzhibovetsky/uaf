@@ -49,7 +49,7 @@ namespace UaFootball.WebApplication
 
             if (isNewObject)
             {
-                tbDate.Text = FormatDate(DateTime.Now);
+                tbDate.Text = FormatDate(DateTime.Now.Subtract(new TimeSpan(24,0,0)));
             }
 
             cblMatchFlags.DataSource = UIHelper.MatchFlagsMap;
@@ -92,6 +92,8 @@ namespace UaFootball.WebApplication
             tbAwayTeamPenaltyScore.Text = dtoObj.AwayPenaltyScore.ToString();
             tbSpecatators.Text = dtoObj.Spectators.ToString();
             tbSpecialNotes.Text = dtoObj.SpecialNote;
+            tbSources.Text = dtoObj.Sources;
+            tbAdminNotes.Text = dtoObj.AdminNotes;
             SetAutocompleteTypes();
             SetCompetitionStages();
             if (dtoObj.CompetitionStage_Id.HasValue)
@@ -220,7 +222,9 @@ namespace UaFootball.WebApplication
                 },
                 Lineup = new List<MatchLineupDTO>(),
                 Events = new List<MatchEventDTO>(),
-                SpecialNote = tbSpecialNotes.Text.Length > 0 ? tbSpecialNotes.Text : null
+                SpecialNote = tbSpecialNotes.Text.Length > 0 ? tbSpecialNotes.Text : null,
+                AdminNotes = string.IsNullOrWhiteSpace(tbAdminNotes.Text) ? null : tbAdminNotes.Text,
+                Sources = string.IsNullOrWhiteSpace(tbSources.Text) ? null : tbSources.Text
             };
 
             DateTime date = DateTime.Now;
@@ -252,15 +256,23 @@ namespace UaFootball.WebApplication
                 TextBox tbAwayPlayerShirtNumber = ri.FindControl("tbAwayPlayerShirtNumber") as TextBox;
                 HiddenField hfHomePlayerLineupId = ri.FindControl("hfHomePlayerLineupId") as HiddenField;
                 HiddenField hfAwayPlayerLineupId = ri.FindControl("hfAwayPlayerLineupId") as HiddenField;
+                CheckBox cbHGoalkeeper = ri.FindControl("cbHGoalkeeper") as CheckBox;
+                CheckBox cbAGoalkeeper = ri.FindControl("cbAGoalkeeper") as CheckBox;
+                CheckBox cbHCaptain = ri.FindControl("cbHCaptain") as CheckBox;
+                CheckBox cbACaptain = ri.FindControl("cbACaptain") as CheckBox;
+                CheckBox cbHDebut = ri.FindControl("cbHDebut") as CheckBox;
+                CheckBox cbADebut = ri.FindControl("cbADebut") as CheckBox;
 
                 if (actbHomePlayer.Text.Length > 0 && tbHomePlayerShirtNumber.Text.Length > 0)
                 {
-                    MatchLineupDTO hpml = GetLineup(actbHomePlayer, homeCountryId, int.Parse(tbHomePlayerShirtNumber.Text), int.Parse(hfHomePlayerLineupId.Value), ri.ItemIndex > 10, true);
+                    int hLineupFlag = 0 | (cbHGoalkeeper.Checked ? Constants.DB.LineupFlags.Goalkeeper : 0) | (cbHCaptain.Checked ? Constants.DB.LineupFlags.Captain : 0) | (cbHDebut.Checked ? Constants.DB.LineupFlags.Debut : 0);
+                    MatchLineupDTO hpml = GetLineup(actbHomePlayer, homeCountryId, int.Parse(tbHomePlayerShirtNumber.Text), int.Parse(hfHomePlayerLineupId.Value), ri.ItemIndex > 10, true, hLineupFlag);
                     MatchToSave.Lineup.Add(hpml);
                 }
                 if (actbAwayPlayer.Text.Length > 0 && tbAwayPlayerShirtNumber.Text.Length > 0)
                 {
-                    MatchLineupDTO apml = GetLineup(actbAwayPlayer, awayCountryId, int.Parse(tbAwayPlayerShirtNumber.Text), int.Parse(hfAwayPlayerLineupId.Value), ri.ItemIndex > 10, false);
+                    int aLineupFlag = 0 | (cbAGoalkeeper.Checked ? Constants.DB.LineupFlags.Goalkeeper : 0) | (cbACaptain.Checked ? Constants.DB.LineupFlags.Captain : 0) | (cbADebut.Checked ? Constants.DB.LineupFlags.Debut : 0);
+                    MatchLineupDTO apml = GetLineup(actbAwayPlayer, awayCountryId, int.Parse(tbAwayPlayerShirtNumber.Text), int.Parse(hfAwayPlayerLineupId.Value), ri.ItemIndex > 10, false, aLineupFlag);
                     MatchToSave.Lineup.Add(apml);
                 }
             }
@@ -353,7 +365,7 @@ namespace UaFootball.WebApplication
             }
         }
 
-        private MatchLineupDTO GetLineup(AutocompleteTextBox actbPlayer, int countryId, int shirtNum, int? lineupId, bool isSubstitute, bool isHomeTeamPlayer)
+        private MatchLineupDTO GetLineup(AutocompleteTextBox actbPlayer, int countryId, int shirtNum, int? lineupId, bool isSubstitute, bool isHomeTeamPlayer, int flags)
         {
             int playerId = 0;
             
@@ -397,7 +409,8 @@ namespace UaFootball.WebApplication
                 Match_Id = DataItem.Match_Id,
                 IsSubstitute = isSubstitute,
                 Player_Id = playerId,
-                ShirtNum = shirtNum
+                ShirtNum = shirtNum,
+                Flags = flags
             };
 
             
@@ -519,6 +532,12 @@ namespace UaFootball.WebApplication
             TextBox tbAwayPlayerShirtNumber = e.Item.FindControl("tbAwayPlayerShirtNumber") as TextBox;
             HiddenField hfHomePlayerLineupId = e.Item.FindControl("hfHomePlayerLineupId") as HiddenField;
             HiddenField hfAwayPlayerLineupId = e.Item.FindControl("hfAwayPlayerLineupId") as HiddenField;
+            CheckBox cbHGoalkeeper = e.Item.FindControl("cbHGoalkeeper") as CheckBox;
+            CheckBox cbAGoalkeeper = e.Item.FindControl("cbAGoalkeeper") as CheckBox;
+            CheckBox cbHCaptain = e.Item.FindControl("cbHCaptain") as CheckBox;
+            CheckBox cbACaptain = e.Item.FindControl("cbACaptain") as CheckBox;
+            CheckBox cbHDebut = e.Item.FindControl("cbHDebut") as CheckBox;
+            CheckBox cbADebut = e.Item.FindControl("cbADebut") as CheckBox;
 
             actbHomePlayer.Value = homePlayer.Player_Id.ToString();
             if (homePlayer.Player_Id > 0)
@@ -534,6 +553,14 @@ namespace UaFootball.WebApplication
                 actbAwayPlayer.Text = FormatName(awayPlayer.Player_FirstName, awayPlayer.Player_LastName, awayPlayer.Player_DisplayName);
             }
             tbAwayPlayerShirtNumber.Text = awayPlayer.ShirtNum.ToString();
+            cbHCaptain.Checked = (homePlayer.Flags & Constants.DB.LineupFlags.Captain) > 0;
+            cbHGoalkeeper.Checked = (homePlayer.Flags & Constants.DB.LineupFlags.Goalkeeper) > 0;
+            cbHDebut.Checked = (homePlayer.Flags & Constants.DB.LineupFlags.Debut) > 0;
+
+            cbACaptain.Checked = (awayPlayer.Flags & Constants.DB.LineupFlags.Captain) > 0;
+            cbAGoalkeeper.Checked = (awayPlayer.Flags & Constants.DB.LineupFlags.Goalkeeper) > 0;
+            cbADebut.Checked = (awayPlayer.Flags & Constants.DB.LineupFlags.Debut) > 0;
+
             hfAwayPlayerLineupId.Value = awayPlayer.MatchLineup_Id.ToString();
             
         }

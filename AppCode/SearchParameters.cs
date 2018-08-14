@@ -18,6 +18,8 @@ namespace UaFootball.AppCode
             public int Referee_Id { get; set; }
 
             public int Stadium_Id { get; set; }
+
+            public int Coach_Id { get; set; }
         }
     }
 }

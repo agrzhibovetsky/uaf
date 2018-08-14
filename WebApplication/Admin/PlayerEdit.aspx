@@ -231,7 +231,10 @@
     <table width="100%">
         <asp:Repeater ID="rptDuplicates" runat="server" Visible="false" OnItemDataBound="rptDuplicates_ItemDataBound">
             <ItemTemplate>
-                <tr>
+                <tr class='duplicate_rank_<%#Eval("Weight")%>'>
+                    <td style="width:15px">
+                        <%#Eval("Weight")%>
+                    </td>
                     <td>
                         <a href='/UaFootball/WebApplication/Public/Player.aspx?playerId=<%#Eval("Player_Id")%>'>
                             <uc:HighlightedLabel runat="server" ID="hl" CssClassForHighlight="editFormError"/>

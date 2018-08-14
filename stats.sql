@@ -25,7 +25,7 @@ order by gc desc
 select COUNT(*) as gc, Minute from MatchEvents 
 where Event_Cd='S'
 group by Minute
-order by gc desc
+order by gc desc, Minute
 
 /* --- ALL UNT players ----*/
 select p.Player_Id, p.First_Name, p.Last_Name, COUNT(*) as mc from MatchLineups ml

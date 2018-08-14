@@ -52,14 +52,10 @@ namespace UaFootball.WebApplication.Controls
 
             if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
             {
-
                 MatchDTO match = e.Item.DataItem as MatchDTO;
                 MatchLineupDTO lineup = match.Lineup[0];
                 Label lblMinute = e.Item.FindControl("lblMinute") as Label;
-
-                bool didntPlay = false;
-                bool cameAsSubstitute = false;
-                bool wasSubstituted = false;
+                Label matchNo = e.Item.FindControl("lblMatchNo") as Label;
                 bool seasonChanged = false;
                 if (match.Season_Id != _curSeasonId)
                 {
@@ -68,54 +64,16 @@ namespace UaFootball.WebApplication.Controls
                 }
                 bool isFriendly = match.CompetitionStageName == null;
 
-                int startMinute = -1;
-                if (lineup.IsSubstitute)
-                {
-                    MatchEventDTO playerInEvent = match.Events.FirstOrDefault(me => (me.Event_Cd == Constants.DB.EventTypeCodes.Substitution) && (me.Player2_Id == PlayerId));
-                    if (playerInEvent != null)
-                    {
-                        startMinute = playerInEvent.Minute == 46 ? 45 : playerInEvent.Minute;
-                        cameAsSubstitute = true;
-                    }
-                    else
-                    {
-                        didntPlay = true;
-                    }
-                }
-                else
-                {
-                    startMinute = 0;
-                }
+                string minuteStg = lineup.didntPlay ? string.Empty : lineup.minutesPlayed.ToString();
 
-                int finishMinute = 90;
-                if (match.Flags.HasValue && (match.Flags & Constants.DB.MatchFlags.Duration120Minutes) > 0) finishMinute = 120;
-
-                MatchEventDTO playerOutEvent = match.Events.FirstOrDefault(me => (me.Event_Cd == Constants.DB.EventTypeCodes.Substitution) && (me.Player1_Id == PlayerId));
-                if (playerOutEvent != null)
-                {
-                    finishMinute = playerOutEvent.Minute == 46 ? 45 : playerOutEvent.Minute;
-                    wasSubstituted = true;
-                }
-
-                MatchEventDTO redCardEvent = match.Events.FirstOrDefault(me => (me.Event_Cd == Constants.DB.EventTypeCodes.RedCard || me.Event_Cd == Constants.DB.EventTypeCodes.SecondYellowCard));
-                if (redCardEvent != null)
-                {
-                    finishMinute = redCardEvent.Minute;
-                }
-
-                int timeOfPlay = finishMinute - startMinute;
-                if (timeOfPlay == 0) timeOfPlay++;
-
-
-                string minuteStg = didntPlay ? string.Empty : timeOfPlay.ToString();
-
-                if (cameAsSubstitute) minuteStg = "(" + minuteStg + ")";
+                if (lineup.cameAsSubstitute) minuteStg = "(" + minuteStg + ")";
 
                 lblMinute.Text = minuteStg;
+                if (!lineup.didntPlay) lblMinute.CssClass = "playerFullMatch";
+                if (lineup.cameAsSubstitute) lblMinute.CssClass = "playerIn";
+                if (lineup.wasSubstituted) lblMinute.CssClass = "playerOut";
 
-                if (!didntPlay) lblMinute.CssClass = "playerFullMatch";
-                if (cameAsSubstitute) lblMinute.CssClass = "playerIn";
-                if (wasSubstituted) lblMinute.CssClass = "playerOut";
+                matchNo.Text = lineup.MatchNo > 0 ? lineup.MatchNo.ToString() : "";
 
                 if ((lineup.IsHomeTeamPlayer && match.HomeTeamCountryCode != Constants.CountryCodeUA) || (!lineup.IsHomeTeamPlayer && match.AwayTeamCountryCode != Constants.CountryCodeUA))
                 {

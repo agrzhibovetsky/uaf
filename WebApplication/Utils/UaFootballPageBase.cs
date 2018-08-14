@@ -174,7 +174,7 @@ namespace UaFootball.WebApplication
                     }
                 case Constants.ObjectType.Season:
                     {
-                        data = db.Seasons.Select(s => new GenericReferenceObject { Name = s.Season_Description, Value = s.Season_Id, GenericStringValue = s.CompetitionLevel_Cd });
+                        data = db.Seasons.OrderByDescending(s=>s.StartDate).Select(s => new GenericReferenceObject { Name = s.Season_Description, Value = s.Season_Id, GenericStringValue = s.CompetitionLevel_Cd });
                         break;
                     }
                 case Constants.ObjectType.Stadium:
