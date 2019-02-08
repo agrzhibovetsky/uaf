@@ -29,8 +29,8 @@ namespace UaFootball.AppCode
             All
         }
 
-        public const string normalSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -aaaaaaaAEеeeeeeeeuuuuUooooOOOiiiiIIccccCCCCsssssSSnnrllLyDZzzttdg";
-        public const string extraSymbols =  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -āäăáãâàÁÉæēéëèěęêúūüůÜóöôøÖÓØıîíïÍİćčçҫČĆÇҪšßşșśŠŞñńřļłŁýĎŽźžţțđğ";
+        public const string normalSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -aaaaaaaAEеeeeeeeeuuuuUooooOOOiiiiIIccccCCCCsssssSSnnrlllLyDZzzttdgR";
+        public const string extraSymbols =  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -āäăáãâàÁÉæēéëèěęêúūüůÜóöôøÖÓØıîíïÍİćčçҫČĆÇҪšßşșśŠŞñńřļľłŁýĎŽźžţțđğŘ";
 
         public const string CountryCodeUA = "UA";
 
@@ -136,6 +136,8 @@ namespace UaFootball.AppCode
                 public const int GoalPass = 0x200000;
                 public const int Pyatka = 0x400000;
                 public const int Razvorot = 0x800000;
+                public const int GKFault = 0x1000000;
+                public const int Dribble = 0x2000000;
 
                 //Substitution
                 public const int Injury = 0x01;
@@ -250,6 +252,8 @@ namespace UaFootball.AppCode
                 public const string GoalPass = "Отличный голевой пас";
                 public const string Pyatka = "Пас/удар пяткой";
                 public const string Razvorot = "Удар с разворота/через себя";
+                public const string GKFault = "Ошибка вратаря";
+                public const string Dribble = "Дриблинг, техника";
 
                 //Substitution
                 public const string Injury = "Травма";

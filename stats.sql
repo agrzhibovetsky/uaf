@@ -106,8 +106,8 @@ join Competitions c on m.Competition_Id = C.Competition_Id
 --where p.Country_Id=1 and c.CompetitionLevel_Cd='C'
 ) as subq
 group by ShirtNumber
-order by c desc
---order by ShirtNumber
+--order by c desc
+order by ShirtNumber
 
 /*plaers that used shit number N */
 select distinct(p.Player_Id), p.First_Name, p.Last_Name, p.Display_Name, ml.ShirtNumber 

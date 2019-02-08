@@ -168,6 +168,8 @@ namespace UaFootball.WebApplication
             _goalEventFlagsMap.Add(Constants.DB.EventFlags.GoalPass, Constants.UI.EventFlags.GoalPass);
             _goalEventFlagsMap.Add(Constants.DB.EventFlags.Pyatka, Constants.UI.EventFlags.Pyatka);
             _goalEventFlagsMap.Add(Constants.DB.EventFlags.Razvorot, Constants.UI.EventFlags.Razvorot);
+            _goalEventFlagsMap.Add(Constants.DB.EventFlags.GKFault, Constants.UI.EventFlags.GKFault);
+            _goalEventFlagsMap.Add(Constants.DB.EventFlags.Dribble, Constants.UI.EventFlags.Dribble);
             
 
             _cardEventFlagsMap = new Dictionary<int, string>();

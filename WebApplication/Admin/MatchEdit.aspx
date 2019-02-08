@@ -271,7 +271,7 @@
                         <ItemTemplate>
                             <tr runat="server" id="trLinup">
                                 <td width="5%">
-                                    <asp:TextBox ID="tbHomePlayerShirtNumber" autocomplete="off" runat="server" ClientIDMode="Static" CssClass="short1 tbPlayerShirtNumberSelector"></asp:TextBox>
+                                    <asp:TextBox ID="tbHomePlayerShirtNumber" autocomplete="off" runat="server" CssClass="short1 tbPlayerShirtNumberSelector"></asp:TextBox>
                                 </td>
                                 <td width="30%">
                                     <UaFootball:AutocompleteTextBox runat="server" ID="actbHomePlayer" AutocompleteType="Player" />
@@ -423,6 +423,7 @@
             <td colspan="4">
                 <asp:Button ID="btnSave" runat="server" Text="Сохранить" OnClick="SaveObject" />
                 <asp:Button ID="btnCancel" runat="server" Text="Отмена" CausesValidation="false" OnClick="ReturnToObjectList" />
+                <asp:CustomValidator ID="cvDuplicateShirtNums" ClientIDMode="Static" runat="server" ClientValidationFunction="checkDuplicates" Text="Duplicate Shirt Numbers: " ForeColor="Red" Display="Dynamic"></asp:CustomValidator>
             </td>
         </tr>
 
@@ -430,5 +431,32 @@
 
 
 </table>
+    <script type="text/javascript">
+        function checkDuplicates(source, arguments)
+        {
+            var homeShirtNumsControls = $("[class*='tbPlayerShirtNumberSelector'][id*='Home']");
+            var awayShirtNumsControls = $("[class*='tbPlayerShirtNumberSelector'][id*='Away']");
+            var homenums = [];
+            var awaynums = [];
+            for (var i=0; i<homeShirtNumsControls.length;i++)
+            {
+                var homenum = $(homeShirtNumsControls[i]).val();
+                var awaynum = $(awayShirtNumsControls[i]).val();
+
+                if (homenums.indexOf(homenum)>-1 || awaynums.indexOf(awaynum)>-1)
+                {
+                    arguments.IsValid = false;
+                    cvDuplicateShirtNums.textContent += homenums.indexOf(homenum)>-1 ? homenum + " (Home)" : awaynum + " (Away)";
+                }
+                else
+                {
+                    if (parseInt(homenum)>0)
+                        homenums.push(homenum);
+                    if (parseInt(awaynum)>0)
+                        awaynums.push(awaynum);
+                }
+            }
+        }
+    </script>
 </asp:Content>
 
