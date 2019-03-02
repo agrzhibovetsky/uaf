@@ -36,9 +36,6 @@ namespace UaFootball.DB
     partial void InsertCountry(Country instance);
     partial void UpdateCountry(Country instance);
     partial void DeleteCountry(Country instance);
-    partial void InsertStadium(Stadium instance);
-    partial void UpdateStadium(Stadium instance);
-    partial void DeleteStadium(Stadium instance);
     partial void InsertClub(Club instance);
     partial void UpdateClub(Club instance);
     partial void DeleteClub(Club instance);
@@ -84,10 +81,13 @@ namespace UaFootball.DB
     partial void InsertSeason(Season instance);
     partial void UpdateSeason(Season instance);
     partial void DeleteSeason(Season instance);
+    partial void InsertStadium(Stadium instance);
+    partial void UpdateStadium(Stadium instance);
+    partial void DeleteStadium(Stadium instance);
     #endregion
 		
 		public UaFootball_DBDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["UaFootballConnectionString"].ConnectionString, mappingSource)
+				base(global::UaFootball.Properties.Settings.Default.UaFootballConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -129,14 +129,6 @@ namespace UaFootball.DB
 			get
 			{
 				return this.GetTable<Country>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Stadium> Stadiums
-		{
-			get
-			{
-				return this.GetTable<Stadium>();
 			}
 		}
 		
@@ -283,6 +275,14 @@ namespace UaFootball.DB
 				return this.GetTable<vw_RefereeList>();
 			}
 		}
+		
+		public System.Data.Linq.Table<Stadium> Stadiums
+		{
+			get
+			{
+				return this.GetTable<Stadium>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Cities")]
@@ -297,9 +297,9 @@ namespace UaFootball.DB
 		
 		private int _Country_ID;
 		
-		private EntitySet<Stadium> _Stadiums;
-		
 		private EntitySet<Club> _Clubs;
+		
+		private EntitySet<Stadium> _Stadiums;
 		
 		private EntityRef<Country> _Country;
 		
@@ -317,8 +317,8 @@ namespace UaFootball.DB
 		
 		public City()
 		{
-			this._Stadiums = new EntitySet<Stadium>(new Action<Stadium>(this.attach_Stadiums), new Action<Stadium>(this.detach_Stadiums));
 			this._Clubs = new EntitySet<Club>(new Action<Club>(this.attach_Clubs), new Action<Club>(this.detach_Clubs));
+			this._Stadiums = new EntitySet<Stadium>(new Action<Stadium>(this.attach_Stadiums), new Action<Stadium>(this.detach_Stadiums));
 			this._Country = default(EntityRef<Country>);
 			OnCreated();
 		}
@@ -387,19 +387,6 @@ namespace UaFootball.DB
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="City_Stadium", Storage="_Stadiums", ThisKey="City_ID", OtherKey="City_Id")]
-		public EntitySet<Stadium> Stadiums
-		{
-			get
-			{
-				return this._Stadiums;
-			}
-			set
-			{
-				this._Stadiums.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="City_Club", Storage="_Clubs", ThisKey="City_ID", OtherKey="City_ID")]
 		public EntitySet<Club> Clubs
 		{
@@ -410,6 +397,19 @@ namespace UaFootball.DB
 			set
 			{
 				this._Clubs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="City_Stadium", Storage="_Stadiums", ThisKey="City_ID", OtherKey="City_Id")]
+		public EntitySet<Stadium> Stadiums
+		{
+			get
+			{
+				return this._Stadiums;
+			}
+			set
+			{
+				this._Stadiums.Assign(value);
 			}
 		}
 		
@@ -467,18 +467,6 @@ namespace UaFootball.DB
 			}
 		}
 		
-		private void attach_Stadiums(Stadium entity)
-		{
-			this.SendPropertyChanging();
-			entity.City = this;
-		}
-		
-		private void detach_Stadiums(Stadium entity)
-		{
-			this.SendPropertyChanging();
-			entity.City = null;
-		}
-		
 		private void attach_Clubs(Club entity)
 		{
 			this.SendPropertyChanging();
@@ -486,6 +474,18 @@ namespace UaFootball.DB
 		}
 		
 		private void detach_Clubs(Club entity)
+		{
+			this.SendPropertyChanging();
+			entity.City = null;
+		}
+		
+		private void attach_Stadiums(Stadium entity)
+		{
+			this.SendPropertyChanging();
+			entity.City = this;
+		}
+		
+		private void detach_Stadiums(Stadium entity)
 		{
 			this.SendPropertyChanging();
 			entity.City = null;
@@ -804,233 +804,6 @@ namespace UaFootball.DB
 		{
 			this.SendPropertyChanging();
 			entity.Country = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Stadiums")]
-	public partial class Stadium : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Stadium_Id;
-		
-		private string _Stadium_Name;
-		
-		private int _Capacity;
-		
-		private int _City_Id;
-		
-		private int _Year_Built;
-		
-		private EntitySet<Match> _Matches;
-		
-		private EntityRef<City> _City;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnStadium_IdChanging(int value);
-    partial void OnStadium_IdChanged();
-    partial void OnStadium_NameChanging(string value);
-    partial void OnStadium_NameChanged();
-    partial void OnCapacityChanging(int value);
-    partial void OnCapacityChanged();
-    partial void OnCity_IdChanging(int value);
-    partial void OnCity_IdChanged();
-    partial void OnYear_BuiltChanging(int value);
-    partial void OnYear_BuiltChanged();
-    #endregion
-		
-		public Stadium()
-		{
-			this._Matches = new EntitySet<Match>(new Action<Match>(this.attach_Matches), new Action<Match>(this.detach_Matches));
-			this._City = default(EntityRef<City>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stadium_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Stadium_Id
-		{
-			get
-			{
-				return this._Stadium_Id;
-			}
-			set
-			{
-				if ((this._Stadium_Id != value))
-				{
-					this.OnStadium_IdChanging(value);
-					this.SendPropertyChanging();
-					this._Stadium_Id = value;
-					this.SendPropertyChanged("Stadium_Id");
-					this.OnStadium_IdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stadium_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Stadium_Name
-		{
-			get
-			{
-				return this._Stadium_Name;
-			}
-			set
-			{
-				if ((this._Stadium_Name != value))
-				{
-					this.OnStadium_NameChanging(value);
-					this.SendPropertyChanging();
-					this._Stadium_Name = value;
-					this.SendPropertyChanged("Stadium_Name");
-					this.OnStadium_NameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Capacity", DbType="Int NOT NULL")]
-		public int Capacity
-		{
-			get
-			{
-				return this._Capacity;
-			}
-			set
-			{
-				if ((this._Capacity != value))
-				{
-					this.OnCapacityChanging(value);
-					this.SendPropertyChanging();
-					this._Capacity = value;
-					this.SendPropertyChanged("Capacity");
-					this.OnCapacityChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_City_Id", DbType="Int NOT NULL")]
-		public int City_Id
-		{
-			get
-			{
-				return this._City_Id;
-			}
-			set
-			{
-				if ((this._City_Id != value))
-				{
-					if (this._City.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCity_IdChanging(value);
-					this.SendPropertyChanging();
-					this._City_Id = value;
-					this.SendPropertyChanged("City_Id");
-					this.OnCity_IdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Year_Built", DbType="Int NOT NULL")]
-		public int Year_Built
-		{
-			get
-			{
-				return this._Year_Built;
-			}
-			set
-			{
-				if ((this._Year_Built != value))
-				{
-					this.OnYear_BuiltChanging(value);
-					this.SendPropertyChanging();
-					this._Year_Built = value;
-					this.SendPropertyChanged("Year_Built");
-					this.OnYear_BuiltChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Stadium_Match", Storage="_Matches", ThisKey="Stadium_Id", OtherKey="Stadium_Id")]
-		public EntitySet<Match> Matches
-		{
-			get
-			{
-				return this._Matches;
-			}
-			set
-			{
-				this._Matches.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="City_Stadium", Storage="_City", ThisKey="City_Id", OtherKey="City_ID", IsForeignKey=true)]
-		public City City
-		{
-			get
-			{
-				return this._City.Entity;
-			}
-			set
-			{
-				City previousValue = this._City.Entity;
-				if (((previousValue != value) 
-							|| (this._City.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._City.Entity = null;
-						previousValue.Stadiums.Remove(this);
-					}
-					this._City.Entity = value;
-					if ((value != null))
-					{
-						value.Stadiums.Add(this);
-						this._City_Id = value.City_ID;
-					}
-					else
-					{
-						this._City_Id = default(int);
-					}
-					this.SendPropertyChanged("City");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Matches(Match entity)
-		{
-			this.SendPropertyChanging();
-			entity.Stadium = this;
-		}
-		
-		private void detach_Matches(Match entity)
-		{
-			this.SendPropertyChanging();
-			entity.Stadium = null;
 		}
 	}
 	
@@ -4918,9 +4691,9 @@ namespace UaFootball.DB
 		
 		private EntityRef<Referee> _Referee;
 		
-		private EntityRef<Stadium> _Stadium;
-		
 		private EntityRef<Season> _Season;
+		
+		private EntityRef<Stadium> _Stadium;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -4982,8 +4755,8 @@ namespace UaFootball.DB
 			this._NationalTeam = default(EntityRef<NationalTeam>);
 			this._NationalTeam1 = default(EntityRef<NationalTeam>);
 			this._Referee = default(EntityRef<Referee>);
-			this._Stadium = default(EntityRef<Stadium>);
 			this._Season = default(EntityRef<Season>);
+			this._Stadium = default(EntityRef<Stadium>);
 			OnCreated();
 		}
 		
@@ -5720,40 +5493,6 @@ namespace UaFootball.DB
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Stadium_Match", Storage="_Stadium", ThisKey="Stadium_Id", OtherKey="Stadium_Id", IsForeignKey=true)]
-		public Stadium Stadium
-		{
-			get
-			{
-				return this._Stadium.Entity;
-			}
-			set
-			{
-				Stadium previousValue = this._Stadium.Entity;
-				if (((previousValue != value) 
-							|| (this._Stadium.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Stadium.Entity = null;
-						previousValue.Matches.Remove(this);
-					}
-					this._Stadium.Entity = value;
-					if ((value != null))
-					{
-						value.Matches.Add(this);
-						this._Stadium_Id = value.Stadium_Id;
-					}
-					else
-					{
-						this._Stadium_Id = default(int);
-					}
-					this.SendPropertyChanged("Stadium");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Season_Match", Storage="_Season", ThisKey="Season_Id", OtherKey="Season_Id", IsForeignKey=true)]
 		public Season Season
 		{
@@ -5784,6 +5523,40 @@ namespace UaFootball.DB
 						this._Season_Id = default(int);
 					}
 					this.SendPropertyChanged("Season");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Stadium_Match", Storage="_Stadium", ThisKey="Stadium_Id", OtherKey="Stadium_Id", IsForeignKey=true)]
+		public Stadium Stadium
+		{
+			get
+			{
+				return this._Stadium.Entity;
+			}
+			set
+			{
+				Stadium previousValue = this._Stadium.Entity;
+				if (((previousValue != value) 
+							|| (this._Stadium.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Stadium.Entity = null;
+						previousValue.Matches.Remove(this);
+					}
+					this._Stadium.Entity = value;
+					if ((value != null))
+					{
+						value.Matches.Add(this);
+						this._Stadium_Id = value.Stadium_Id;
+					}
+					else
+					{
+						this._Stadium_Id = default(int);
+					}
+					this.SendPropertyChanged("Stadium");
 				}
 			}
 		}
@@ -6579,6 +6352,281 @@ namespace UaFootball.DB
 					this._matchesCount = value;
 				}
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Stadiums")]
+	public partial class Stadium : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Stadium_Id;
+		
+		private string _Stadium_Name;
+		
+		private int _Capacity;
+		
+		private int _City_Id;
+		
+		private int _Year_Built;
+		
+		private string _Comments;
+		
+		private System.Nullable<System.DateTime> _DateAdded;
+		
+		private EntitySet<Match> _Matches;
+		
+		private EntityRef<City> _City;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnStadium_IdChanging(int value);
+    partial void OnStadium_IdChanged();
+    partial void OnStadium_NameChanging(string value);
+    partial void OnStadium_NameChanged();
+    partial void OnCapacityChanging(int value);
+    partial void OnCapacityChanged();
+    partial void OnCity_IdChanging(int value);
+    partial void OnCity_IdChanged();
+    partial void OnYear_BuiltChanging(int value);
+    partial void OnYear_BuiltChanged();
+    partial void OnCommentsChanging(string value);
+    partial void OnCommentsChanged();
+    partial void OnDateAddedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateAddedChanged();
+    #endregion
+		
+		public Stadium()
+		{
+			this._Matches = new EntitySet<Match>(new Action<Match>(this.attach_Matches), new Action<Match>(this.detach_Matches));
+			this._City = default(EntityRef<City>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stadium_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Stadium_Id
+		{
+			get
+			{
+				return this._Stadium_Id;
+			}
+			set
+			{
+				if ((this._Stadium_Id != value))
+				{
+					this.OnStadium_IdChanging(value);
+					this.SendPropertyChanging();
+					this._Stadium_Id = value;
+					this.SendPropertyChanged("Stadium_Id");
+					this.OnStadium_IdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stadium_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Stadium_Name
+		{
+			get
+			{
+				return this._Stadium_Name;
+			}
+			set
+			{
+				if ((this._Stadium_Name != value))
+				{
+					this.OnStadium_NameChanging(value);
+					this.SendPropertyChanging();
+					this._Stadium_Name = value;
+					this.SendPropertyChanged("Stadium_Name");
+					this.OnStadium_NameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Capacity", DbType="Int NOT NULL")]
+		public int Capacity
+		{
+			get
+			{
+				return this._Capacity;
+			}
+			set
+			{
+				if ((this._Capacity != value))
+				{
+					this.OnCapacityChanging(value);
+					this.SendPropertyChanging();
+					this._Capacity = value;
+					this.SendPropertyChanged("Capacity");
+					this.OnCapacityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_City_Id", DbType="Int NOT NULL")]
+		public int City_Id
+		{
+			get
+			{
+				return this._City_Id;
+			}
+			set
+			{
+				if ((this._City_Id != value))
+				{
+					if (this._City.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCity_IdChanging(value);
+					this.SendPropertyChanging();
+					this._City_Id = value;
+					this.SendPropertyChanged("City_Id");
+					this.OnCity_IdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Year_Built", DbType="Int NOT NULL")]
+		public int Year_Built
+		{
+			get
+			{
+				return this._Year_Built;
+			}
+			set
+			{
+				if ((this._Year_Built != value))
+				{
+					this.OnYear_BuiltChanging(value);
+					this.SendPropertyChanging();
+					this._Year_Built = value;
+					this.SendPropertyChanged("Year_Built");
+					this.OnYear_BuiltChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comments", DbType="VarChar(1024)")]
+		public string Comments
+		{
+			get
+			{
+				return this._Comments;
+			}
+			set
+			{
+				if ((this._Comments != value))
+				{
+					this.OnCommentsChanging(value);
+					this.SendPropertyChanging();
+					this._Comments = value;
+					this.SendPropertyChanged("Comments");
+					this.OnCommentsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateAdded", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateAdded
+		{
+			get
+			{
+				return this._DateAdded;
+			}
+			set
+			{
+				if ((this._DateAdded != value))
+				{
+					this.OnDateAddedChanging(value);
+					this.SendPropertyChanging();
+					this._DateAdded = value;
+					this.SendPropertyChanged("DateAdded");
+					this.OnDateAddedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Stadium_Match", Storage="_Matches", ThisKey="Stadium_Id", OtherKey="Stadium_Id")]
+		public EntitySet<Match> Matches
+		{
+			get
+			{
+				return this._Matches;
+			}
+			set
+			{
+				this._Matches.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="City_Stadium", Storage="_City", ThisKey="City_Id", OtherKey="City_ID", IsForeignKey=true)]
+		public City City
+		{
+			get
+			{
+				return this._City.Entity;
+			}
+			set
+			{
+				City previousValue = this._City.Entity;
+				if (((previousValue != value) 
+							|| (this._City.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._City.Entity = null;
+						previousValue.Stadiums.Remove(this);
+					}
+					this._City.Entity = value;
+					if ((value != null))
+					{
+						value.Stadiums.Add(this);
+						this._City_Id = value.City_ID;
+					}
+					else
+					{
+						this._City_Id = default(int);
+					}
+					this.SendPropertyChanged("City");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Matches(Match entity)
+		{
+			this.SendPropertyChanging();
+			entity.Stadium = this;
+		}
+		
+		private void detach_Matches(Match entity)
+		{
+			this.SendPropertyChanging();
+			entity.Stadium = null;
 		}
 	}
 }

@@ -47,6 +47,15 @@
         </tr>
 
         <tr>
+            <td align="right">
+                Примечание
+            </td>
+            <td>
+                <asp:TextBox ID="tbComments" runat="server" TextMode="MultiLine" Width="400" Height="100"></asp:TextBox>
+            </td>
+        </tr>
+
+        <tr>
             <td colspan="2">
                 <asp:Button ID="btnSave" runat="server" Text="Сохранить" OnClick="SaveObject" />
                 <asp:Button ID="btnCancel" runat="server" Text="Отмена" CausesValidation="false" OnClick="ReturnToObjectList" />

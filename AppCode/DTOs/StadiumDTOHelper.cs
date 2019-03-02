@@ -20,7 +20,7 @@ namespace UaFootball.AppCode
             dtoObj.City_ID = dbObj.City_Id;
             dtoObj.Capacity = dbObj.Capacity;
             dtoObj.YearBuilt = dbObj.Year_Built;
-
+            dtoObj.Comments = dbObj.Comments;
             return dtoObj;
         }
 
@@ -31,6 +31,7 @@ namespace UaFootball.AppCode
             dbObj.City_Id = dtoObj.City_ID;
             dbObj.Capacity = dtoObj.Capacity;
             dbObj.Year_Built = dtoObj.YearBuilt;
+            dbObj.Comments = dtoObj.Comments;
         }
 
         public StadiumDTO GetFromDB(int objectId)
@@ -54,6 +55,7 @@ namespace UaFootball.AppCode
                 }
                 else
                 {
+                    dbObj.DateAdded = DateTime.Now;
                     db.Stadiums.InsertOnSubmit(dbObj);
                 }
 

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="UaFootball" Class="UaFootball_DBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=localhost;Initial Catalog=UaFootball;User ID=UaFootball" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="UaFootballConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost;Initial Catalog=UaFootball;User ID=UaFootball" SettingsObjectName="UaFootball.Properties.Settings" SettingsPropertyName="UaFootballConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Cities" Member="Cities">
     <Type Name="City">
       <Column Name="City_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="City_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Country_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="City_Stadium" Member="Stadiums" ThisKey="City_ID" OtherKey="City_Id" Type="Stadium" />
       <Association Name="City_Club" Member="Clubs" ThisKey="City_ID" OtherKey="City_ID" Type="Club" />
+      <Association Name="City_Stadium" Member="Stadiums" ThisKey="City_ID" OtherKey="City_Id" Type="Stadium" />
       <Association Name="Country_City" Member="Country" ThisKey="Country_ID" OtherKey="Country_ID" Type="Country" IsForeignKey="true" />
     </Type>
   </Table>
@@ -22,17 +22,6 @@
       <Association Name="Country_Player" Member="Players" ThisKey="Country_ID" OtherKey="Country_Id" Type="Player" />
       <Association Name="Country_Coach" Member="Coaches" ThisKey="Country_ID" OtherKey="CountryId" Type="Coach" />
       <Association Name="FIFAAssociation_Country" Member="FIFAAssociation" ThisKey="FIFAAssociation_ID" OtherKey="FIFAAssociation_ID" Type="FIFAAssociation" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Stadiums" Member="Stadiums">
-    <Type Name="Stadium">
-      <Column Name="Stadium_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Stadium_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Capacity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="City_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Year_Built" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Stadium_Match" Member="Matches" ThisKey="Stadium_Id" OtherKey="Stadium_Id" Type="Match" />
-      <Association Name="City_Stadium" Member="City" ThisKey="City_Id" OtherKey="City_ID" Type="City" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Clubs" Member="Clubs">
@@ -251,8 +240,8 @@
       <Association Name="NationalTeam_Match" Member="NationalTeam" ThisKey="HomeNationalTeam_Id" OtherKey="NationalTeam_Id" Type="NationalTeam" IsForeignKey="true" />
       <Association Name="NationalTeam_Match1" Member="NationalTeam1" ThisKey="AwayNationalTeam_Id" OtherKey="NationalTeam_Id" Type="NationalTeam" IsForeignKey="true" />
       <Association Name="Referee_Match" Member="Referee" ThisKey="Referee_Id" OtherKey="Referee_Id" Type="Referee" IsForeignKey="true" />
-      <Association Name="Stadium_Match" Member="Stadium" ThisKey="Stadium_Id" OtherKey="Stadium_Id" Type="Stadium" IsForeignKey="true" />
       <Association Name="Season_Match" Member="Season" ThisKey="Season_Id" OtherKey="Season_Id" Type="Season" IsForeignKey="true" />
+      <Association Name="Stadium_Match" Member="Stadium" ThisKey="Stadium_Id" OtherKey="Stadium_Id" Type="Stadium" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.MatchLineups" Member="MatchLineups">
@@ -296,6 +285,19 @@
       <Column Name="Referee_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Country_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="matchesCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Stadiums" Member="Stadiums">
+    <Type Name="Stadium">
+      <Column Name="Stadium_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Stadium_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Capacity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="City_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Year_Built" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Comments" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="DateAdded" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Stadium_Match" Member="Matches" ThisKey="Stadium_Id" OtherKey="Stadium_Id" Type="Match" />
+      <Association Name="City_Stadium" Member="City" ThisKey="City_Id" OtherKey="City_ID" Type="City" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

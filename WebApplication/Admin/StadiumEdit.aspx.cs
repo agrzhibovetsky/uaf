@@ -31,6 +31,7 @@ namespace UaFootball.WebApplication
                 tbName.Text = dtoObj.Stadium_Name;
                 tbCapacity.Text = dtoObj.Capacity.ToString();
                 tbYearBuilt.Text = dtoObj.YearBuilt.ToString();
+                tbComments.Text = dtoObj.Comments;
                 ddlCities.SelectedValue = dtoObj.City_ID.ToString();
             }
         }
@@ -44,7 +45,7 @@ namespace UaFootball.WebApplication
             stadiumToSave.Capacity = int.Parse(tbCapacity.Text);
             stadiumToSave.YearBuilt = int.Parse(tbYearBuilt.Text);
             stadiumToSave.City_ID = int.Parse(ddlCities.SelectedValue);
-
+            stadiumToSave.Comments = tbComments.Text;
             return stadiumToSave;
         }
     } 

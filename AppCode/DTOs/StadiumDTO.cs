@@ -24,6 +24,10 @@ namespace UaFootball.AppCode
 
         public string Country_Name { get; set; }
 
+        public string Comments { get; set; }
+
+        public DateTime? DateAdded { get; set; }
+
         public StadiumDTO()
         {
 

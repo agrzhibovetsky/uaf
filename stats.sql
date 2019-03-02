@@ -78,11 +78,26 @@ join Countries acn on act.Country_ID = acn.Country_ID
 join MatchLineups ml on ml.Match_Id = m.Match_ID and ml.Player_Id = me.Player1_Id
 where me.Match_Id in 
 (
-select Match_Id from Matches where Season_Id=17
+select Match_Id from Matches where Season_Id=19
 )
 and (Event_Cd='G' or Event_Cd='P') and ((ml.IsHomeTeamPlayer = 1 and hcn.Country_ID=1) or (ml.IsHomeTeamPlayer = 0 and acn.Country_ID=1))
 and EventFlags & 128 =0 and MultimediaTag_ID is null
 order by me.Match_Id
+
+
+/* eurocup season - # of photos */
+select d.PhotoCount, g.HomeTeam, g.AwayTeam, g.Date from 
+vwMatches g left outer join
+(
+select count(*) as PhotoCount, g.Match_Id from 
+Multimedia m join
+MultimediaTags mt on m.Multimedia_ID = mt.Multimedia_ID
+join Matches g on mt.Match_ID = g.Match_Id
+where m.MultimediaSubType_CD = 'MP'
+group by g.Match_Id) d
+on g.Match_Id = d.Match_Id
+where g.Season_Id=19--17
+order by g.Date desc
 
 
 /*all dynamo players  dk=2, shahta=7, dnipro=17*/

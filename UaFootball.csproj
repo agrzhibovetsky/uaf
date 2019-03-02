@@ -24,6 +24,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -372,6 +374,11 @@
     <Compile Include="AppCode\IDTOHelper.cs" />
     <Compile Include="DB\Multimedia.cs" />
     <Compile Include="DB\MultimediaTag.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="WebApplication\Admin\CoachEdit.aspx.cs">
       <DependentUpon>CoachEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -681,6 +688,10 @@
     <Content Include="WebApplication\Site.master" />
     <Content Include="WebApplication\Autocomplete.ashx" />
     <Content Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="DB\UaFootball_DB.dbml.layout">
