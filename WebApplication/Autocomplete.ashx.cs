@@ -68,7 +68,7 @@ namespace UaFootball.WebApplication
                                 var searchMatches =
                                     from natTeam in db.NationalTeams
                                     join country in db.Countries on natTeam.Country_Id equals country.Country_ID
-                                    where country.Country_Name.Contains(searchTerm)
+                                    where country.Country_Name.Contains(searchTerm) && natTeam.NationalTeamType_Cd=="NAT"
                                     select new { id = natTeam.NationalTeam_Id, value = country.Country_Name, code = natTeam.NationalTeamType_Cd };
 
                                 foreach (var item in searchMatches)

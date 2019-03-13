@@ -38,7 +38,7 @@ namespace UaFootball.WebApplication
                     ddlMonth.Items.Add(new ListItem(months[i], (i+1).ToString()));
                 }
 
-                for (int i = DateTime.Now.Year - 52; i < DateTime.Now.Year-15; i++)
+                for (int i = DateTime.Now.Year - 62; i < DateTime.Now.Year-15; i++)
                 {
                     ddlYear.Items.Add(new ListItem(i.ToString(), i.ToString()));
                 }

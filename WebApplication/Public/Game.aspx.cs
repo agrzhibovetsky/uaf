@@ -45,6 +45,10 @@ namespace UaFootball.WebApplication
                         iAwayTeamLogo.ImageUrl = PathHelper.GetWebPath(this, Constants.Paths.MutlimediaWebRoot, DataItem.AwayTeamLogo.FilePath + thumbPath, DataItem.AwayTeamLogo.FileName);
                     }
 
+                    if ((DataItem.Flags & Constants.DB.MatchFlags.GoldenGoalRule)>0)
+                    {
+                        DataItem.SpecialNote += "Матч закончился в дополнительное время по правилу золотого гола";
+                    }
                     lblSpecialNotes.Text = DataItem.SpecialNote;
                     lblSpecialNotes.Visible = !DataItem.SpecialNote.IsEmpty();
 

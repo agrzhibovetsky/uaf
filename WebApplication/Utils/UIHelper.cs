@@ -217,6 +217,7 @@ namespace UaFootball.WebApplication
             _matchFlagsMap.Add(Constants.DB.MatchFlags.HomeTeamTechnicalDefeat, Constants.UI.MatchFlags.HomeTeamTechnicalDefeat);
             _matchFlagsMap.Add(Constants.DB.MatchFlags.AwayTeamTechnicalDefeat, Constants.UI.MatchFlags.AwayTeamTechnicalDefeat);
             _matchFlagsMap.Add(Constants.DB.MatchFlags.Duration120Minutes, Constants.UI.MatchFlags.Duration120Minutes);
+            _matchFlagsMap.Add(Constants.DB.MatchFlags.GoldenGoalRule, Constants.UI.MatchFlags.GoldenGoalRule);
             _matchFlagsMap.Add(Constants.DB.MatchFlags.IWasOnStadium, Constants.UI.MatchFlags.IWasOnStadium);
             _matchFlagsMap.Add(Constants.DB.MatchFlags.IWatchedMatchOnTV, Constants.UI.MatchFlags.IWatchedMatchOnTV);
             _matchFlagsMap.Add(Constants.DB.MatchFlags.NeutralField, Constants.UI.MatchFlags.NeutralField);

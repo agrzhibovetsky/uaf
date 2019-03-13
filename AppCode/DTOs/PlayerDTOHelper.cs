@@ -351,6 +351,12 @@ namespace UaFootball.AppCode
 
                     int finishMinute = 90;
                     if (match.Flags.HasValue && (match.Flags & Constants.DB.MatchFlags.Duration120Minutes) > 0) finishMinute = 120;
+                    if (match.Flags.HasValue && (match.Flags & Constants.DB.MatchFlags.GoldenGoalRule) > 0)
+                    {
+                        finishMinute = 120;
+                        MatchEvent lastGoalEvent = db.MatchEvents.Where(me => me.Match_Id == match.Match_Id && (me.Event_Cd == Constants.DB.EventTypeCodes.Goal || me.Event_Cd == Constants.DB.EventTypeCodes.Penalty)).OrderByDescending(me => me.Minute).First();
+                        finishMinute = lastGoalEvent.Minute;
+                    }
 
                     MatchEventDTO playerOutEvent = match.Events.FirstOrDefault(me => (me.Event_Cd == Constants.DB.EventTypeCodes.Substitution) && (me.Player1_Id == playerId));
                     if (playerOutEvent != null)

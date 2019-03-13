@@ -29,8 +29,8 @@ namespace UaFootball.AppCode
             All
         }
 
-        public const string normalSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -aaaaaaaAEеeeeeeeeuuuuUooooOOOiiiiIIccccCCCCsssssSSnnrlllLyDZzzttdgR";
-        public const string extraSymbols =  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -āäăáãâàÁÉæēéëèěęêúūüůÜóöôøÖÓØıîíïÍİćčçҫČĆÇҪšßşșśŠŞñńřļľłŁýĎŽźžţțđğŘ";
+        public const string normalSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -aaaaaaaaAEеeeeeeeeuuuuUooooOOOiiiiIIccccCCCCsssssSSnnrlllLyDZzzttdgRZ";
+        public const string extraSymbols =  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -āäăáãâàąÁÉæēéëèěęêúūüůÜóöôøÖÓØıîíïÍİćčçҫČĆÇҪšßşșśŠŞñńřļľłŁýĎŽźžţțđğŘŻ";
 
         public const string CountryCodeUA = "UA";
 
@@ -175,6 +175,7 @@ namespace UaFootball.AppCode
                 public const int Duration120Minutes = 0x10;
                 public const int IWasOnStadium = 0x20;
                 public const int IWatchedMatchOnTV = 0x40;
+                public const int GoldenGoalRule = 0x80;
             }
 
             public static class LineupFlags
@@ -288,6 +289,7 @@ namespace UaFootball.AppCode
                 public const string StadiumDisqualifiedNoSpectators = "При пустых трибунах";
                 public const string NeutralField = "Нейтральное поле";
                 public const string Duration120Minutes = "Длина матча - 120 минут";
+                public const string GoldenGoalRule = "Правило золотого гола";
                 public const string IWasOnStadium = "Я был на стадионе";
                 public const string IWatchedMatchOnTV = "Я видел матч по ТВ";
             }
