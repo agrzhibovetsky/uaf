@@ -105,6 +105,7 @@
     <Content Include="WebApplication\Images\close.gif" />
     <Content Include="WebApplication\Images\delete.gif" />
     <Content Include="WebApplication\Images\delete.jpg" />
+    <Content Include="WebApplication\Images\down_arrow.png" />
     <Content Include="WebApplication\Images\edit.gif" />
     <Content Include="WebApplication\Images\edit.jpg" />
     <Content Include="WebApplication\Images\logos\cska_kiev.gif" />
@@ -304,6 +305,7 @@
     <Content Include="WebApplication\Images\players\zubchenko.jpg" />
     <Content Include="WebApplication\Images\players\zubov.jpg" />
     <Content Include="WebApplication\Images\players\лднгсршл.jpg" />
+    <Content Include="WebApplication\Images\up_arrow.png" />
     <Content Include="WebApplication\Images\video.gif" />
     <Content Include="WebApplication\Public\Coach.aspx" />
     <Content Include="WebApplication\Public\Coaches.aspx" />

@@ -35,6 +35,47 @@
             }
             
         }
+
+        $(document).ready(function () {
+            $(".iMoveWord").click(function () {
+                var tbSrc = $("#" + $(this).data("tbsrc"));
+                var tbDst = $("#" + $(this).data("tbdst"));
+                var direction = $("#" + $(this).data("dir"));
+                var textParts = tbSrc.val().split(" ");
+                var curSrcVal = tbSrc.val();
+                var curDstVal = tbDst.val();
+                //debugger;
+                if (textParts.length > 0) {
+                    if (direction = "down") {
+                        var lastPart = textParts[textParts.length - 1];
+                        var indexOfLastPart = curSrcVal.lastIndexOf(lastPart);
+                        var newSrcVal = curSrcVal.substr(0, indexOfLastPart - 1);
+                        var newDstVal = lastPart + " " + curDstVal;
+                        tbSrc.val(newSrcVal.trim());
+                        tbDst.val(newDstVal.trim());
+                    }
+                    else {
+                        var firstPart = textParts[0];
+                        var newSrcVal = curSrcVal.substr(firstPart.length);
+                        var newDstVal = curDstVal + " " + firstPart;
+                        tbSrc.val(newSrcVal.trim());
+                        tbDst.val(newDstVal.trim());
+                    }
+                }
+                
+
+            });
+
+            $("#tbFirstNameInt").blur(function () {
+                var firstNameInt = $(this).val();
+                var lastNameInt = $("#tbLastNameInt").val().trim();
+                var firstNameParts = firstNameInt.split(" ");
+                if (firstNameParts.length == 2 && lastNameInt.length == 0) {
+                    $("#itbFirstNameIntDown").click();
+                }
+            });
+           
+        });
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
@@ -49,7 +90,8 @@
             </td>
             <td>
                 <asp:TextBox ID="tbFirstName" runat="server" autocomplete="off" MaxLength="50"></asp:TextBox>
-                <asp:TextBox ID="tbFirstNameInt" runat="server" autocomplete="off" MaxLength="50"></asp:TextBox>
+                <asp:TextBox ID="tbFirstNameInt" ClientIDMode="Static" runat="server" autocomplete="off" MaxLength="50"></asp:TextBox>
+                <img class="iMoveWord" id="itbFirstNameIntDown" src="../Images/down_arrow.png" data-tbSrc="tbFirstNameInt" data-tbDst="tbLastNameInt" data-direction="down"/>
             </td>
         </tr>
         <tr>
@@ -58,8 +100,10 @@
             </td>
             <td>
                 <asp:TextBox ID="tbLastName" runat="server" autocomplete="off" MaxLength="50"></asp:TextBox>
+                
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" Display="Dynamic" ControlToValidate="tbLastName" ErrorMessage="Введите фамилию игрока" CssClass="editFormError"></asp:RequiredFieldValidator>
-                <asp:TextBox ID="tbLastNameInt" autocomplete="off" runat="server" MaxLength="50"></asp:TextBox>
+                <asp:TextBox ID="tbLastNameInt" ClientIDMode="Static" autocomplete="off" runat="server" MaxLength="50"></asp:TextBox>
+                <img class="iMoveWord" src="../Images/up_arrow.png" data-tbSrc="tbLastNameInt" data-tbDst="tbFirstNameInt" data-direction="up" />
                 <asp:CustomValidator ID="cvSymbols" runat="server" OnServerValidate="cvSymbols_ServerValidate"  CssClass="editFormError" ErrorMessage="Недопустимый символ"></asp:CustomValidator>
             </td>
         </tr>
