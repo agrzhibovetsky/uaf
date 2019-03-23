@@ -31,8 +31,6 @@ namespace UaFootball.WebApplication
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.ClientScript.RegisterClientScriptInclude(Constants.Paths.JQueryKey, Page.ResolveClientUrl(Constants.Paths.JQueryPath));
-            Page.ClientScript.RegisterClientScriptInclude(Constants.Paths.JQueryUIKey, Page.ResolveClientUrl(Constants.Paths.JQueryUIPath));
         }
 
         protected override void PrepareUI()

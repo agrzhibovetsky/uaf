@@ -4,10 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head runat="server">
     <title>Ua Football - v3.0</title>
+    
     <link href="~/WebApplication/Styles/Site.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="/UaFootball/WebApplication/Scripts/UaFootball.js"></script>
+    <script type="text/javascript" src='/UaFootball/WebApplication/Scripts/jquery-1.9.0.js'></script>
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
     </asp:ContentPlaceHolder>
+    <script type="text/javascript" src="/UaFootball/WebApplication/Scripts/UaFootball.js"></script>
+     
 </head>
 <body>
     <form runat="server">

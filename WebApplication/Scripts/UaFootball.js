@@ -1,4 +1,11 @@
-﻿
+﻿$(document).ready(function () {
+    $(".tbManualDateEntry").keyup(function (ev) {
+        var curVal = $(this).val();
+        $(this).val(curVal.replace(",", "."));
+    });
+});
+
+
 function initMatchLog() {
     $(document).ready(function () {
         $(".trMatchRow").mouseover(function () {

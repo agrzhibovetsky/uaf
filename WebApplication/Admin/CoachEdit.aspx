@@ -2,6 +2,7 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
+     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
     <table cellpadding="4" class="editform">
@@ -49,7 +50,7 @@
                 Дата рождения
             </td>
             <td>
-                <asp:TextBox ID="tbDOB" runat="server" MaxLength="10"></asp:TextBox>
+                <asp:TextBox ID="tbDOB" CssClass="tbManualDateEntry" runat="server" MaxLength="10"></asp:TextBox>
                 <asp:CompareValidator ID="CompareValidator1" runat="server" Display="Dynamic" ControlToValidate="tbDOB" Operator="DataTypeCheck" Type="Date" ErrorMessage="Неверная дата" CssClass="editFormError"></asp:CompareValidator>
             </td>
         </tr>

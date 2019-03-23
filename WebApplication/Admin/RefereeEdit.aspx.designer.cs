@@ -13,15 +13,6 @@ namespace UaFootball.WebApplication {
     public partial class RefereeEdit {
         
         /// <summary>
-        /// dsa control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox dsa;
-        
-        /// <summary>
         /// tbFirstName control.
         /// </summary>
         /// <remarks>

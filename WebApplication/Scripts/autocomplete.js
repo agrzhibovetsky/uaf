@@ -32,6 +32,7 @@ autocompleteTextBox.prototype.init = function () {
     this.tb = $("#" + this.autocompleteTextBoxId);
     this.hf = $("#" + this.autocompleteHiddenFieldId);
     var source = this.getAutocompleteUrl();
+    
     this.tb.autocomplete();
     this.tb.autocomplete("option", "minLength", 2);
     this.tb.autocomplete("option", "delay", 1500);
@@ -41,22 +42,21 @@ autocompleteTextBox.prototype.init = function () {
         var matchedName = "";
         var matchedId = "";
         var matchesCount = 0;
-        if (this.id.indexOf("actbEventPlayer") >0 && document.location.href.indexOf("MatchEdit.aspx") > 0) {
+        if (this.id.indexOf("actbEventPlayer") > 0 && document.location.href.indexOf("MatchEdit.aspx") > 0)
+        {
+            var matchedPlayers = [];
             var playersTextboxes = $("[id*='PlayerAutocomplete']");
             for (var i = 0; i < playersTextboxes.length; i++) {
                 if ($(playersTextboxes[i]).val().toUpperCase().indexOf($(this).val().toUpperCase()) > 0) {
-                    matchesCount++;
                     matchedName = $(playersTextboxes[i]).val();
                     matchedId = $("#" + playersTextboxes[i].id.replace("tb", "hf")).val();
+                    matchedPlayers.push({ value: matchedName, id: matchedId });
                 }
             }
 
-            if (matchesCount == 1) {
-                $(this).val(matchedName);
-                $("#" + this.id.replace("tb", "hf")).val(matchedId);
-                e.preventDefault();
-            }
+            $(this).autocomplete("option", "source", matchedPlayers);
         }
+            
     });
     this.tb.autocomplete("option", "select", function (event, ui) {
         var autocompleteObj = eval(this.id.substring(2, this.id.length));
