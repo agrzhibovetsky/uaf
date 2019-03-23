@@ -47,7 +47,7 @@ autocompleteTextBox.prototype.init = function () {
             var matchedPlayers = [];
             var playersTextboxes = $("[id*='PlayerAutocomplete']");
             for (var i = 0; i < playersTextboxes.length; i++) {
-                if ($(playersTextboxes[i]).val().toUpperCase().indexOf($(this).val().toUpperCase()) > 0) {
+                if ($(playersTextboxes[i]).val().toUpperCase().indexOf($(this).val().toUpperCase()) > -1) {
                     matchedName = $(playersTextboxes[i]).val();
                     matchedId = $("#" + playersTextboxes[i].id.replace("tb", "hf")).val();
                     matchedPlayers.push({ value: matchedName, id: matchedId });
