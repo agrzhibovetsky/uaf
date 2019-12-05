@@ -22,6 +22,7 @@ namespace UaFootball.WebApplication.Public
             public string playersStg { get; set; }
             public string homeTeam { get; set; }
             public string awayTeam { get; set; }
+            public int Id { get; set; }
             public string title1 
             {
                 get
@@ -100,7 +101,8 @@ namespace UaFootball.WebApplication.Public
                         gameDate = game.Date,
                         playersStg = string.Join(", ", players.Select(p=>UIHelper.FormatName(p.First_Name, p.Last_Name, p.Display_Name))),
                         homeTeam = game.HomeTeam,
-                        awayTeam = game.AwayTeam
+                        awayTeam = game.AwayTeam,
+                        Id=m.Multimedia_ID
                     };
                     
                     data.Add(d);

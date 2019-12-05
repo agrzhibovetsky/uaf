@@ -96,7 +96,7 @@ join Matches g on mt.Match_ID = g.Match_Id
 where m.MultimediaSubType_CD = 'MP'
 group by g.Match_Id) d
 on g.Match_Id = d.Match_Id
-where g.Season_Id=19--17
+where g.Season_Id=24--19--17
 order by g.Date desc
 
 
@@ -105,7 +105,7 @@ order by g.Date desc
 select distinct(p.Player_Id), p.First_Name, p.Last_Name, p.Display_Name, ml.ShirtNumber from MatchLineups ml
 join Matches m on ml.Match_Id = m.Match_Id
 join Players p on ml.Player_Id = p.Player_Id
-where ((m.HomeClub_Id = 2 and ml.IsHomeTeamPlayer = 1) or (m.AwayClub_Id = 2 and ml.IsHomeTeamPlayer = 0))
+where ((m.HomeClub_Id = 7 and ml.IsHomeTeamPlayer = 1) or (m.AwayClub_Id = 7 and ml.IsHomeTeamPlayer = 0))
 order by ShirtNumber
 
 
@@ -121,8 +121,8 @@ join Competitions c on m.Competition_Id = C.Competition_Id
 --where p.Country_Id=1 and c.CompetitionLevel_Cd='C'
 ) as subq
 group by ShirtNumber
---order by c desc
-order by ShirtNumber
+order by c desc
+--order by ShirtNumber
 
 /*plaers that used shit number N */
 select distinct(p.Player_Id), p.First_Name, p.Last_Name, p.Display_Name, ml.ShirtNumber 

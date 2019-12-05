@@ -16,5 +16,6 @@ namespace UaFootball.AppCode
         public string Type { get; set; }
         public string Description { get; set; }
         public int tmpId { get; set; }
+        public int MultimediaTag_ID { get; set; }
     }
 }

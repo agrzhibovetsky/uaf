@@ -417,7 +417,7 @@
         <tr>
             <td colspan="4">
                 <div>Источники:</div>
-                <asp:TextBox TextMode="MultiLine" runat="server" ID="tbSources" Width="400"></asp:TextBox>
+                <asp:TextBox TextMode="MultiLine" runat="server" ID="tbSources" Width="90%" Height="150"></asp:TextBox>
             </td>
 
         </tr>

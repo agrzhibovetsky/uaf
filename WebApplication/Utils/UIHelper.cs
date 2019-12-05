@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using UaFootball.AppCode;
+using UaFootball.DB;
 
 namespace UaFootball.WebApplication
 {
@@ -101,6 +102,11 @@ namespace UaFootball.WebApplication
             if (homePenScore.HasValue && awayPenScore.HasValue)
                 return string.Format("{0}:{1} ({2}:{3})", homeScore, awayScore, homePenScore, awayPenScore);
             else return string.Format("{0}:{1}", homeScore, awayScore);
+        }
+
+        public static string FormatMatch(vwMatch match)
+        {
+            return string.Format("{0} - {1} ({2}:{3})", match.HomeTeam, match.AwayTeam, match.HomeScore, match.AwayScore);
         }
 
         public static string GetTeamSpanClass(object countryCode)
@@ -223,5 +229,6 @@ namespace UaFootball.WebApplication
             _matchFlagsMap.Add(Constants.DB.MatchFlags.NeutralField, Constants.UI.MatchFlags.NeutralField);
             _matchFlagsMap.Add(Constants.DB.MatchFlags.StadiumDisqualifiedNoSpectators, Constants.UI.MatchFlags.StadiumDisqualifiedNoSpectators);
         }
+
     }
 }

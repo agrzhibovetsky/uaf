@@ -15,11 +15,11 @@ namespace UaFootball.WebApplication.Admin
 {
     public partial class Multimedia : UaFootballPageBase
     {
-        const string _tagTypeClub = "Club";
-        const string _tagTypeNatTeam = "NationalTeam";
-        const string _tagTypePlayer = "Player";
-        const string _tagTypeGame = "Match";
-        const string _tagTypeEvent = "Event";
+        const string _tagTypeClub = "Клуб";
+        const string _tagTypeNatTeam = "Сборная";
+        const string _tagTypePlayer = "Футболист";
+        const string _tagTypeGame = "Матч";
+        const string _tagTypeEvent = "Событие";
 
         const string _tmpUploadPath = "\\tmpUpload\\";
 
@@ -73,6 +73,83 @@ namespace UaFootball.WebApplication.Admin
                 cbl1.Items.Add(new ListItem(Constants.UI.MultimediaTags.BadQuality, Constants.DB.MultimediaTags.BadQuality.ToString()));
                 cbl1.Items.Add(new ListItem(Constants.UI.MultimediaTags.AwayTeamPhoto, Constants.DB.MultimediaTags.AwayTeamPhoto.ToString()));
                 cbl1.Items.Add(new ListItem(Constants.UI.MultimediaTags.HomeTeamPhoto, Constants.DB.MultimediaTags.HomeTeamPhoto.ToString()));
+
+
+                if (!string.IsNullOrEmpty(Request["id"]))
+                {
+                    int multimediaId = 0;
+
+                    if (int.TryParse(Request["id"], out multimediaId))
+                    {
+                        using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                        {
+                            DB.Multimedia mm = db.Multimedias.SingleOrDefault(m => m.Multimedia_ID == multimediaId);
+                            if (mm != null)
+                            {
+                                ddlMultimediaSubType.Enabled = false;
+                                afuUploader.Enabled = false;
+                                hfFileName.Value = mm.FileName;
+                                ddlMultimediaSubType.SelectedValue = mm.MultimediaSubType_CD;
+
+
+                                List<DB.MultimediaTag> tags = db.MultimediaTags.Where(m => m.Multimedia_ID == multimediaId).ToList();
+                                if (tags.Count > 0)
+                                {
+                                    List<MultimediaTagDTO> tagsToBind = tags.Select(t => new MultimediaTagDTO { Club_ID = t.Club_ID, MatchEvent_ID = t.MatchEvent_ID, Match_ID = t.Match_ID, NationalTeam_ID = t.NationalTeam_ID, Player_ID = t.Player_ID, tmpId = t.MultimediaTag_ID, MultimediaTag_ID = t.MultimediaTag_ID }).ToList();
+                                    foreach (MultimediaTagDTO mt in tagsToBind)
+                                    {
+                                        if (mt.Match_ID.HasValue)
+                                        {
+                                            mt.Type = _tagTypeGame;
+                                            vwMatch match = db.vwMatches.SingleOrDefault(m => m.Match_ID == mt.Match_ID.Value);
+                                            mt.Description = UIHelper.FormatMatch(match);
+                                        }
+
+                                        if (mt.Player_ID.HasValue)
+                                        {
+                                            mt.Type = _tagTypePlayer;
+                                            PlayerDTO player = new PlayerDTOHelper().GetPlayer(mt.Player_ID.Value);
+                                            mt.Description = UIHelper.FormatName(player);
+                                        }
+
+                                        if (mt.MatchEvent_ID.HasValue)
+                                        {
+                                            mt.Type = _tagTypeEvent;
+                                            DataLoadOptions opt = new DataLoadOptions();
+                                            opt.LoadWith<MatchEvent>(m => m.Player1);
+                                            DB.MatchEvent mEvent = db.MatchEvents.SingleOrDefault(m => m.MatchEvent_Id == mt.MatchEvent_ID.Value);
+
+                                            mt.Description = string.Format("{0} мин - {1} - {2}", mEvent.Minute, UIHelper.EventCodeMap[mEvent.Event_Cd], FormatName(mEvent.Player.First_Name, mEvent.Player.Last_Name, mEvent.Player.Display_Name));
+
+                                        }
+                                    }
+                                    TagsCache.AddRange(tagsToBind);
+                                    rptTags.DataSource = tagsToBind;
+                                    rptTags.DataBind();
+                                }
+
+                                if (mm.Flags.HasValue)
+                                {
+                                    if (mm.Flags > 0)
+                                    {
+                                        foreach (ListItem li in cbl1.Items)
+                                        {
+                                            if ((long.Parse(li.Value) & mm.Flags.Value) > 0)
+                                            {
+                                                li.Selected = true;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                tbAuthor.Text = mm.Author;
+                                tbSource.Text = mm.Source;
+                                tbDescription.Text = mm.Description;
+
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -373,123 +450,170 @@ namespace UaFootball.WebApplication.Admin
 
                 if (isValid)
                 {
-                    //Get mmedia information from UI
-                    DB.Multimedia newMM = new DB.Multimedia();
-                    newMM.MultimediaType_CD = isImage(UploadedFileName) ? Constants.DB.MutlimediaTypes.Image : Constants.DB.MutlimediaTypes.Video;
-                    newMM.MultimediaSubType_CD = ddlMultimediaSubType.SelectedValue;
-                    newMM.MultimediaTags = new EntitySet<MultimediaTag>();
-                    newMM.Author = tbAuthor.Text;
-                    newMM.Source = tbSource.Text;
-                    newMM.Description = tbDescription.Text;
-                    newMM.Flags = 0;
-                    foreach (ListItem li in cbl1.Items)
+                    if (string.IsNullOrEmpty(Request["id"]))
                     {
-                        if (li.Selected)
+                        //Get mmedia information from UI
+                        DB.Multimedia newMM = new DB.Multimedia();
+                        newMM.MultimediaType_CD = isImage(UploadedFileName) ? Constants.DB.MutlimediaTypes.Image : Constants.DB.MutlimediaTypes.Video;
+                        newMM.MultimediaSubType_CD = ddlMultimediaSubType.SelectedValue;
+                        newMM.MultimediaTags = new EntitySet<MultimediaTag>();
+                        newMM.Author = tbAuthor.Text;
+                        newMM.Source = tbSource.Text;
+                        newMM.Description = tbDescription.Text;
+                        newMM.Flags = 0;
+                        foreach (ListItem li in cbl1.Items)
                         {
-                            newMM.Flags = newMM.Flags | long.Parse(li.Value);
-                        }
-                    }
-
-                    foreach (MultimediaTagDTO mmTag in TagsCache)
-                    {
-                        MultimediaTag mt = new MultimediaTag
-                        {
-                            Club_ID = mmTag.Club_ID,
-                            Match_ID = mmTag.Match_ID,
-                            NationalTeam_ID = mmTag.NationalTeam_ID,
-                            Player_ID = mmTag.Player_ID,
-                            MatchEvent_ID = mmTag.MatchEvent_ID
-                        };
-                        newMM.MultimediaTags.Add(mt);
-                    }
-
-                    newMM.FilePath = PathHelper.GetMultimediaRelativePath(newMM);
-                    newMM.FileName = UploadedFileName;
-
-                    //1. Save file to permanent location
-                   
-                    if (newMM.FilePath.Length > 0)
-                    {
-                        string destinationDirectoryPath = PathHelper.GetFileSystemPath(Constants.Paths.MultimediaStorageRoot, newMM.FilePath, "");
-                        if (!Directory.Exists(destinationDirectoryPath)) Directory.CreateDirectory(destinationDirectoryPath);
-                                                                        
-                        string uploadedFilePath = PathHelper.GetFileSystemPath(Constants.Paths.MultimediaStorageRoot, _tmpUploadPath, UploadedFileName);
-                        string destinationFilePath = PathHelper.GetFileSystemPath(Constants.Paths.MultimediaStorageRoot, newMM.FilePath, newMM.FileName);
-
-                        if (!File.Exists(destinationFilePath))
-                        {
-                            File.Copy(uploadedFilePath, destinationFilePath);
-
-                            //Create thumbnail for image
-                            if (ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.MatchPhoto ||
-                                ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.NationalTeamLogo ||
-                                ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.ClubLogo ||
-                                ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.PlayerLogo)
+                            if (li.Selected)
                             {
-                                string thumbnailDirectoryPath = PathHelper.GetFileSystemPath(destinationDirectoryPath, "thumb", "");
-                                if (!Directory.Exists(thumbnailDirectoryPath)) Directory.CreateDirectory(thumbnailDirectoryPath);
-
-                                string destinationThumbFilePath = PathHelper.GetFileSystemPath(thumbnailDirectoryPath, "", UploadedFileName);
-
-                                int thumbnailMaxHeight = 150;
-                                switch (ddlMultimediaSubType.SelectedValue)
-                                {
-                                    case Constants.DB.MutlimediaSubTypes.MatchPhoto:
-                                    default:
-                                        {
-                                            thumbnailMaxHeight = 150; break;
-                                        }
-                                    case Constants.DB.MutlimediaSubTypes.NationalTeamLogo:
-                                    case Constants.DB.MutlimediaSubTypes.ClubLogo:
-                                        {
-                                            thumbnailMaxHeight = 150; break;
-                                        }
-                                    case Constants.DB.MutlimediaSubTypes.PlayerLogo:
-                                        {
-                                            thumbnailMaxHeight = 300; break;
-                                        }
-                                }
-                                if (ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.MatchPhoto) thumbnailMaxHeight = 100;
-                                isValid = new BitmapHelper().ResizeImage(uploadedFilePath, destinationThumbFilePath, thumbnailMaxHeight, null);
+                                newMM.Flags = newMM.Flags | long.Parse(li.Value);
                             }
+                        }
 
-                            if (isValid)
+                        foreach (MultimediaTagDTO mmTag in TagsCache)
+                        {
+                            MultimediaTag mt = new MultimediaTag
                             {
-                                lblError.Text = "File " + UploadedFileName + " successfully saved";
-                                tbDescription.Text = "";
-                                File.Delete(uploadedFilePath);
+                                Club_ID = mmTag.Club_ID,
+                                Match_ID = mmTag.Match_ID,
+                                NationalTeam_ID = mmTag.NationalTeam_ID,
+                                Player_ID = mmTag.Player_ID,
+                                MatchEvent_ID = mmTag.MatchEvent_ID
+                            };
+                            newMM.MultimediaTags.Add(mt);
+                        }
+
+                        newMM.FilePath = PathHelper.GetMultimediaRelativePath(newMM);
+                        newMM.FileName = UploadedFileName;
+
+                        //1. Save file to permanent location
+
+                        if (newMM.FilePath.Length > 0)
+                        {
+                            string destinationDirectoryPath = PathHelper.GetFileSystemPath(Constants.Paths.MultimediaStorageRoot, newMM.FilePath, "");
+                            if (!Directory.Exists(destinationDirectoryPath)) Directory.CreateDirectory(destinationDirectoryPath);
+
+                            string uploadedFilePath = PathHelper.GetFileSystemPath(Constants.Paths.MultimediaStorageRoot, _tmpUploadPath, UploadedFileName);
+                            string destinationFilePath = PathHelper.GetFileSystemPath(Constants.Paths.MultimediaStorageRoot, newMM.FilePath, newMM.FileName);
+
+                            if (!File.Exists(destinationFilePath))
+                            {
+                                File.Copy(uploadedFilePath, destinationFilePath);
+
+                                //Create thumbnail for image
+                                if (ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.MatchPhoto ||
+                                    ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.NationalTeamLogo ||
+                                    ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.ClubLogo ||
+                                    ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.PlayerLogo)
+                                {
+                                    string thumbnailDirectoryPath = PathHelper.GetFileSystemPath(destinationDirectoryPath, "thumb", "");
+                                    if (!Directory.Exists(thumbnailDirectoryPath)) Directory.CreateDirectory(thumbnailDirectoryPath);
+
+                                    string destinationThumbFilePath = PathHelper.GetFileSystemPath(thumbnailDirectoryPath, "", UploadedFileName);
+
+                                    int thumbnailMaxHeight = 150;
+                                    switch (ddlMultimediaSubType.SelectedValue)
+                                    {
+                                        case Constants.DB.MutlimediaSubTypes.MatchPhoto:
+                                        default:
+                                            {
+                                                thumbnailMaxHeight = 150; break;
+                                            }
+                                        case Constants.DB.MutlimediaSubTypes.NationalTeamLogo:
+                                        case Constants.DB.MutlimediaSubTypes.ClubLogo:
+                                            {
+                                                thumbnailMaxHeight = 150; break;
+                                            }
+                                        case Constants.DB.MutlimediaSubTypes.PlayerLogo:
+                                            {
+                                                thumbnailMaxHeight = 300; break;
+                                            }
+                                    }
+                                    if (ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.MatchPhoto) thumbnailMaxHeight = 100;
+                                    isValid = new BitmapHelper().ResizeImage(uploadedFilePath, destinationThumbFilePath, thumbnailMaxHeight, null);
+                                }
+
+                                if (isValid)
+                                {
+                                    lblError.Text = "File " + UploadedFileName + " successfully saved";
+                                    tbDescription.Text = "";
+                                    File.Delete(uploadedFilePath);
+                                }
+                                else
+                                {
+                                    isValid = false;
+                                    lblError.Text = "Error creating thumbnail";
+                                }
                             }
                             else
                             {
                                 isValid = false;
-                                lblError.Text = "Error creating thumbnail";
+                                lblError.Text = "File already exists";
+                            }
+
+                        }
+
+
+                        //2. Save tags to DB
+                        if (isValid)
+                        {
+                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            {
+                                db.Multimedias.InsertOnSubmit(newMM);
+                                db.SubmitChanges();
+                            }
+
+                            TagsCache.RemoveAll(mt => mt.Type != _tagTypeGame);
+                            rptTags.DataSource = TagsCache;
+                            rptTags.DataBind();
+
+                            foreach (ListItem li in cbl1.Items)
+                            {
+                                li.Selected = false;
                             }
                         }
-                        else
-                        {
-                            isValid = false;
-                            lblError.Text = "File already exists";
-                        }
-                                    
                     }
-                    
-
-                    //2. Save tags to DB
-                    if (isValid)
+                    else //update mm
                     {
-                        using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
-                        {
-                            db.Multimedias.InsertOnSubmit(newMM);
-                            db.SubmitChanges();
-                        }
+                        int multimediaId = 0;
 
-                        TagsCache.RemoveAll(mt => mt.Type != _tagTypeGame);
-                        rptTags.DataSource = TagsCache;
-                        rptTags.DataBind();
-
-                        foreach (ListItem li in cbl1.Items)
+                        if (int.TryParse(Request["id"], out multimediaId))
                         {
-                            li.Selected = false;
+                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            {
+                                DB.Multimedia mm = db.Multimedias.SingleOrDefault(m => m.Multimedia_ID == multimediaId);
+                                if (mm!=null)
+                                {
+                                    mm.Author = tbAuthor.Text;
+                                    mm.Description = tbDescription.Text;
+                                    mm.Source = tbSource.Text;
+                                    mm.MultimediaTags.Clear();
+
+                                    db.MultimediaTags.DeleteAllOnSubmit(db.MultimediaTags.Where(m=>m.Multimedia_ID == multimediaId));
+                                    foreach (MultimediaTagDTO mmTag in TagsCache)
+                                    {
+                                        MultimediaTag mt = new MultimediaTag
+                                        {
+                                            Club_ID = mmTag.Club_ID,
+                                            Match_ID = mmTag.Match_ID,
+                                            NationalTeam_ID = mmTag.NationalTeam_ID,
+                                            Player_ID = mmTag.Player_ID,
+                                            MatchEvent_ID = mmTag.MatchEvent_ID
+                                        };
+                                        mm.MultimediaTags.Add(mt);
+                                    }
+
+                                    mm.Flags = 0;
+                                    foreach (ListItem li in cbl1.Items)
+                                    {
+                                        if (li.Selected)
+                                        {
+                                            mm.Flags = mm.Flags | long.Parse(li.Value);
+                                        }
+                                    }
+
+                                    db.SubmitChanges();
+                                }
+                            }
                         }
                     }
                 }

@@ -14,14 +14,19 @@
             <asp:Repeater ID="rptJssorContent" runat="server">
                 <ItemTemplate>
                     <div>
-                        <img alt="" u="image" src2='<%#Eval("filePath")%>' id='slide<%# Container.ItemIndex %>' title='<%#Eval("title1")%>' title2='<%#Eval("title2")%>' /> 
+                        <img alt="" u="image" src2='<%#Eval("filePath")%>' id='slide<%# Container.ItemIndex %>' title='<%#Eval("title1")%>' title2='<%#Eval("title2")%>' mm_id='<%#Eval("Id")%>' /> 
                         <img alt="" u="thumb" src2='<%#Eval("fileThumbPath")%>' />
                     </div>
                 </ItemTemplate>
             </asp:Repeater>
             
         </div>
-        <div id="caption2" style="position: absolute; top:590px; left: 60px; width:800px; height: 20px; text-align:right;"></div>
+        <div id="caption2" style="position: absolute; top:590px; left: 60px; width:800px; height: 20px; text-align:right;">
+            
+        </div>
+        <div id="editMM" style="position:absolute; top:610px; left:60px;height:10px;">
+            <a href='../Admin/Multimedia.aspx?Id=<%#Eval("Id")%>' target="_blank">&nbsp;&nbsp;</a>
+        </div>
         <div u="thumbnavigator" class="jssort01" style="position: absolute; width: 800px; height: 100px; left:60px; top: 620px; ">
         
             <!-- Thumbnail Item Skin Begin -->
@@ -89,6 +94,7 @@
         var cur_img = $("#slide" + slideIndex);
         div_caption1.html(cur_img.attr("title"));
         div_caption2.html(cur_img.attr("title2"));
+        $("#editMM").find("a").attr("href", "../Admin/Multimedia.aspx?Id=" + cur_img.attr("mm_id"));
     }
 
 
