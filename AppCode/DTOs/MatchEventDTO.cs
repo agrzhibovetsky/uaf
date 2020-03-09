@@ -43,6 +43,12 @@ namespace UaFootball.AppCode
 
         public bool HasVideo { get; set; }
 
+        public MatchEventDTO()
+        {
+            Player1 = new PlayerDTO();
+            Player2 = new PlayerDTO();
+        }
+
         public void CopyDTOToDbObject(MatchEvent dbObj)
         {
             dbObj.Match_Id = Match_Id;

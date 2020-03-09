@@ -29,8 +29,8 @@ namespace UaFootball.AppCode
             All
         }
 
-        public const string normalSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -aaaaaaaaAEеeeeeeeeuuuuUooooOOOiiiiIIccccCCCCsssssSSnnrlllLyDZzzttdgRZ";
-        public const string extraSymbols =  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -āäăáãâàąÁÉæēéëèěęêúūüůÜóöôøÖÓØıîíïÍİćčçҫČĆÇҪšßşșśŠŞñńřļľłŁýĎŽźžţțđğŘŻ";
+        public const string normalSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -aaaaaaaaAEеeeeeeeeeuuuuUooooOOOiiiiIIccccCCCCsssssSSnnrlllLyDZzzttdgRZ";
+        public const string extraSymbols =  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -āäăáãâàąÁÉæēéëèěęêėúūüůÜóöôøÖÓØıîíïÍİćčçҫČĆÇҪšßşșśŠŞñńřļľłŁýĎŽźžţțđğŘŻ";
 
         public const string CountryCodeUA = "UA";
 
@@ -183,6 +183,7 @@ namespace UaFootball.AppCode
                 public const int Goalkeeper = 0x01;
                 public const int Captain = 0x02;
                 public const int Debut = 0x04;
+                public const int CoachInCharge = 0x08;
             }
         }
 

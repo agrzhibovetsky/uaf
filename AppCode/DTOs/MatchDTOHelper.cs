@@ -181,7 +181,7 @@ namespace UaFootball.AppCode
                 }
 
                 IQueryable<MatchLineupDTO> lineup = from matchLineup in db.MatchLineups
-                                                 where matchLineup.Match_Id == objectId
+                                                 where matchLineup.Match_Id == objectId //&& matchLineup.Player_Id>0
                                                  orderby matchLineup.IsSubstitute, matchLineup.MatchLineup_Id
                                                  select new MatchLineupDTO
                                                  {
@@ -195,6 +195,7 @@ namespace UaFootball.AppCode
                                                      Player_DisplayName = matchLineup.Player.Display_Name,
                                                      Player_FirstName_Int = matchLineup.Player.First_Name_Int,
                                                      Player_LastName_Int = matchLineup.Player.Last_Name_Int,
+                                                     Player_CountryId = matchLineup.Coach_Id.HasValue ? 0 : matchLineup.Player.Country_Id,
                                                      ShirtNum = matchLineup.ShirtNumber,
                                                      CoachId = matchLineup.Coach_Id,
                                                      Coach_FirstName = matchLineup.Coach.FirstName,
@@ -202,6 +203,8 @@ namespace UaFootball.AppCode
                                                      Flags = matchLineup.Flags ?? 0
                                                  };
                 ret.Lineup.AddRange(lineup.AsEnumerable());
+
+
 
                 IQueryable<MatchEventDTO> events = from matchEvent in db.MatchEvents
                                                    where matchEvent.Match_Id == objectId
@@ -216,7 +219,8 @@ namespace UaFootball.AppCode
                                                        {
                                                            First_Name = matchEvent.Player.First_Name,
                                                            Last_Name = matchEvent.Player.Last_Name,
-                                                           Display_Name = matchEvent.Player.Display_Name
+                                                           Display_Name = matchEvent.Player.Display_Name,
+                                                           Country_Id = matchEvent.Player.Player_Id > 0 ? matchEvent.Player.Country_Id : 0
                                                        },
                                                        Player1_Id = matchEvent.Player1_Id,
                                                        //Player1_FName = matchEvent.Player.First_Name,
@@ -230,7 +234,8 @@ namespace UaFootball.AppCode
                                                        {
                                                            First_Name =matchEvent.Player1.First_Name,
                                                            Last_Name = matchEvent.Player1.Last_Name,
-                                                           Display_Name = matchEvent.Player1.Display_Name
+                                                           Display_Name = matchEvent.Player1.Display_Name,
+                                                           Country_Id = matchEvent.Player1.Player_Id > 0 ? matchEvent.Player1.Country_Id : 0
                                                        }
                                                    };
                 ret.Events.AddRange(events.AsEnumerable());

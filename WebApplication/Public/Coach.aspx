@@ -7,7 +7,7 @@
 <table width="90%">
     <tr>
         <td>
-            <%= FormatName(DataItem.FirstName, DataItem.LastName, null)%> 
+            <%= FormatName(DataItem.FirstName, DataItem.LastName, null, DataItem.Country_Id)%> 
         </td>
     </tr>
     <tr>
@@ -33,7 +33,7 @@
                                     <b>Имя:</b>
                                 </td>
                                 <td>
-                                    <%= FormatName(DataItem.FirstName_EN, DataItem.LastName_EN, null)%> 
+                                    <%= FormatName(DataItem.FirstName_EN, DataItem.LastName_EN, null, DataItem.Country_Id)%> 
                                 </td>
                             </tr>
 

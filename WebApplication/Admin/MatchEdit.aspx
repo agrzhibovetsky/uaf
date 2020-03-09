@@ -28,8 +28,8 @@
             var isNationalTeamMatch =  document.getElementById("cbMatchKind").checked;
             var searchBackward = document.getElementById("cbSearchBackwards").checked
             var request = teamId + ";"+shirtNum+";"+isNationalTeamMatch+";"+searchBackward;
-            
-            if (shirtNum.length > 0)
+
+            if (shirtNum.length > 0 && shirtNum!="0")
             {
             
                 $.ajax({
@@ -303,10 +303,13 @@
                      <tr>
                         <td colspan="3">
                             <UaFootball:AutocompleteTextBox runat="server" ID="actbHomeCoach" Placeholder="Валерий Лобановский" BehaviorId="actbHomeCoach" AutocompleteType="Coach" />
+                            (и.о. <asp:CheckBox ID="cbHomeCoachInCharge" runat="server" />)
                             <asp:HiddenField ID="hfHomeCoachLineupId" runat="server"  />
                         </td>
+                        
                         <td colspan="3">
                             <UaFootball:AutocompleteTextBox ID="actbAwayCoach" runat="server" Placeholder="Луи ван Гаал" BehaviorId="actbAwayCoach" AutocompleteType="Coach" />
+                            (и.о. <asp:CheckBox ID="cbAwayCoachInCharge" runat="server" />)
                             <asp:HiddenField ID="hfAwayCoachLineupId" runat="server" />
                         </td>
                     </tr>
@@ -361,11 +364,11 @@
                                             <asp:DropDownList ID="ddlEventTypeCd" ClientIDMode="Predictable" runat="server" CssClass="default" AutoPostBack="true" OnSelectedIndexChanged="ddlEventTypeCd_SelectedIndexChanged" ></asp:DropDownList>
                                         </td>
                                         <td valign="top">
-                                            <UaFootball:AutocompleteTextBox runat="server" ID="actbEventPlayer1" AutocompleteType="Player" Text='<%#FormatName(Eval("Player1.First_Name"),Eval("Player1.Last_Name"),Eval("Player1.Display_Name"))%>' Value='<%#Eval("Player1_Id") %>' />
+                                            <UaFootball:AutocompleteTextBox runat="server" ID="actbEventPlayer1" AutocompleteType="Player" Text='<%#FormatName(Eval("Player1.First_Name"),Eval("Player1.Last_Name"),Eval("Player1.Display_Name"), (int)Eval("Player1.Country_Id"))%>' Value='<%#Eval("Player1_Id") %>' />
                                         </td>
 
                                         <td valign="top">
-                                            <UaFootball:AutocompleteTextBox runat="server" ID="actbEventPlayer2" AutocompleteType="Player" Text='<%#FormatName(Eval("Player2.First_Name"),Eval("Player2.last_Name"),Eval("Player2.Display_Name"))%>' Value='<%#Eval("Player2_Id") %>'/>
+                                            <UaFootball:AutocompleteTextBox runat="server" ID="actbEventPlayer2" AutocompleteType="Player" Text='<%#FormatName(Eval("Player2.First_Name"),Eval("Player2.last_Name"),Eval("Player2.Display_Name"), (int)Eval("Player2.Country_Id"))%>' Value='<%#Eval("Player2_Id") %>'/>
                                         </td>
                                         <td valign="top">
                                             <div id="cardFlags" runat="server">

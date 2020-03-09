@@ -10,7 +10,7 @@
 <table width="100%">
     <tr>
         <td>
-            <%= FormatName(DataItem.First_Name, DataItem.Last_Name, DataItem.Display_Name)%> (<%=DataItem.Country_Name %>)
+            <%= FormatName(DataItem.First_Name, DataItem.Last_Name, DataItem.Display_Name, DataItem.Country_Id)%> (<%=DataItem.Country_Name %>)
         </td>
     </tr>
     <tr>

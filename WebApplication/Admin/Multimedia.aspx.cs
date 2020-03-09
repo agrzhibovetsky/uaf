@@ -40,6 +40,18 @@ namespace UaFootball.WebApplication.Admin
             }
         }
 
+        private int MMId
+        {
+            get
+            {
+                int multimediaId = 0;
+
+                int.TryParse(Request["id"], out multimediaId);
+
+                return multimediaId;
+            }
+        }
+
         private List<MultimediaTagDTO> TagsCache
         {
             get
@@ -77,10 +89,12 @@ namespace UaFootball.WebApplication.Admin
 
                 if (!string.IsNullOrEmpty(Request["id"]))
                 {
-                    int multimediaId = 0;
+                    int multimediaId = MMId;
 
-                    if (int.TryParse(Request["id"], out multimediaId))
+                    if (multimediaId>0)
                     {
+                        btnDelete.Visible = true;
+
                         using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
                         {
                             DB.Multimedia mm = db.Multimedias.SingleOrDefault(m => m.Multimedia_ID == multimediaId);
@@ -119,7 +133,7 @@ namespace UaFootball.WebApplication.Admin
                                             opt.LoadWith<MatchEvent>(m => m.Player1);
                                             DB.MatchEvent mEvent = db.MatchEvents.SingleOrDefault(m => m.MatchEvent_Id == mt.MatchEvent_ID.Value);
 
-                                            mt.Description = string.Format("{0} мин - {1} - {2}", mEvent.Minute, UIHelper.EventCodeMap[mEvent.Event_Cd], FormatName(mEvent.Player.First_Name, mEvent.Player.Last_Name, mEvent.Player.Display_Name));
+                                            mt.Description = string.Format("{0} мин - {1} - {2}", mEvent.Minute, UIHelper.EventCodeMap[mEvent.Event_Cd], FormatName(mEvent.Player.First_Name, mEvent.Player.Last_Name, mEvent.Player.Display_Name, mEvent.Player.Country_Id));
 
                                         }
                                     }
@@ -260,7 +274,7 @@ namespace UaFootball.WebApplication.Admin
                                     foreach (var player in players)
                                     {
                                         GenericReferenceObject go = new GenericReferenceObject();
-                                        go.Name = string.Format("{0} - {1}", player.No.ToString().PadLeft(2,' '), FormatName(player.Player.First_Name, player.Player.Last_Name, player.Player.Display_Name));
+                                        go.Name = string.Format("{0} - {1}", player.No.ToString().PadLeft(2,' '), FormatName(player.Player.First_Name, player.Player.Last_Name, player.Player.Display_Name, player.Player.Country_Id));
                                         go.Value = player.Player.Player_Id;
                                         lTagValueSource.Add(go);
                                     }
@@ -296,7 +310,7 @@ namespace UaFootball.WebApplication.Admin
                                 foreach (DB.MatchEvent mEvent in events)
                                 {
                                     GenericReferenceObject go = new GenericReferenceObject();
-                                    go.Name = string.Format("{0} мин - {1} - {2}", mEvent.Minute, UIHelper.EventCodeMap[mEvent.Event_Cd], FormatName(mEvent.Player.First_Name, mEvent.Player.Last_Name, mEvent.Player.Display_Name));
+                                    go.Name = string.Format("{0} мин - {1} - {2}", mEvent.Minute, UIHelper.EventCodeMap[mEvent.Event_Cd], FormatName(mEvent.Player.First_Name, mEvent.Player.Last_Name, mEvent.Player.Display_Name, mEvent.Player.Country_Id));
                                     go.Value = mEvent.MatchEvent_Id;
                                     lTagValueSource.Add(go);
                                 }
@@ -686,6 +700,31 @@ namespace UaFootball.WebApplication.Admin
             {
                 string uploadedFilePath = PathHelper.GetFileSystemPath(Constants.Paths.MultimediaStorageRoot, _tmpUploadPath, fileName);
                 afuUploader.SaveAs(uploadedFilePath);
+            }
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            int multimediaId = MMId;
+            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            {
+                if (multimediaId>0)
+                {
+                    DB.Multimedia mm = db.Multimedias.SingleOrDefault(m => m.Multimedia_ID == multimediaId);
+                    if (mm != null)
+                    {
+                        db.MultimediaTags.DeleteAllOnSubmit(db.MultimediaTags.Where(m => m.Multimedia_ID == multimediaId));
+                        db.Multimedias.DeleteOnSubmit(mm);
+
+                        string filePath = PathHelper.GetFileSystemPath(Constants.Paths.MultimediaStorageRoot, mm.FilePath, mm.FileName);
+                        if (File.Exists(filePath))
+                        {
+                            File.Delete(filePath);
+                        }
+
+                        db.SubmitChanges();
+                    }
+                }
             }
         }
     }

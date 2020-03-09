@@ -97,9 +97,9 @@ namespace UaFootball.WebApplication
             else return string.Empty;
         }
 
-        protected string FormatName(object FirstName, object LastName, object DisplayName)
+        protected string FormatName(object FirstName, object LastName, object DisplayName, int countryId)
         {
-            return UIHelper.FormatName(FirstName, LastName, DisplayName);
+            return UIHelper.FormatName(FirstName, LastName, DisplayName, countryId);
         }
 
         protected string GetTeamSpanClass(object countryCode)

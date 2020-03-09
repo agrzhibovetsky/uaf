@@ -23,6 +23,8 @@ namespace UaFootball.AppCode
 
         public string Player_DisplayName { get; set; }
 
+        public int Player_CountryId { get; set; }
+
         public int? ShirtNum {get; set;}
 
         public bool IsHomeTeamPlayer { get; set; }

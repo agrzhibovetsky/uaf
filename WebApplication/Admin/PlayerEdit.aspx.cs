@@ -125,8 +125,10 @@ namespace UaFootball.WebApplication
                 playerToSave.NameSearchString = fullName.ToNormalizedASCIIString();
             }
 
-            playerToSave.DOB = new DateTime(int.Parse(ddlYear.SelectedValue), int.Parse(ddlMonth.SelectedValue), int.Parse(ddlDay.SelectedValue));
-            
+            if (!cbUnknownDOB.Checked)
+            {
+                playerToSave.DOB = new DateTime(int.Parse(ddlYear.SelectedValue), int.Parse(ddlMonth.SelectedValue), int.Parse(ddlDay.SelectedValue));
+            }
             return playerToSave;
         }
 

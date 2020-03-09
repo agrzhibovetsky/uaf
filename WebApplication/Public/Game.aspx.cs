@@ -67,11 +67,13 @@ namespace UaFootball.WebApplication
                     {
                         hlHomeTeamCoach.Text = string.Concat(homeCoachDTO.Coach_FirstName, " ", homeCoachDTO.Coach_LastName);
                         hlHomeTeamCoach.NavigateUrl = ResolveClientUrl("~/WebApplication/Public/Coach.aspx?objectId=" + homeCoachDTO.CoachId);
+                        ltHomeCoachInCharge.Visible = (homeCoachDTO.Flags & Constants.DB.LineupFlags.CoachInCharge) > 0;
                     }
                     if (awayCoachDTO != null)
                     {
                         hlAwayTeamCoach.Text = string.Concat(awayCoachDTO.Coach_FirstName, " ", awayCoachDTO.Coach_LastName);
                         hlAwayTeamCoach.NavigateUrl = ResolveClientUrl("~/WebApplication/Public/Coach.aspx?objectId=" + awayCoachDTO.CoachId);
+                        ltAwayCoachInCharge.Visible = (awayCoachDTO.Flags & Constants.DB.LineupFlags.CoachInCharge) > 0;
                     }
 
                     int rowsCount = Math.Max(homePlayers.Count, awayPlayers.Count);
@@ -119,7 +121,7 @@ namespace UaFootball.WebApplication
 
         protected void FormatPlayerHyperLink(HyperLink h, MatchLineupDTO pl)
         {
-            h.Text = FormatName(pl.Player_FirstName, pl.Player_LastName, pl.Player_DisplayName);
+            h.Text = FormatName(pl.Player_FirstName, pl.Player_LastName, pl.Player_DisplayName, pl.Player_CountryId);
             if ((pl.Flags & Constants.DB.LineupFlags.Goalkeeper) > 0)
             {
                 h.Text += " (Вр) ";
@@ -132,13 +134,13 @@ namespace UaFootball.WebApplication
             {
                 h.Text += " (Дебют) ";
             }
-            h.ToolTip = FormatName(pl.Player_FirstName_Int, pl.Player_LastName_Int, null);
+            h.ToolTip = FormatName(pl.Player_FirstName_Int, pl.Player_LastName_Int, null, pl.Player_CountryId);
             h.NavigateUrl = string.Format("Player.aspx?{0}={1}", Constants.QueryParam.PlayerId, pl.Player_Id);
         }
 
         protected void FormatPlayerSubstHyperLink(HyperLink h, MatchEventDTO me)
         {
-            h.Text = FormatName(me.Player2.First_Name, me.Player2.Last_Name, me.Player2.Display_Name) + ", " + me.Minute.ToString();
+            h.Text = FormatName(me.Player2.First_Name, me.Player2.Last_Name, me.Player2.Display_Name, me.Player2.Country_Id) + ", " + me.Minute.ToString();
             h.NavigateUrl = string.Format("Player.aspx?{0}={1}", Constants.QueryParam.PlayerId, me.Player2_Id);
         }
         protected void rptLineup_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -148,10 +150,10 @@ namespace UaFootball.WebApplication
             MatchLineupDTO ap = l.Second as MatchLineupDTO;
 
             Label lblHPlayerNum = e.Item.FindControl("lblHPlayerNum") as Label;
-            lblHPlayerNum.Text = hp.ShirtNum.ToString();
+            lblHPlayerNum.Text = hp.ShirtNum.HasValue & hp.ShirtNum>0 ? hp.ShirtNum.Value.ToString() : string.Empty;
 
             Label lblAPlayerNum = e.Item.FindControl("lblAPlayerNum") as Label;
-            lblAPlayerNum.Text = ap.ShirtNum.ToString();
+            lblAPlayerNum.Text = ap.ShirtNum.HasValue & ap.ShirtNum>0 ? ap.ShirtNum.Value.ToString() : string.Empty;
 
             Panel pHomePlayer = e.Item.FindControl("pHomePlayer") as Panel;
             HyperLink aHomePlayer = pHomePlayer.FindControl("aHomePlayer") as HyperLink;
@@ -215,7 +217,7 @@ namespace UaFootball.WebApplication
                 meControl.EventFlags = ev.EventFlags;
                 meControl.Player1 = ev.Player1;
                 meControl.Player2 = ev.Player2;
-                lblPlayerName.Text = FormatName(lineup.Player_FirstName, lineup.Player_LastName, lineup.Player_DisplayName) + ", " + ev.Minute.ToString();
+                lblPlayerName.Text = FormatName(lineup.Player_FirstName, lineup.Player_LastName, lineup.Player_DisplayName, lineup.Player_CountryId) + ", " + ev.Minute.ToString();
             }
         }
     }

@@ -62,12 +62,12 @@ namespace UaFootball.WebApplication
         {
             if (player != null)
             {
-                return FormatName(player.First_Name, player.Last_Name, player.Display_Name);
+                return FormatName(player.First_Name, player.Last_Name, player.Display_Name, player.Country_Id);
             }
             else return string.Empty;
         }
 
-        public static string FormatName(object FirstName, object LastName, object DisplayName)
+        public static string FormatName(object FirstName, object LastName, object DisplayName, int countryId)
         {
             string fNameStg = FirstName as string;
             string sNameStg = LastName as string;
@@ -82,6 +82,10 @@ namespace UaFootball.WebApplication
                 {
                     if (fNameStg != null && fNameStg.Length > 0 && sNameStg.Length > 0)
                     {
+                        if (countryId == 50)
+                        {
+                            return string.Concat(sNameStg.ToUpper(), " ", fNameStg);
+                        }
                         return string.Concat(fNameStg, " ", sNameStg.ToUpper());
                     }
                     else

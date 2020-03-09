@@ -69,7 +69,7 @@
                                             </td>
                                             <td>
                                                 <a href="Referee.aspx?objectId=<%=DataItem.Referee.Referee_Id%>">
-                                                <%= FormatName(DataItem.Referee.FirstName, DataItem.Referee.LastName, null) %>
+                                                <%= FormatName(DataItem.Referee.FirstName, DataItem.Referee.LastName, null, DataItem.Referee.Country_Id) %>
                                                 </a>
                                             </td>
                                         </tr>
@@ -127,8 +127,8 @@
                                 </ItemTemplate>
                             </asp:Repeater>
                             <tr>
-                                <td colspan="2"><br />Тренер: <asp:HyperLink ID="hlHomeTeamCoach" runat="server"></asp:HyperLink> </td>
-                                <td colspan="2"><br />Тренер: <asp:HyperLink ID="hlAwayTeamCoach" runat="server"></asp:HyperLink></td>
+                                <td colspan="2"><br />Тренер: <asp:HyperLink ID="hlHomeTeamCoach" runat="server"></asp:HyperLink><asp:Literal ID="ltHomeCoachInCharge" runat="server" Visible="false"> (и.о.)</asp:Literal></td>
+                                <td colspan="2"><br />Тренер: <asp:HyperLink ID="hlAwayTeamCoach" runat="server"></asp:HyperLink><asp:Literal ID="ltAwayCoachInCharge" runat="server" Visible="false"> (и.о.)</asp:Literal></td>
                             </tr>
                         </table>
                     </td>

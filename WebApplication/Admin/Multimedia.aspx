@@ -148,7 +148,7 @@
     <tr>
         <td colspan="2">
             <asp:Button ID="btnSave" runat="server" Text="Сохранить" ValidationGroup="trueValidation" OnClick="btnSave_Click" />
-            
+            <asp:Button ID="btnDelete" runat="server" Text="Удалить" ValidationGroup="trueValidation" OnClick="btnDelete_Click" Visible="false" />
             <asp:Label ID="lblError" Font-Bold="true" CssClass="editFormError" runat="server"></asp:Label>
         </td>
     </tr>

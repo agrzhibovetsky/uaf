@@ -77,7 +77,7 @@ namespace UaFootball.WebApplication
 
             if (dtoObj.Referee != null)
             {
-                actbReferee.Text = FormatName(dtoObj.Referee.FirstName, dtoObj.Referee.LastName, null);
+                actbReferee.Text = FormatName(dtoObj.Referee.FirstName, dtoObj.Referee.LastName, null, dtoObj.Referee.Country_Id);
                 actbReferee.Value = dtoObj.Referee.Referee_Id.ToString();
             }
             ddlCompetitions.SelectedValue = dtoObj.Competition_Id.ToString();
@@ -150,13 +150,15 @@ namespace UaFootball.WebApplication
             {
                 hfHomeCoachLineupId.Value = homeCoach.MatchLineup_Id.ToString();
                 actbHomeCoach.Value = homeCoach.CoachId.ToString();
-                actbHomeCoach.Text = FormatName(homeCoach.Coach_FirstName, homeCoach.Coach_LastName, "");
+                actbHomeCoach.Text = FormatName(homeCoach.Coach_FirstName, homeCoach.Coach_LastName, "", 0);
+                cbHomeCoachInCharge.Checked = (homeCoach.Flags & Constants.DB.LineupFlags.CoachInCharge) > 0;
             }
             if (awayCoach != null)
             {
                 hfAwayCoachLineupId.Value = awayCoach.MatchLineup_Id.ToString();
                 actbAwayCoach.Value = awayCoach.CoachId.ToString();
-                actbAwayCoach.Text = FormatName(awayCoach.Coach_FirstName, awayCoach.Coach_LastName, "");
+                actbAwayCoach.Text = FormatName(awayCoach.Coach_FirstName, awayCoach.Coach_LastName, "", 0);
+                cbAwayCoachInCharge.Checked = (awayCoach.Flags & Constants.DB.LineupFlags.CoachInCharge) > 0;
             }
 
             for (int i = 0; i < 16; i++)
@@ -284,7 +286,8 @@ namespace UaFootball.WebApplication
                     IsSubstitute = false,
                     CoachId = int.Parse(actbHomeCoach.Value),
                     ShirtNum = null,
-                    MatchLineup_Id = string.IsNullOrEmpty(hfHomeCoachLineupId.Value) ? 0 : int.Parse(hfHomeCoachLineupId.Value)
+                    MatchLineup_Id = string.IsNullOrEmpty(hfHomeCoachLineupId.Value) ? 0 : int.Parse(hfHomeCoachLineupId.Value),
+                    Flags = cbHomeCoachInCharge.Checked ? Constants.DB.LineupFlags.CoachInCharge : 0
                 };
                 MatchToSave.Lineup.Add(homeCoachLineupDTO);
             }
@@ -298,7 +301,8 @@ namespace UaFootball.WebApplication
                     IsSubstitute = false,
                     CoachId = int.Parse(actbAwayCoach.Value),
                     ShirtNum = null,
-                    MatchLineup_Id = string.IsNullOrEmpty(hfAwayCoachLineupId.Value) ? 0 : int.Parse(hfAwayCoachLineupId.Value)
+                    MatchLineup_Id = string.IsNullOrEmpty(hfAwayCoachLineupId.Value) ? 0 : int.Parse(hfAwayCoachLineupId.Value),
+                    Flags = cbAwayCoachInCharge.Checked ? Constants.DB.LineupFlags.CoachInCharge : 0
                 };
                 MatchToSave.Lineup.Add(awayCoachLineupDTO);
             }
@@ -536,11 +540,11 @@ namespace UaFootball.WebApplication
             CheckBox cbACaptain = e.Item.FindControl("cbACaptain") as CheckBox;
             CheckBox cbHDebut = e.Item.FindControl("cbHDebut") as CheckBox;
             CheckBox cbADebut = e.Item.FindControl("cbADebut") as CheckBox;
-
+            
             actbHomePlayer.Value = homePlayer.Player_Id.ToString();
             if (homePlayer.Player_Id > 0)
             {
-                actbHomePlayer.Text = FormatName(homePlayer.Player_FirstName, homePlayer.Player_LastName, homePlayer.Player_DisplayName);
+                actbHomePlayer.Text = FormatName(homePlayer.Player_FirstName, homePlayer.Player_LastName, homePlayer.Player_DisplayName, homePlayer.Player_CountryId);
             }
             tbHomePlayerShirtNumber.Text = homePlayer.ShirtNum.ToString();
             hfHomePlayerLineupId.Value = homePlayer.MatchLineup_Id.ToString();
@@ -548,7 +552,7 @@ namespace UaFootball.WebApplication
             actbAwayPlayer.Value = awayPlayer.Player_Id.ToString();
             if (awayPlayer.Player_Id > 0)
             {
-                actbAwayPlayer.Text = FormatName(awayPlayer.Player_FirstName, awayPlayer.Player_LastName, awayPlayer.Player_DisplayName);
+                actbAwayPlayer.Text = FormatName(awayPlayer.Player_FirstName, awayPlayer.Player_LastName, awayPlayer.Player_DisplayName, awayPlayer.Player_CountryId);
             }
             tbAwayPlayerShirtNumber.Text = awayPlayer.ShirtNum.ToString();
             cbHCaptain.Checked = (homePlayer.Flags & Constants.DB.LineupFlags.Captain) > 0;

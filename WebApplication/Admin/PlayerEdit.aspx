@@ -133,6 +133,7 @@
                 <asp:DropDownList ID="ddlMonth" runat="server" ClientIDMode="Static"></asp:DropDownList>
                 <asp:DropDownList ID="ddlYear" runat="server" ClientIDMode="Static"></asp:DropDownList>
                 <input type="text" id="tbDate" onblur="parseDate(this)" />
+                Неизвестно <asp:CheckBox runat="server" ID="cbUnknownDOB" />
                 <asp:CustomValidator ID="cvDOB" runat="server" OnServerValidate="cvDOB_ServerValidate" ErrorMessage="Неверная дата" CssClass="editFormError"></asp:CustomValidator>
             </td>
         </tr>
@@ -260,7 +261,7 @@
                             <tr>
                                 <td width="35%"><%#Eval("Last_Name_Int")%>, <%#Eval("First_Name_Int")%></td>
                                 <td width="65%"><a href="/UaFootball/WebApplication/Public/Player.aspx?playerId=<%#Eval("Player_Id")%>">
-                                        <%# FormatName(Eval("First_Name"), Eval("Last_Name"), Eval("Display_Name"))%>
+                                        <%# FormatName(Eval("First_Name"), Eval("Last_Name"), Eval("Display_Name"), (int)Eval("County_Id"))%>
                                     </a>
                                 </td>
                             </tr>
@@ -283,7 +284,7 @@
                             <uc:HighlightedLabel runat="server" ID="hl" CssClassForHighlight="editFormError"/>
                         </a>
                     </td>
-                    <td><%# FormatName(Eval("First_Name"), Eval("Last_Name"), Eval("Display_Name"))%></td>
+                    <td><%# FormatName(Eval("First_Name"), Eval("Last_Name"), Eval("Display_Name"), (int)Eval("Country_Id"))%></td>
                     <td><span class="editFormError"><%#CheckAndDisplayDOB(Eval("DOB"))%></span></td>
                     <td><%#Eval("Country.Country_Name")%></td>
                                 

@@ -99,7 +99,7 @@ namespace UaFootball.WebApplication.Public
                         comments = m.Description,
                         source = m.Source,
                         gameDate = game.Date,
-                        playersStg = string.Join(", ", players.Select(p=>UIHelper.FormatName(p.First_Name, p.Last_Name, p.Display_Name))),
+                        playersStg = string.Join(", ", players.Select(p=>UIHelper.FormatName(p.First_Name, p.Last_Name, p.Display_Name, p.Country_Id))),
                         homeTeam = game.HomeTeam,
                         awayTeam = game.AwayTeam,
                         Id=m.Multimedia_ID

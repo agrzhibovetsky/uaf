@@ -30,6 +30,12 @@
                 <asp:ImageButton ID="btnDelete" runat="server" ImageUrl="~/WebApplication/images/delete.gif" CommandArgument='<%#Bind("Match_Id")%>' OnCommand="DeleteObject" />
             </ItemTemplate>
         </asp:TemplateColumn>
+
+        <asp:TemplateColumn>
+            <ItemTemplate>
+                <a href='../Public/Game.aspx?objectId=<%#Eval("Match_Id")%>'>></a>
+            </ItemTemplate>
+        </asp:TemplateColumn>
     </Columns>
 </asp:DataGrid>
 <br />
