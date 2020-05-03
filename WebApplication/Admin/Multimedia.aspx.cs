@@ -104,7 +104,7 @@ namespace UaFootball.WebApplication.Admin
                                 afuUploader.Enabled = false;
                                 hfFileName.Value = mm.FileName;
                                 ddlMultimediaSubType.SelectedValue = mm.MultimediaSubType_CD;
-
+                                ddlMultimediaSubType_SelectedIndexChanged(ddlMultimediaSubType, new EventArgs());
 
                                 List<DB.MultimediaTag> tags = db.MultimediaTags.Where(m => m.Multimedia_ID == multimediaId).ToList();
                                 if (tags.Count > 0)
@@ -136,6 +136,21 @@ namespace UaFootball.WebApplication.Admin
                                             mt.Description = string.Format("{0} мин - {1} - {2}", mEvent.Minute, UIHelper.EventCodeMap[mEvent.Event_Cd], FormatName(mEvent.Player.First_Name, mEvent.Player.Last_Name, mEvent.Player.Display_Name, mEvent.Player.Country_Id));
 
                                         }
+
+                                        if (mt.Club_ID.HasValue)
+                                        {
+                                            mt.Type = _tagTypeClub;
+                                            ClubDTO club = new ClubDTOHelper().GetFromDB(mt.Club_ID.Value);
+                                            mt.Description = string.Format("{0} ({1})", club.Club_Name, club.City_Name);
+                                        }
+
+                                        if (mt.NationalTeam_ID.HasValue)
+                                        {
+                                            mt.Type = _tagTypeNatTeam;
+                                            mt.Description = "Украина";
+                                        }
+
+                                        
                                     }
                                     TagsCache.AddRange(tagsToBind);
                                     rptTags.DataSource = tagsToBind;
@@ -159,6 +174,11 @@ namespace UaFootball.WebApplication.Admin
                                 tbAuthor.Text = mm.Author;
                                 tbSource.Text = mm.Source;
                                 tbDescription.Text = mm.Description;
+                                tbPhotoDate.Text = FormatDate(mm.DateTaken);
+                                if (mm.MultimediaType_CD == Constants.DB.MutlimediaTypes.Image)
+                                {
+                                    imgMultimedia.ImageUrl = PathHelper.GetWebPath(this, Constants.Paths.MutlimediaWebRoot, mm.FilePath, mm.FileName);
+                                }
 
                             }
                         }
@@ -189,7 +209,9 @@ namespace UaFootball.WebApplication.Admin
                 case Constants.DB.MutlimediaSubTypes.PlayerLogo:
                     {
                         ddlTagType.Items.Add(new ListItem("Футболист", _tagTypePlayer));
-                        ddlTagType.Enabled = false;
+                        ddlTagType.Items.Add(new ListItem("Клуб", _tagTypeClub));
+                        ddlTagType.Items.Add(new ListItem("Сборная", _tagTypeNatTeam));
+                        ddlTagType.Enabled = true;
                         break;
                     }
                 case Constants.DB.MutlimediaSubTypes.MatchPhoto:
@@ -218,10 +240,28 @@ namespace UaFootball.WebApplication.Admin
                     {
                         using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
                         {
-                            lTagValueSource = db.Clubs.OrderByDescending(c=>c.Club_ID).Select(c => new GenericReferenceObject { Name = c.Club_Name, GenericStringValue = c.City.City_Name, Value = c.Club_ID }).Take(20).ToList();
-                            foreach (GenericReferenceObject go in lTagValueSource)
+                            if (ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.PlayerLogo)
                             {
-                                go.Name = string.Format("{0} ({1})", go.Name, go.GenericStringValue);
+                                MultimediaTagDTO playerTag = TagsCache.SingleOrDefault(tc => tc.Type == _tagTypePlayer);
+                                if (playerTag != null)
+                                {
+                                    List<Player_GetClubsResult> clubs = db.Player_GetClubs(playerTag.Player_ID).ToList();
+                                    if (clubs != null)
+                                    {
+                                        foreach (Player_GetClubsResult club in clubs)
+                                        {
+                                            lTagValueSource.Add(new GenericReferenceObject { Name = string.Format("{0} ({1})", club.Club, club.City), Value = club.Club_Id, });
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                lTagValueSource = db.Clubs.OrderByDescending(c => c.Club_ID).Select(c => new GenericReferenceObject { Name = c.Club_Name, GenericStringValue = c.City.City_Name, Value = c.Club_ID }).Take(20).ToList();
+                                foreach (GenericReferenceObject go in lTagValueSource)
+                                {
+                                    go.Name = string.Format("{0} ({1})", go.Name, go.GenericStringValue);
+                                }
                             }
                         }
                         break;
@@ -230,7 +270,16 @@ namespace UaFootball.WebApplication.Admin
                     {
                         using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
                         {
-                            lTagValueSource = db.NationalTeams.Where(nt=>nt.NationalTeamType_Cd == Constants.DB.NationalTeamTypeCd_National).OrderBy(c => c.Country.Country_Name).Select(c => new GenericReferenceObject { Name = c.Country.Country_Name, Value = c.NationalTeam_Id }).ToList();
+                            if (ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.PlayerLogo)
+                            {
+                                lTagValueSource = new List<GenericReferenceObject>();
+                                lTagValueSource = db.NationalTeams.Where(nt => nt.NationalTeamType_Cd == Constants.DB.NationalTeamTypeCd_National && nt.Country.Country_Code == Constants.CountryCodeUA).Select(c => new GenericReferenceObject { Name = c.Country.Country_Name, Value = c.NationalTeam_Id }).ToList();
+                            }
+                            else
+                            {
+                                lTagValueSource = db.NationalTeams.Where(nt => nt.NationalTeamType_Cd == Constants.DB.NationalTeamTypeCd_National).OrderBy(c => c.Country.Country_Name).Select(c => new GenericReferenceObject { Name = c.Country.Country_Name, Value = c.NationalTeam_Id }).ToList();
+                            }
+                                
                         }
                         break;
                     }
@@ -498,7 +547,10 @@ namespace UaFootball.WebApplication.Admin
 
                         newMM.FilePath = PathHelper.GetMultimediaRelativePath(newMM);
                         newMM.FileName = UploadedFileName;
-
+                        newMM.DateAdded = DateTime.Now;
+                        newMM.DateUpdated = DateTime.Now;
+                        newMM.DateTaken = getDateTaken();
+                        
                         //1. Save file to permanent location
 
                         if (newMM.FilePath.Length > 0)
@@ -625,6 +677,8 @@ namespace UaFootball.WebApplication.Admin
                                         }
                                     }
 
+                                    mm.DateUpdated = DateTime.Now;
+                                    mm.DateTaken = getDateTaken();
                                     db.SubmitChanges();
                                 }
                             }
@@ -646,32 +700,36 @@ namespace UaFootball.WebApplication.Admin
             switch (ddlMultimediaSubType.SelectedValue)
             {
                 case Constants.DB.MutlimediaSubTypes.ClubLogo:
-                {
-                    isValid = isImg && (TagsCache.Count == 1) && (TagsCache[0].Club_ID > 0);
-                    break;
-                }
+                    {
+                        isValid = isImg && (TagsCache.Count == 1) && (TagsCache[0].Club_ID > 0);
+                        break;
+                    }
                 case Constants.DB.MutlimediaSubTypes.MatchPhoto:
-                {
-                    int matchTagCount = TagsCache.Count(tc => tc.Type == _tagTypeGame);
-                    isValid = isImg && matchTagCount == 1;
-                    break;
-                }
+                    {
+                        int matchTagCount = TagsCache.Count(tc => tc.Type == _tagTypeGame);
+                        isValid = isImg && matchTagCount == 1;
+                        break;
+                    }
                 case Constants.DB.MutlimediaSubTypes.MatchVideo:
-                {
-                    int matchTagCount = TagsCache.Count(tc => tc.Type == _tagTypeGame);
-                    isValid = !isImg && matchTagCount == 1;
-                    break;
-                }
+                    {
+                        int matchTagCount = TagsCache.Count(tc => tc.Type == _tagTypeGame);
+                        isValid = !isImg && matchTagCount == 1;
+                        break;
+                    }
                 case Constants.DB.MutlimediaSubTypes.NationalTeamLogo:
-                {
-                    isValid = isImg && (TagsCache.Count == 1) && (TagsCache[0].NationalTeam_ID > 0);
-                    break;
-                }
+                    {
+                        isValid = isImg && (TagsCache.Count == 1) && (TagsCache[0].NationalTeam_ID > 0);
+                        break;
+                    }
                 case Constants.DB.MutlimediaSubTypes.PlayerLogo:
-                {
-                    isValid = isImg && (TagsCache.Count == 1) && (TagsCache[0].Player_ID > 0);
-                    break;
-                }
+                    {
+
+                        int playerTagsCount = TagsCache.Count(c => c.Player_ID.HasValue);
+                        int clubTagsCount = TagsCache.Count(c => c.Club_ID.HasValue);
+                        int nteamTagsCount = TagsCache.Count(c => c.NationalTeam_ID.HasValue);
+                        isValid = isImg && (playerTagsCount == 1 && clubTagsCount + nteamTagsCount < 2);
+                        break;
+                    }
             }
 
             return isValid;
@@ -683,6 +741,21 @@ namespace UaFootball.WebApplication.Admin
             return fileName.Contains(".JPG") || fileName.Contains(".GIF") || fileName.Contains(".PNG");
         }
 
+        private DateTime? getDateTaken ()
+        {
+            if (tbPhotoDate.Text.Length > 0)
+            {
+                if (tbPhotoDate.Text.Length == 4)
+                {
+                    return new DateTime(int.Parse(tbPhotoDate.Text), 1, 1);
+                }
+                else
+                {
+                    return DateTime.Parse(tbPhotoDate.Text);
+                }
+            }
+            else return null;
+        }
 
         protected void rptTags_ItemCommand(object sender, RepeaterCommandEventArgs e)
         {

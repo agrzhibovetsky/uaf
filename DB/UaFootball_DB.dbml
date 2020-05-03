@@ -108,8 +108,8 @@
       <Association Name="MatchEvent_MultimediaTag" Member="MatchEvent" ThisKey="MatchEvent_ID" OtherKey="MatchEvent_Id" Type="MatchEvent" IsForeignKey="true" />
       <Association Name="NationalTeam_MultimediaTag" Member="NationalTeam" ThisKey="NationalTeam_ID" OtherKey="NationalTeam_Id" Type="NationalTeam" IsForeignKey="true" />
       <Association Name="Player_MultimediaTag" Member="Player" ThisKey="Player_ID" OtherKey="Player_Id" Type="Player" IsForeignKey="true" />
-      <Association Name="Multimedia_MultimediaTag" Member="Multimedia" ThisKey="Multimedia_ID" OtherKey="Multimedia_ID" Type="Multimedia" IsForeignKey="true" />
       <Association Name="Match_MultimediaTag" Member="Match" ThisKey="Match_ID" OtherKey="Match_Id" Type="Match" IsForeignKey="true" />
+      <Association Name="Multimedia_MultimediaTag" Member="Multimedia" ThisKey="Multimedia_ID" OtherKey="Multimedia_ID" Type="Multimedia" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.vwMatches" Member="vwMatches">
@@ -191,20 +191,6 @@
       <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="Coach_MatchLineup" Member="MatchLineups" ThisKey="CoachId" OtherKey="Coach_Id" Type="MatchLineup" />
       <Association Name="Country_Coach" Member="Country" ThisKey="CountryId" OtherKey="Country_ID" Type="Country" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Multimedia" Member="Multimedias">
-    <Type Name="Multimedia">
-      <Column Name="Multimedia_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="MultimediaType_CD" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
-      <Column Name="MultimediaSubType_CD" Type="System.String" DbType="VarChar(3) NOT NULL" CanBeNull="false" />
-      <Column Name="FilePath" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="FileName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Source" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Author" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="Flags" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Association Name="Multimedia_MultimediaTag" Member="MultimediaTags" ThisKey="Multimedia_ID" OtherKey="Multimedia_ID" Type="MultimediaTag" />
     </Type>
   </Table>
   <Table Name="dbo.Matches" Member="Matches">
@@ -300,4 +286,46 @@
       <Association Name="City_Stadium" Member="City" ThisKey="City_Id" OtherKey="City_ID" Type="City" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.vwCities" Member="vwCities">
+    <Type Name="vwCity">
+      <Column Name="City_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="City_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Country_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vwClubs" Member="vwClubs">
+    <Type Name="vwClub">
+      <Column Name="Club_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Club_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Year_Found" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="City_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="City_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Country_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Multimedia" Member="Multimedias">
+    <Type Name="Multimedia">
+      <Column Name="Multimedia_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MultimediaType_CD" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
+      <Column Name="MultimediaSubType_CD" Type="System.String" DbType="VarChar(3) NOT NULL" CanBeNull="false" />
+      <Column Name="FilePath" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FileName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Source" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Author" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Flags" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="DateTaken" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DateAdded" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DateUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Multimedia_MultimediaTag" Member="MultimediaTags" ThisKey="Multimedia_ID" OtherKey="Multimedia_ID" Type="MultimediaTag" />
+    </Type>
+  </Table>
+  <Function Name="dbo.Player_GetClubs" Method="Player_GetClubs">
+    <Parameter Name="PlayerId" Parameter="playerId" Type="System.Int32" DbType="Int" />
+    <ElementType Name="Player_GetClubsResult">
+      <Column Name="Club" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="City" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Club_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
 </Database>

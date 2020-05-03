@@ -221,7 +221,7 @@
                         <ItemTemplate>
                             <tr>
                                 <td>
-                                    <asp:Image runat="server" ID="imgLogo" />
+                                    <a href="Multimedia.aspx?Id=<%#Eval("Multimedia_ID")%>"><asp:Image runat="server" ID="imgLogo" /></a>
                                 </td>
                                 <td>
                                     <asp:ImageButton ID="btnDelete" runat="server" ImageUrl="~/WebApplication/images/delete.gif" CommandArgument='<%#Eval("Multimedia_ID")%>' OnCommand="btnDelete_Command"/>

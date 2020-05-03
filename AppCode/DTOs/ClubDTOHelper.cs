@@ -12,16 +12,15 @@ namespace UaFootball.AppCode
     /// </summary>
     public class ClubDTOHelper : IDTOHelper<ClubDTO>
     {
-        public ClubDTO ConvertDBObjectToDTO(Club dbObj)
+        public ClubDTO ConvertDBObjectToDTO(vwClub dbObj)
         {
             ClubDTO dtoObj = new ClubDTO()
             {
                 Club_ID = dbObj.Club_ID,
                 Club_Name = dbObj.Club_Name,
                 City_ID = dbObj.City_ID,
-                Display_Name = dbObj.Display_Name,
-                //Logo = dbObj.Logo,
-                Year_Found = dbObj.Year_Found
+                Year_Found = dbObj.Year_Found,
+                City_Name = dbObj.City_Name
             };
 
             return dtoObj;
@@ -41,7 +40,7 @@ namespace UaFootball.AppCode
         {
             using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
             {
-                Club c = db.Clubs.Single(cc => cc.Club_ID == objectId);
+                vwClub c = db.vwClubs.Single(cc => cc.Club_ID == objectId);
                 ClubDTO dtoObj = ConvertDBObjectToDTO(c);
                 
                 Multimedia mLogo = (from tag in db.MultimediaTags

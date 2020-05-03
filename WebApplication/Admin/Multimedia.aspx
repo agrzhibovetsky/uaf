@@ -11,6 +11,7 @@
     <script type="text/javascript" src="../Scripts/flowplayer-3.2.13.min.js"></script>
 
     <script type="text/javascript">
+
         function onUploadComplete(sender, args) {
             var contentType = args.get_contentType();
             var fileName = args.get_fileName();
@@ -125,6 +126,7 @@
         <td colspan="2">
             Источник: <asp:TextBox ID="tbSource" runat="server" MaxLength="50"></asp:TextBox>
             Автор: <asp:TextBox ID="tbAuthor" runat="server" MaxLength="50"></asp:TextBox>
+            Дата фото/видео: <asp:TextBox ID="tbPhotoDate" runat="server" MaxLength="50"></asp:TextBox>
         </td>
     </tr>
     <tr>
@@ -141,7 +143,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            <img id="imgMultimedia" style="max-width:90%" alt=""/>
+            <asp:Image ID="imgMultimedia" runat="server" ClientIDMode="Static" style="max-width:90%" />
             <div style="display: none; width:425px;height:300px;" id="player"></div>
         </td>
     </tr>

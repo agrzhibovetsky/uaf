@@ -21,6 +21,10 @@ namespace UaFootball.AppCode
 
         public bool IsUploaded { get; set; }
 
+        public DateTime? DateAdded { get; set; }
+        public DateTime? DateUpdated { get; set; }
+        public DateTime? DateTaken { get; set; }
+
         public List<MultimediaTagDTO> Tags { get; set; }
 
         public MultimediaDTO()
@@ -35,6 +39,9 @@ namespace UaFootball.AppCode
             dbObj.MultimediaSubType_CD = MultimediaSubType_CD;
             dbObj.FileName = FileName;
             dbObj.FilePath = FilePath;
+            dbObj.DateAdded = DateAdded;
+            dbObj.DateTaken = DateTaken;
+            dbObj.DateUpdated = DateUpdated;
         }
     }
 }

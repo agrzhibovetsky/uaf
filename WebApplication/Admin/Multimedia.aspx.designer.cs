@@ -112,6 +112,15 @@ namespace UaFootball.WebApplication.Admin {
         protected global::System.Web.UI.WebControls.TextBox tbAuthor;
         
         /// <summary>
+        /// tbPhotoDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbPhotoDate;
+        
+        /// <summary>
         /// tbDescription control.
         /// </summary>
         /// <remarks>
@@ -128,6 +137,15 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBoxList cbl1;
+        
+        /// <summary>
+        /// imgMultimedia control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgMultimedia;
         
         /// <summary>
         /// btnSave control.
