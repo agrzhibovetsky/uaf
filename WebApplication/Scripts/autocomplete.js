@@ -36,6 +36,10 @@ autocompleteTextBox.prototype.init = function () {
     this.tb.autocomplete();
     this.tb.autocomplete("option", "minLength", 2);
     this.tb.autocomplete("option", "delay", 1500);
+    if (this.tb[0].id.indexOf("actbEventPlayer") > 0 && document.location.href.indexOf("MatchEdit.aspx") > 0)
+    {
+        this.tb.autocomplete("option", "delay", 150);
+    }
     this.tb.autocomplete("option", "source", source);
     this.tb.autocomplete("option", "search", function (e, ui) {
 

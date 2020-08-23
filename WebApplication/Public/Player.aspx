@@ -4,6 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="Stylesheet" type="text/css" href='<%=JQueryUICssPath%>' />
     <link rel="Stylesheet" href="../Styles/colorbox.css" />
+    <title><%= FormatName(DataItem.First_Name, DataItem.Last_Name, DataItem.Display_Name, DataItem.Country_Id)%></title>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 

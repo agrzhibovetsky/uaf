@@ -3,6 +3,10 @@
         var curVal = $(this).val();
         $(this).val(curVal.replace(",", "."));
     });
+
+    if (document.title === "")
+        document.title = "Ua Football 3.0";
+    else document.title =  document.title + " - Ua Football 3.0"
 });
 
 

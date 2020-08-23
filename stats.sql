@@ -51,7 +51,7 @@ order by c desc
 
 
 /* UNT goals without uploaded video*/
-select m.Match_ID, m.HomeTeam, m.AwayTeam, p.First_Name, p.Last_Name from MatchEvents me
+select m.Match_ID, m.HomeTeam, m.AwayTeam, p.First_Name, p.Last_Name, case when me.EventFlags=0 and mt.MultimediaTag_ID is not null THEN 'Missing tags' ELSE 'Missing video' END [Desription] from MatchEvents me
 join Players p on me.Player1_Id = p.Player_Id
 join vwMatches m on me.Match_Id = m.Match_Id
 left outer join MultimediaTags mt on mt.MatchEvent_ID = me.MatchEvent_Id
@@ -60,11 +60,11 @@ where me.Match_Id in
 select Match_Id from Matches
 where AwayNationalTeam_Id =1 or HomeNationalTeam_Id = 1 
 )
-and (Event_Cd='G' or Event_Cd='P') and p.Country_Id = 1 and mt.MultimediaTag_ID is null and EventFlags & 128 =0
+and (Event_Cd='G' or Event_Cd='P') and p.Country_Id = 1 and EventFlags & 128 =0 and (mt.MultimediaTag_ID is null or me.EventFlags=0)
 order by me.Match_Id
 
-/* eurocup season - goals without uploaded video */
-select me.MatchEvent_ID, me.Event_Cd, me.Minute, hc.Club_Name, ac.Club_Name, p.First_Name, p.Last_Name, mt.MultimediaTag_ID 
+/* eurocup season - goals without uploaded video or tags */
+select me.MatchEvent_ID, me.Event_Cd, me.Minute, hc.Club_Name, ac.Club_Name, p.First_Name, p.Last_Name, mt.MultimediaTag_ID, EventFlags 
 from MatchEvents me
 join Players p on me.Player1_Id = p.Player_Id
 left outer join MultimediaTags mt on mt.MatchEvent_ID = me.MatchEvent_Id
@@ -78,10 +78,10 @@ join Countries acn on act.Country_ID = acn.Country_ID
 join MatchLineups ml on ml.Match_Id = m.Match_ID and ml.Player_Id = me.Player1_Id
 where me.Match_Id in 
 (
-select Match_Id from Matches where Season_Id=19
+select Match_Id from Matches where Season_Id=24
 )
 and (Event_Cd='G' or Event_Cd='P') and ((ml.IsHomeTeamPlayer = 1 and hcn.Country_ID=1) or (ml.IsHomeTeamPlayer = 0 and acn.Country_ID=1))
-and EventFlags & 128 =0 and MultimediaTag_ID is null
+and EventFlags & 128 =0 and (MultimediaTag_ID is null or EventFlags=0)
 order by me.Match_Id
 
 
@@ -105,7 +105,7 @@ order by g.Date desc
 select distinct(p.Player_Id), p.First_Name, p.Last_Name, p.Display_Name, ml.ShirtNumber from MatchLineups ml
 join Matches m on ml.Match_Id = m.Match_Id
 join Players p on ml.Player_Id = p.Player_Id
-where ((m.HomeClub_Id = 7 and ml.IsHomeTeamPlayer = 1) or (m.AwayClub_Id = 7 and ml.IsHomeTeamPlayer = 0))
+where ((m.HomeClub_Id = 2 and ml.IsHomeTeamPlayer = 1) or (m.AwayClub_Id = 2 and ml.IsHomeTeamPlayer = 0))
 order by ShirtNumber
 
 
@@ -150,3 +150,12 @@ select top 1000
 		where Flags & 2 >0 and p.Country_Id=1
 	 ) as captains on matches.Match_ID = captains.Match_Id
 	order by Date
+
+/**-- players - logo count- */
+select count(*) as c, First_Name, Last_Name, p.Player_Id
+From Multimedia m
+JOIN MultimediaTags mt on mt.Multimedia_ID = m.Multimedia_ID
+JOIN PLayers p on mt.Player_ID= p.Player_Id
+where MultimediaSubType_CD='PL' and mt.Player_ID is not null and m.DateTaken is null
+group by mt.Player_ID, p.First_Name, p.Last_Name, p.Player_Id
+order by c desc

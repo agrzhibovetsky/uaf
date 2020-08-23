@@ -2,7 +2,9 @@
 <%@ Register TagPrefix="UaFootball" TagName="MatchEvent" Src="~/WebApplication/Controls/MatchEvent.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="Stylesheet" href="../Styles/colorbox.css" />
+    <title><%=DataItem.HomeTeamName%> - <%=DataItem.AwayTeamName%> (<%=FormatDate(DataItem.Date)%>)</title>
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <table width="100%">
     <tr>
