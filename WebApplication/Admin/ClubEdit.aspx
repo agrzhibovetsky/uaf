@@ -1,10 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WebApplication/Site.master" AutoEventWireup="true" Inherits="UaFootball.WebApplication.ClubEdit" Codebehind="ClubEdit.aspx.cs" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
-    <link rel="Stylesheet" type="text/css" href='<%=JQueryUICssPath%>' />
-    
-    <script type="text/javascript" src='<%=JQueryUIPath%>'></script>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
     <table cellpadding="4" class="editform">

@@ -307,6 +307,7 @@
     <Content Include="WebApplication\Images\players\лднгсршл.jpg" />
     <Content Include="WebApplication\Images\up_arrow.png" />
     <Content Include="WebApplication\Images\video.gif" />
+    <Content Include="WebApplication\Public\NationalTeam.aspx" />
     <Content Include="WebApplication\Public\Coach.aspx" />
     <Content Include="WebApplication\Public\Coaches.aspx" />
     <Content Include="WebApplication\Public\Countries.aspx" />
@@ -316,6 +317,7 @@
     <Content Include="WebApplication\Public\Photo.aspx" />
     <Content Include="WebApplication\Public\Player.aspx" />
     <Content Include="WebApplication\Public\Players.aspx" />
+    <Content Include="WebApplication\Public\Club.aspx" />
     <Content Include="WebApplication\Public\Referee.aspx" />
     <Content Include="WebApplication\Public\Stadium.aspx" />
     <Content Include="WebApplication\Public\Video.aspx" />
@@ -352,6 +354,8 @@
     <Compile Include="AppCode\Constants.cs" />
     <Compile Include="AppCode\DTOs\CityDTO.cs" />
     <Compile Include="AppCode\DTOs\CityDTOHelper.cs" />
+    <Compile Include="AppCode\DTOs\NationalTeamDTOHelper.cs" />
+    <Compile Include="AppCode\DTOs\NationalTeamDTO.cs" />
     <Compile Include="AppCode\DTOs\ClubDTO.cs" />
     <Compile Include="AppCode\DTOs\ClubDTOHelper.cs" />
     <Compile Include="AppCode\DTOs\CoachDTO.cs" />
@@ -395,6 +399,13 @@
     <Compile Include="WebApplication\Admin\CoachList.aspx.designer.cs">
       <DependentUpon>CoachList.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WebApplication\Public\NationalTeam.aspx.cs">
+      <DependentUpon>NationalTeam.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\NationalTeam.aspx.designer.cs">
+      <DependentUpon>NationalTeam.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WebApplication\Public\Coach.aspx.cs">
       <DependentUpon>Coach.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -408,6 +419,13 @@
     </Compile>
     <Compile Include="WebApplication\Public\Coaches.aspx.designer.cs">
       <DependentUpon>Coaches.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Club.aspx.cs">
+      <DependentUpon>Club.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Club.aspx.designer.cs">
+      <DependentUpon>Club.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebApplication\Public\Videos.aspx.cs">
       <DependentUpon>Videos.aspx</DependentUpon>

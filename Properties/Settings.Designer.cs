@@ -33,5 +33,15 @@ namespace UaFootball.Properties {
                 return ((string)(this["UaFootballConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost;Initial Catalog=UaFootball;User ID=UaFootball")]
+        public string UaFootballConnectionString1 {
+            get {
+                return ((string)(this["UaFootballConnectionString1"]));
+            }
+        }
     }
 }

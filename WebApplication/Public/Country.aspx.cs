@@ -25,7 +25,7 @@ namespace UaFootball.WebApplication.Public
                         rptMatches.DataSource = games;
                         rptMatches.DataBind();
 
-                        List<Club> clubs = db.Clubs.Where(c => c.City.Country_ID == countryId).ToList();
+                        List<DB.Club> clubs = db.Clubs.Where(c => c.City.Country_ID == countryId).ToList();
                         Repeater rptClubs = accCountry.Panes["apClubs"].FindControl("rptClubs") as Repeater;
                         rptClubs.DataSource = clubs;
                         rptClubs.DataBind();

@@ -20,6 +20,10 @@ namespace UaFootball.AppCode
             public int Stadium_Id { get; set; }
 
             public int Coach_Id { get; set; }
+
+            public int Club_Id { get; set; }
+
+            public int NationalTeam_Id { get; set; }
         }
     }
 }

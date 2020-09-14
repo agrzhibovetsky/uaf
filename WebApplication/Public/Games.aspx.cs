@@ -23,7 +23,6 @@ namespace UaFootball.WebApplication
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.ClientScript.RegisterClientScriptInclude(Constants.Paths.JQueryKey, Page.ResolveClientUrl(Constants.Paths.JQueryPath));
 
             IsNationalTeam = (Request[Constants.QueryParam.NationalTeam] != null && Request[Constants.QueryParam.NationalTeam].Equals("1"));
 

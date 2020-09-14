@@ -363,6 +363,16 @@ namespace UaFootball.AppCode
                     dbData = dbData.Where(d => lineups.Contains(d.Match_ID));
                 }
 
+                if (searchParam.Club_Id > 0)
+                {
+                    dbData = dbData.Where(d => d.HomeClub_Id == searchParam.Club_Id || d.AwayClub_Id == searchParam.Club_Id);
+                }
+
+                if (searchParam.NationalTeam_Id > 0)
+                {
+                    dbData = dbData.Where(d => d.HomeNationalTeam_Id == searchParam.NationalTeam_Id|| d.AwayNationalTeam_Id == searchParam.NationalTeam_Id);
+                }
+
                 dbData = dbData.OrderByDescending(d => d.Date);
 
                 foreach (var md in dbData)

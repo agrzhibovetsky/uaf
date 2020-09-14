@@ -76,8 +76,6 @@ namespace UaFootball.WebApplication
         protected void Page_Load(object sender, EventArgs e)
         {
             ClientScriptManager cs = Page.ClientScript;
-            cs.RegisterClientScriptInclude(Constants.Paths.JQueryKey, ResolveClientUrl(Constants.Paths.JQueryPath));
-            cs.RegisterClientScriptInclude(Constants.Paths.JQueryUIKey, Page.ResolveClientUrl(Constants.Paths.JQueryUIPath));
             cs.RegisterClientScriptInclude(Constants.Paths.AutocompleteKey, Page.ResolveClientUrl(Constants.Paths.AutocompletePath));
 
             string clientObjName = BehaviorId;

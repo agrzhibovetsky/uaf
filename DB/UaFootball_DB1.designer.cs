@@ -188,14 +188,6 @@ namespace UaFootball.DB
 			}
 		}
 		
-		public System.Data.Linq.Table<vwMatch> vwMatches
-		{
-			get
-			{
-				return this.GetTable<vwMatch>();
-			}
-		}
-		
 		public System.Data.Linq.Table<FIFAAssociation> FIFAAssociations
 		{
 			get
@@ -297,6 +289,22 @@ namespace UaFootball.DB
 			get
 			{
 				return this.GetTable<Multimedia>();
+			}
+		}
+		
+		public System.Data.Linq.Table<vGamesByPlayerByTeam> vGamesByPlayerByTeams
+		{
+			get
+			{
+				return this.GetTable<vGamesByPlayerByTeam>();
+			}
+		}
+		
+		public System.Data.Linq.Table<vwMatch> vwMatches
+		{
+			get
+			{
+				return this.GetTable<vwMatch>();
 			}
 		}
 		
@@ -2789,375 +2797,6 @@ namespace UaFootball.DB
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vwMatches")]
-	public partial class vwMatch
-	{
-		
-		private int _Match_ID;
-		
-		private System.DateTime _Date;
-		
-		private string _Competition_Name;
-		
-		private string _CompetitionLevel_Cd;
-		
-		private string _Season_Description;
-		
-		private short _HomeScore;
-		
-		private short _AwayScore;
-		
-		private System.Nullable<short> _HomePenaltyScore;
-		
-		private System.Nullable<short> _AwayPenaltyScore;
-		
-		private int _Competition_Id;
-		
-		private string _CompetitionStage_Name;
-		
-		private int _Season_Id;
-		
-		private System.Nullable<int> _Referee_Id;
-		
-		private System.Nullable<int> _Flags;
-		
-		private int _Stadium_Id;
-		
-		private System.Nullable<int> _Spectators;
-		
-		private string _HomeTeam;
-		
-		private string _AwayTeam;
-		
-		private string _HomeTeamCountryCode;
-		
-		private string _AwayTeamCountryCode;
-		
-		public vwMatch()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Match_ID", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
-		public int Match_ID
-		{
-			get
-			{
-				return this._Match_ID;
-			}
-			set
-			{
-				if ((this._Match_ID != value))
-				{
-					this._Match_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
-		public System.DateTime Date
-		{
-			get
-			{
-				return this._Date;
-			}
-			set
-			{
-				if ((this._Date != value))
-				{
-					this._Date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Competition_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Competition_Name
-		{
-			get
-			{
-				return this._Competition_Name;
-			}
-			set
-			{
-				if ((this._Competition_Name != value))
-				{
-					this._Competition_Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompetitionLevel_Cd", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
-		public string CompetitionLevel_Cd
-		{
-			get
-			{
-				return this._CompetitionLevel_Cd;
-			}
-			set
-			{
-				if ((this._CompetitionLevel_Cd != value))
-				{
-					this._CompetitionLevel_Cd = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Season_Description", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Season_Description
-		{
-			get
-			{
-				return this._Season_Description;
-			}
-			set
-			{
-				if ((this._Season_Description != value))
-				{
-					this._Season_Description = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HomeScore", DbType="SmallInt NOT NULL")]
-		public short HomeScore
-		{
-			get
-			{
-				return this._HomeScore;
-			}
-			set
-			{
-				if ((this._HomeScore != value))
-				{
-					this._HomeScore = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AwayScore", DbType="SmallInt NOT NULL")]
-		public short AwayScore
-		{
-			get
-			{
-				return this._AwayScore;
-			}
-			set
-			{
-				if ((this._AwayScore != value))
-				{
-					this._AwayScore = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HomePenaltyScore", DbType="SmallInt")]
-		public System.Nullable<short> HomePenaltyScore
-		{
-			get
-			{
-				return this._HomePenaltyScore;
-			}
-			set
-			{
-				if ((this._HomePenaltyScore != value))
-				{
-					this._HomePenaltyScore = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AwayPenaltyScore", DbType="SmallInt")]
-		public System.Nullable<short> AwayPenaltyScore
-		{
-			get
-			{
-				return this._AwayPenaltyScore;
-			}
-			set
-			{
-				if ((this._AwayPenaltyScore != value))
-				{
-					this._AwayPenaltyScore = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Competition_Id", DbType="Int NOT NULL")]
-		public int Competition_Id
-		{
-			get
-			{
-				return this._Competition_Id;
-			}
-			set
-			{
-				if ((this._Competition_Id != value))
-				{
-					this._Competition_Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompetitionStage_Name", DbType="NVarChar(50)")]
-		public string CompetitionStage_Name
-		{
-			get
-			{
-				return this._CompetitionStage_Name;
-			}
-			set
-			{
-				if ((this._CompetitionStage_Name != value))
-				{
-					this._CompetitionStage_Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Season_Id", DbType="Int NOT NULL")]
-		public int Season_Id
-		{
-			get
-			{
-				return this._Season_Id;
-			}
-			set
-			{
-				if ((this._Season_Id != value))
-				{
-					this._Season_Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Referee_Id", DbType="Int")]
-		public System.Nullable<int> Referee_Id
-		{
-			get
-			{
-				return this._Referee_Id;
-			}
-			set
-			{
-				if ((this._Referee_Id != value))
-				{
-					this._Referee_Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Flags", DbType="Int")]
-		public System.Nullable<int> Flags
-		{
-			get
-			{
-				return this._Flags;
-			}
-			set
-			{
-				if ((this._Flags != value))
-				{
-					this._Flags = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stadium_Id", DbType="Int NOT NULL")]
-		public int Stadium_Id
-		{
-			get
-			{
-				return this._Stadium_Id;
-			}
-			set
-			{
-				if ((this._Stadium_Id != value))
-				{
-					this._Stadium_Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Spectators", DbType="Int")]
-		public System.Nullable<int> Spectators
-		{
-			get
-			{
-				return this._Spectators;
-			}
-			set
-			{
-				if ((this._Spectators != value))
-				{
-					this._Spectators = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HomeTeam", DbType="VarChar(50)")]
-		public string HomeTeam
-		{
-			get
-			{
-				return this._HomeTeam;
-			}
-			set
-			{
-				if ((this._HomeTeam != value))
-				{
-					this._HomeTeam = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AwayTeam", DbType="VarChar(50)")]
-		public string AwayTeam
-		{
-			get
-			{
-				return this._AwayTeam;
-			}
-			set
-			{
-				if ((this._AwayTeam != value))
-				{
-					this._AwayTeam = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HomeTeamCountryCode", DbType="VarChar(30)")]
-		public string HomeTeamCountryCode
-		{
-			get
-			{
-				return this._HomeTeamCountryCode;
-			}
-			set
-			{
-				if ((this._HomeTeamCountryCode != value))
-				{
-					this._HomeTeamCountryCode = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AwayTeamCountryCode", DbType="VarChar(30)")]
-		public string AwayTeamCountryCode
-		{
-			get
-			{
-				return this._AwayTeamCountryCode;
-			}
-			set
-			{
-				if ((this._AwayTeamCountryCode != value))
-				{
-					this._AwayTeamCountryCode = value;
-				}
 			}
 		}
 	}
@@ -6902,6 +6541,618 @@ namespace UaFootball.DB
 		{
 			this.SendPropertyChanging();
 			entity.Multimedia = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vGamesByPlayerByTeam")]
+	public partial class vGamesByPlayerByTeam
+	{
+		
+		private string _First_Name;
+		
+		private string _Last_Name;
+		
+		private string _Display_Name;
+		
+		private int _Player_Id;
+		
+		private System.Nullable<int> _TotalLIneups;
+		
+		private System.Nullable<int> _TotalMatches;
+		
+		private System.Nullable<int> _TotalMinutes;
+		
+		private int _IsNational;
+		
+		private System.Nullable<int> _PlayedFor;
+		
+		public vGamesByPlayerByTeam()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_First_Name", DbType="VarChar(50)")]
+		public string First_Name
+		{
+			get
+			{
+				return this._First_Name;
+			}
+			set
+			{
+				if ((this._First_Name != value))
+				{
+					this._First_Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Last_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Last_Name
+		{
+			get
+			{
+				return this._Last_Name;
+			}
+			set
+			{
+				if ((this._Last_Name != value))
+				{
+					this._Last_Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Display_Name", DbType="VarChar(50)")]
+		public string Display_Name
+		{
+			get
+			{
+				return this._Display_Name;
+			}
+			set
+			{
+				if ((this._Display_Name != value))
+				{
+					this._Display_Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Player_Id", DbType="Int NOT NULL")]
+		public int Player_Id
+		{
+			get
+			{
+				return this._Player_Id;
+			}
+			set
+			{
+				if ((this._Player_Id != value))
+				{
+					this._Player_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalLIneups", DbType="Int")]
+		public System.Nullable<int> TotalLIneups
+		{
+			get
+			{
+				return this._TotalLIneups;
+			}
+			set
+			{
+				if ((this._TotalLIneups != value))
+				{
+					this._TotalLIneups = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalMatches", DbType="Int")]
+		public System.Nullable<int> TotalMatches
+		{
+			get
+			{
+				return this._TotalMatches;
+			}
+			set
+			{
+				if ((this._TotalMatches != value))
+				{
+					this._TotalMatches = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalMinutes", DbType="Int")]
+		public System.Nullable<int> TotalMinutes
+		{
+			get
+			{
+				return this._TotalMinutes;
+			}
+			set
+			{
+				if ((this._TotalMinutes != value))
+				{
+					this._TotalMinutes = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsNational", DbType="Int NOT NULL")]
+		public int IsNational
+		{
+			get
+			{
+				return this._IsNational;
+			}
+			set
+			{
+				if ((this._IsNational != value))
+				{
+					this._IsNational = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlayedFor", DbType="Int")]
+		public System.Nullable<int> PlayedFor
+		{
+			get
+			{
+				return this._PlayedFor;
+			}
+			set
+			{
+				if ((this._PlayedFor != value))
+				{
+					this._PlayedFor = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.vwMatches")]
+	public partial class vwMatch
+	{
+		
+		private int _Match_ID;
+		
+		private System.DateTime _Date;
+		
+		private string _Competition_Name;
+		
+		private string _CompetitionLevel_Cd;
+		
+		private string _Season_Description;
+		
+		private short _HomeScore;
+		
+		private short _AwayScore;
+		
+		private System.Nullable<short> _HomePenaltyScore;
+		
+		private System.Nullable<short> _AwayPenaltyScore;
+		
+		private int _Competition_Id;
+		
+		private string _CompetitionStage_Name;
+		
+		private int _Season_Id;
+		
+		private System.Nullable<int> _Referee_Id;
+		
+		private System.Nullable<int> _Flags;
+		
+		private int _Stadium_Id;
+		
+		private System.Nullable<int> _Spectators;
+		
+		private string _HomeTeam;
+		
+		private string _AwayTeam;
+		
+		private string _HomeTeamCountryCode;
+		
+		private string _AwayTeamCountryCode;
+		
+		private System.Nullable<int> _HomeClub_Id;
+		
+		private System.Nullable<int> _AwayClub_Id;
+		
+		private System.Nullable<int> _HomeNationalTeam_Id;
+		
+		private System.Nullable<int> _AwayNationalTeam_Id;
+		
+		public vwMatch()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Match_ID", DbType="Int NOT NULL")]
+		public int Match_ID
+		{
+			get
+			{
+				return this._Match_ID;
+			}
+			set
+			{
+				if ((this._Match_ID != value))
+				{
+					this._Match_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
+		public System.DateTime Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this._Date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Competition_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Competition_Name
+		{
+			get
+			{
+				return this._Competition_Name;
+			}
+			set
+			{
+				if ((this._Competition_Name != value))
+				{
+					this._Competition_Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompetitionLevel_Cd", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string CompetitionLevel_Cd
+		{
+			get
+			{
+				return this._CompetitionLevel_Cd;
+			}
+			set
+			{
+				if ((this._CompetitionLevel_Cd != value))
+				{
+					this._CompetitionLevel_Cd = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Season_Description", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Season_Description
+		{
+			get
+			{
+				return this._Season_Description;
+			}
+			set
+			{
+				if ((this._Season_Description != value))
+				{
+					this._Season_Description = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HomeScore", DbType="SmallInt NOT NULL")]
+		public short HomeScore
+		{
+			get
+			{
+				return this._HomeScore;
+			}
+			set
+			{
+				if ((this._HomeScore != value))
+				{
+					this._HomeScore = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AwayScore", DbType="SmallInt NOT NULL")]
+		public short AwayScore
+		{
+			get
+			{
+				return this._AwayScore;
+			}
+			set
+			{
+				if ((this._AwayScore != value))
+				{
+					this._AwayScore = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HomePenaltyScore", DbType="SmallInt")]
+		public System.Nullable<short> HomePenaltyScore
+		{
+			get
+			{
+				return this._HomePenaltyScore;
+			}
+			set
+			{
+				if ((this._HomePenaltyScore != value))
+				{
+					this._HomePenaltyScore = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AwayPenaltyScore", DbType="SmallInt")]
+		public System.Nullable<short> AwayPenaltyScore
+		{
+			get
+			{
+				return this._AwayPenaltyScore;
+			}
+			set
+			{
+				if ((this._AwayPenaltyScore != value))
+				{
+					this._AwayPenaltyScore = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Competition_Id", DbType="Int NOT NULL")]
+		public int Competition_Id
+		{
+			get
+			{
+				return this._Competition_Id;
+			}
+			set
+			{
+				if ((this._Competition_Id != value))
+				{
+					this._Competition_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompetitionStage_Name", DbType="NVarChar(50)")]
+		public string CompetitionStage_Name
+		{
+			get
+			{
+				return this._CompetitionStage_Name;
+			}
+			set
+			{
+				if ((this._CompetitionStage_Name != value))
+				{
+					this._CompetitionStage_Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Season_Id", DbType="Int NOT NULL")]
+		public int Season_Id
+		{
+			get
+			{
+				return this._Season_Id;
+			}
+			set
+			{
+				if ((this._Season_Id != value))
+				{
+					this._Season_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Referee_Id", DbType="Int")]
+		public System.Nullable<int> Referee_Id
+		{
+			get
+			{
+				return this._Referee_Id;
+			}
+			set
+			{
+				if ((this._Referee_Id != value))
+				{
+					this._Referee_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Flags", DbType="Int")]
+		public System.Nullable<int> Flags
+		{
+			get
+			{
+				return this._Flags;
+			}
+			set
+			{
+				if ((this._Flags != value))
+				{
+					this._Flags = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stadium_Id", DbType="Int NOT NULL")]
+		public int Stadium_Id
+		{
+			get
+			{
+				return this._Stadium_Id;
+			}
+			set
+			{
+				if ((this._Stadium_Id != value))
+				{
+					this._Stadium_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Spectators", DbType="Int")]
+		public System.Nullable<int> Spectators
+		{
+			get
+			{
+				return this._Spectators;
+			}
+			set
+			{
+				if ((this._Spectators != value))
+				{
+					this._Spectators = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HomeTeam", DbType="VarChar(50)")]
+		public string HomeTeam
+		{
+			get
+			{
+				return this._HomeTeam;
+			}
+			set
+			{
+				if ((this._HomeTeam != value))
+				{
+					this._HomeTeam = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AwayTeam", DbType="VarChar(50)")]
+		public string AwayTeam
+		{
+			get
+			{
+				return this._AwayTeam;
+			}
+			set
+			{
+				if ((this._AwayTeam != value))
+				{
+					this._AwayTeam = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HomeTeamCountryCode", DbType="VarChar(30)")]
+		public string HomeTeamCountryCode
+		{
+			get
+			{
+				return this._HomeTeamCountryCode;
+			}
+			set
+			{
+				if ((this._HomeTeamCountryCode != value))
+				{
+					this._HomeTeamCountryCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AwayTeamCountryCode", DbType="VarChar(30)")]
+		public string AwayTeamCountryCode
+		{
+			get
+			{
+				return this._AwayTeamCountryCode;
+			}
+			set
+			{
+				if ((this._AwayTeamCountryCode != value))
+				{
+					this._AwayTeamCountryCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HomeClub_Id", DbType="Int")]
+		public System.Nullable<int> HomeClub_Id
+		{
+			get
+			{
+				return this._HomeClub_Id;
+			}
+			set
+			{
+				if ((this._HomeClub_Id != value))
+				{
+					this._HomeClub_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AwayClub_Id", DbType="Int")]
+		public System.Nullable<int> AwayClub_Id
+		{
+			get
+			{
+				return this._AwayClub_Id;
+			}
+			set
+			{
+				if ((this._AwayClub_Id != value))
+				{
+					this._AwayClub_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HomeNationalTeam_Id", DbType="Int")]
+		public System.Nullable<int> HomeNationalTeam_Id
+		{
+			get
+			{
+				return this._HomeNationalTeam_Id;
+			}
+			set
+			{
+				if ((this._HomeNationalTeam_Id != value))
+				{
+					this._HomeNationalTeam_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AwayNationalTeam_Id", DbType="Int")]
+		public System.Nullable<int> AwayNationalTeam_Id
+		{
+			get
+			{
+				return this._AwayNationalTeam_Id;
+			}
+			set
+			{
+				if ((this._AwayNationalTeam_Id != value))
+				{
+					this._AwayNationalTeam_Id = value;
+				}
+			}
 		}
 	}
 	

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="UaFootball" Class="UaFootball_DBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost;Initial Catalog=UaFootball;User ID=UaFootball" SettingsObjectName="UaFootball.Properties.Settings" SettingsPropertyName="UaFootballConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost;Initial Catalog=UaFootball;User ID=UaFootball" SettingsObjectName="UaFootball.Properties.Settings" SettingsPropertyName="UaFootballConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Cities" Member="Cities">
     <Type Name="City">
       <Column Name="City_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -110,30 +110,6 @@
       <Association Name="Player_MultimediaTag" Member="Player" ThisKey="Player_ID" OtherKey="Player_Id" Type="Player" IsForeignKey="true" />
       <Association Name="Match_MultimediaTag" Member="Match" ThisKey="Match_ID" OtherKey="Match_Id" Type="Match" IsForeignKey="true" />
       <Association Name="Multimedia_MultimediaTag" Member="Multimedia" ThisKey="Multimedia_ID" OtherKey="Multimedia_ID" Type="Multimedia" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.vwMatches" Member="vwMatches">
-    <Type Name="vwMatch">
-      <Column Name="Match_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="Competition_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="CompetitionLevel_Cd" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
-      <Column Name="Season_Description" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="HomeScore" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
-      <Column Name="AwayScore" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
-      <Column Name="HomePenaltyScore" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
-      <Column Name="AwayPenaltyScore" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
-      <Column Name="Competition_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CompetitionStage_Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Season_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Referee_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Flags" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Stadium_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Spectators" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="HomeTeam" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="AwayTeam" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="HomeTeamCountryCode" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Column Name="AwayTeamCountryCode" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.FIFAAssociations" Member="FIFAAssociations">
@@ -318,6 +294,47 @@
       <Column Name="DateAdded" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="DateUpdated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="Multimedia_MultimediaTag" Member="MultimediaTags" ThisKey="Multimedia_ID" OtherKey="Multimedia_ID" Type="MultimediaTag" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vGamesByPlayerByTeam" Member="vGamesByPlayerByTeams">
+    <Type Name="vGamesByPlayerByTeam">
+      <Column Name="First_Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Last_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Display_Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Player_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TotalLIneups" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TotalMatches" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TotalMinutes" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsNational" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PlayedFor" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vwMatches" Member="vwMatches">
+    <Type Name="vwMatch">
+      <Column Name="Match_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Competition_Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CompetitionLevel_Cd" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="Season_Description" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="HomeScore" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="AwayScore" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="HomePenaltyScore" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="AwayPenaltyScore" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="Competition_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CompetitionStage_Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Season_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Referee_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Flags" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Stadium_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Spectators" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HomeTeam" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="AwayTeam" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="HomeTeamCountryCode" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="AwayTeamCountryCode" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="HomeClub_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AwayClub_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HomeNationalTeam_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AwayNationalTeam_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.Player_GetClubs" Method="Player_GetClubs">

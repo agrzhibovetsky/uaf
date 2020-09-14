@@ -24,9 +24,15 @@ namespace UaFootball.WebApplication
             }
         }
 
+        protected string GetTeamUrl(int? clubId, int? nationalTeamId)
+        {
+            string pageUrl = clubId.HasValue ? "Club.aspx" : "NationalTeam.aspx";
+            int teamId = clubId.HasValue ? clubId.Value : nationalTeamId.Value;
+            return pageUrl + "?id=" + teamId;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.ClientScript.RegisterClientScriptInclude(Constants.Paths.JQueryKey, Page.ResolveClientUrl(Constants.Paths.JQueryPath));
             Page.ClientScript.RegisterClientScriptInclude(Constants.Paths.ColorboxKey, Page.ResolveClientUrl(Constants.Paths.ColorboxPath));
             if (!IsPostBack)
             {

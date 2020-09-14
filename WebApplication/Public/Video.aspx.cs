@@ -24,7 +24,6 @@ namespace UaFootball.WebApplication.Public
         {
             AUTOPLAY = bool.FalseString.ToLower();
             DEFAULT_VIDEO_URL = "";
-            Page.ClientScript.RegisterClientScriptInclude(Constants.Paths.JQueryKey, Page.ResolveClientUrl(Constants.Paths.JQueryPath));
 
             List<VideoDTO> videosToPlay = new List<VideoDTO>();
             int matchId = 0;

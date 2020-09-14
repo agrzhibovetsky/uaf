@@ -14,29 +14,7 @@ namespace UaFootball.WebApplication
     {
         protected NameValueCollection Query;
 
-        protected string JQueryPath
-        {
-            get
-            {
-                return ResolveClientUrl(Constants.Paths.JQueryPath);
-            }
-        }
-
-        protected string JQueryUIPath
-        {
-            get
-            {
-                return ResolveClientUrl(Constants.Paths.JQueryUIPath);
-            }
-        }
-
-        protected string JQueryUICssPath
-        {
-            get
-            {
-                return ResolveClientUrl(Constants.Paths.JQueryUICSSPath);
-            }
-        }
+        
 
         protected string AutoCompletePath
         {

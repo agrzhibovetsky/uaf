@@ -25,7 +25,9 @@
                             </tr>
                             <tr>
                                 <td  align="center">
-                                    <asp:Image ID="iHomeTeamLogo" runat="server" />
+                                    <a href="<%=GetTeamUrl(DataItem.HomeClub_Id, DataItem.HomeNationalTeam_Id)%>">
+                                        <asp:Image ID="iHomeTeamLogo" runat="server" />
+                                    </a>
                                 </td>
                                 <td>
                                     <table width="100%">
@@ -85,7 +87,9 @@
                                     </table>
                                 </td>
                                 <td align="center">
-                                    <asp:Image ID="iAwayTeamLogo" runat="server" />
+                                    <a href="<%=GetTeamUrl(DataItem.AwayClub_Id, DataItem.AwayNationalTeam_Id)%>">
+                                        <asp:Image ID="iAwayTeamLogo" runat="server" />
+                                    </a>
                                 </td>
                             </tr>
                         </table>

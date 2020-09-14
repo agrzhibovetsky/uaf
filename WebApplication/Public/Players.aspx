@@ -1,7 +1,7 @@
 ﻿<%@ Page MasterPageFile="~/WebApplication/Site.master"  Language="C#" AutoEventWireup="true" CodeBehind="Players.aspx.cs" Inherits="UaFootball.WebApplication.Players" %>
 <%@ Register TagPrefix="UaFootball" TagName="AutocompleteTextBox" Src="~/WebApplication/Controls/AutocompleteTextBox.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
-    <link rel="Stylesheet" type="text/css" href='<%=JQueryUICssPath%>' />
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
     <table width="90%">

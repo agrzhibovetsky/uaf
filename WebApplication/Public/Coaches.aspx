@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/WebApplication/Site.master" AutoEventWireup="true" CodeBehind="Coaches.aspx.cs" Inherits="UaFootball.WebApplication.Public.Coaches" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
-    <link rel="Stylesheet" type="text/css" href='<%=JQueryUICssPath%>' />
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">

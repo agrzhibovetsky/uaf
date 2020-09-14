@@ -28,7 +28,6 @@ namespace UaFootball.WebApplication.Public
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.ClientScript.RegisterClientScriptInclude(Constants.Paths.JQueryKey, Page.ResolveClientUrl(Constants.Paths.JQueryPath));
 
             if (!IsPostBack)
             {

@@ -25,6 +25,11 @@ namespace UaFootball.AppCode
             return sender.ResolveClientUrl(path);
         }
 
+        public static string GetMultimediaWebPath(Page sender, MultimediaDTO dto)
+        {
+            return GetWebPath(sender, Constants.Paths.MutlimediaWebRoot, dto.FilePath + "//thumb//", dto.FileName.Trim());
+        }
+
         public static string GetFileSystemPath(string rootPath, string relativePath, string fileName)
         {
             string path = string.Format("{0}\\{1}\\{2}", rootPath, relativePath.Trim(), fileName.Trim());

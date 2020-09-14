@@ -307,8 +307,7 @@ namespace UaFootball.AppCode
         {
             public const string FullWebRoot = "/UaFootball/WebApplication/";
             //scripts
-            public const string JQueryPath = "~/WebApplication/Scripts/jquery-1.9.0.js";
-            public const string JQueryUIPath = "~/WebApplication/Scripts/jquery-ui-1.10.0.custom.min.js";
+            
             public const string AutocompletePath = "~/WebApplication/Scripts/autocomplete.js";
             public const string ColorboxPath = "~/WebApplication/Scripts/jquery.colorbox.js";
 
@@ -317,8 +316,7 @@ namespace UaFootball.AppCode
             public const string DropBoxWebPath = "~/WebApplication/Dropbox/";
             public const string MutlimediaWebRoot = "~/WebApplication/Multimedia/";
 
-            //css
-            public const string JQueryUICSSPath = "~/WebApplication/Styles/jquery-ui-1.10.0.custom.css";
+            
 
             //file system
             public const string DropBoxPath = @"D:\Andrey\Projects\git\UaFootball\WebApplication\Dropbox\";

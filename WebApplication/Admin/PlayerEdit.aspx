@@ -1,8 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WebApplication/Site.master" AutoEventWireup="true" Inherits="UaFootball.WebApplication.PlayerEdit" Codebehind="PlayerEdit.aspx.cs" %>
 <%@ Register TagPrefix ="uc" NameSpace="UaFootball.WebApplication.Controls" Assembly="UaFootball"%>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
-    <link rel="Stylesheet" type="text/css" href='<%=JQueryUICssPath%>' />
-    <script type="text/javascript" src='<%=JQueryUIPath%>'></script>
+    
     <script type="text/javascript">
         function parseDate(tbObj) {
             var dt = tbObj.value;
