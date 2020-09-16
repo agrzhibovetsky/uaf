@@ -14,6 +14,8 @@ namespace UaFootball.WebApplication
         Referee,
         Player,
         SearchPlayerByShirtNum,
-        Coach
+        Coach,
+        MostRecentClubCoach,
+        MostRecentStadium
     }
 }

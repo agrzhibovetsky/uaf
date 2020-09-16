@@ -76,6 +76,24 @@ namespace UaFootball.WebApplication {
         protected global::System.Web.UI.WebControls.DropDownList ddlStage;
         
         /// <summary>
+        /// actbHomeTeam control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::UaFootball.WebApplication.AutocompleteTextBox actbHomeTeam;
+        
+        /// <summary>
+        /// actbAwayTeam control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::UaFootball.WebApplication.AutocompleteTextBox actbAwayTeam;
+        
+        /// <summary>
         /// tbDate control.
         /// </summary>
         /// <remarks>
@@ -128,24 +146,6 @@ namespace UaFootball.WebApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::UaFootball.WebApplication.AutocompleteTextBox actbReferee;
-        
-        /// <summary>
-        /// actbHomeTeam control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::UaFootball.WebApplication.AutocompleteTextBox actbHomeTeam;
-        
-        /// <summary>
-        /// actbAwayTeam control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::UaFootball.WebApplication.AutocompleteTextBox actbAwayTeam;
         
         /// <summary>
         /// tbHomeTeamScore control.

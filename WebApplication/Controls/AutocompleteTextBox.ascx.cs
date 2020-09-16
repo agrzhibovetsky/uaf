@@ -50,6 +50,14 @@ namespace UaFootball.WebApplication
             set;
         }
 
+        public string OnChange
+        {
+            set
+            {
+                tb.Attributes.Add("onchange", value);
+            }
+        }
+
 
         protected override void OnInit(EventArgs e)
         {

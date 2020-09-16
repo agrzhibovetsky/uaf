@@ -176,6 +176,58 @@ namespace UaFootball.WebApplication
                             }
                             break;
                         }
+                    case AutocompleteType.MostRecentClubCoach:
+                        {
+                            //term: [nc]Id
+                            bool isNational = searchTerm[0] == 'n';
+                            int teamId = int.Parse(searchTerm.Substring(1));
+                            AutoCompleteResponse resp = new AutoCompleteResponse();
+                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            {
+                                Match mostRecentMatch = (from match in db.Matches
+                                              where (match.HomeClub_Id == teamId) && !isNational || (match.HomeNationalTeam_Id == teamId) && isNational
+                                              orderby match.Date descending
+                                              select match).FirstOrDefault();
+                                if (mostRecentMatch != null)
+                                {
+                                    Coach teamCoach = (from ml in db.MatchLineups
+                                                       where ml.Match_Id == mostRecentMatch.Match_Id && ml.IsHomeTeamPlayer && ml.Coach_Id > 0
+                                                       select ml.Coach).FirstOrDefault();
+                                    if (teamCoach != null)
+                                    {
+                                        resp.id = teamCoach.CoachId;
+                                        resp.value = teamCoach.FirstName + " " + teamCoach.LastName;
+                                    }
+                                }
+                                context.Response.Write(serializer.Serialize(resp));
+                                
+                            }
+                            break;
+                        }
+                    case AutocompleteType.MostRecentStadium:
+                        {
+                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            {
+                                //term: [nc]Id
+                                bool isNational = searchTerm[0] == 'n';
+                                int teamId = int.Parse(searchTerm.Substring(1));
+                                AutoCompleteResponse resp = new AutoCompleteResponse();
+
+                                Match mostRecentMatch = (from match in db.Matches
+                                                         where (match.HomeClub_Id == teamId) && !isNational || (match.HomeNationalTeam_Id == teamId) && isNational
+                                                         orderby match.Date descending
+                                                         select match).FirstOrDefault();
+
+                                if (mostRecentMatch != null)
+                                {
+                                    resp.id = mostRecentMatch.Stadium_Id;
+                                    resp.value = "";
+                                }
+                                context.Response.Write(serializer.Serialize(resp));
+
+                            }
+                            break;
+                        }
                 }
             }
             else

@@ -7,18 +7,53 @@
 <asp:ScriptManager ID="ScriptManager1" runat="server" />
 <script type="text/javascript">
 
+    function onTeamChanged(sender) {
+        var textBoxControl = sender;
+        var hdnInputControl = $("#" + sender.id.replace("tb", "hf"));
+        var isNational = $("#cbMatchKind")[0].checked;
+        var request = (isNational ? "n" : "c") + hdnInputControl.val();
+        var coachTbId = sender.id.indexOf("home") > 0 ? "tbactbHomeCoach" : "tbactbAwayCoach";
+        var coachHdnId = coachTbId.replace("tb", "hf");
+        if (request.length > 1) {
+            $.ajax({
+                url: "<%=AutoCompletePath%>?type=MostRecentClubCoach&term=" + request,
+                data: "",
+                dataType: "json",
+                success: function (data) {
+                    if (data.id > 0) {
+                        $("#" + coachTbId).val(data.value);
+                        $("#" + coachHdnId).val(data.id);
+                    }
+                }
+            });
+
+            if (sender.id.indexOf("home") > 0) {
+                $.ajax({
+                    url: "<%=AutoCompletePath%>?type=MostRecentStadium&term=" + request,
+                    data: "",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.id > 0) {
+                            $("#ddlStadiums").val(data.id);
+                        }
+                    }
+                });
+            }
+        }
+    }
+
     $(document).ready(function () {
         $(".tbPlayerShirtNumberSelector").blur(function () {
             
             if (this.id.indexOf("Home")>0)
             {
-                var teamId= <%=DataItem.HomeClub_Id.HasValue ? DataItem.HomeClub_Id : DataItem.HomeNationalTeam_Id %>;
+                var teamId= '<%=DataItem.HomeClub_Id.HasValue ? DataItem.HomeClub_Id : DataItem.HomeNationalTeam_Id %>';
                 var tbName = $(this).parent().parent().find("[id^='tbhomePlayerAutocomplete']");
                 var hfId = $(this).parent().parent().find("[id^='hfhomePlayerAutocomplete']");
             }
             else
             {
-                var teamId= <%=DataItem.AwayClub_Id.HasValue ? DataItem.AwayClub_Id : DataItem.AwayNationalTeam_Id %>;
+               var teamId= '<%=DataItem.AwayClub_Id.HasValue ? DataItem.AwayClub_Id : DataItem.AwayNationalTeam_Id %>';
                 var tbName = $(this).parent().parent().find("[id^='tbawayPlayerAutocomplete']");
                 var hfId = $(this).parent().parent().find("[id^='hfawayPlayerAutocomplete']");
             }
@@ -47,6 +82,8 @@
             
         });
     });
+
+    
 
 </script>
 <table cellpadding="4" cellspacing="2" class="editform" border="0" width="100%">
@@ -115,6 +152,25 @@
             
         </tr>
 
+        
+
+        <tr>
+            <td align="right">
+                Команда хозяев
+            </td>
+            <td>
+                <UaFootball:AutocompleteTextBox ID="actbHomeTeam" BehaviorId="homeTeamAutocomplete" OnChange="javascript:onTeamChanged(this);" IsRequired="true" runat="server" />
+            </td>
+
+            <td align="left">
+                Команда гостей
+            </td>
+            <td>
+                <UaFootball:AutocompleteTextBox ID="actbAwayTeam" BehaviorId="awayTeamAutocomplete"  OnChange="javascript:onTeamChanged(this);" IsRequired="true" runat="server" />
+            </td>
+
+        </tr>
+
         <tr>
             <td align="right">
                 Дата проведения матча
@@ -133,7 +189,7 @@
             </td>
             
             <td>
-                <asp:DropDownList ID="ddlStadiums" runat="server" CssClass="default"></asp:DropDownList>
+                <asp:DropDownList ID="ddlStadiums" runat="server" ClientIDMode="Static" CssClass="default"></asp:DropDownList>
                 <asp:RequiredFieldValidator ID="rfvStadiums" runat="server" ControlToValidate="ddlStadiums" Display="Dynamic" ErrorMessage="!" CssClass="editFormError"></asp:RequiredFieldValidator>
             </td>
             
@@ -168,22 +224,7 @@
             
         </tr>
 
-        <tr>
-            <td align="right">
-                Команда хозяев
-            </td>
-            <td>
-                <UaFootball:AutocompleteTextBox ID="actbHomeTeam" BehaviorId="homeTeamAutocomplete" IsRequired="true" runat="server" />
-            </td>
-
-            <td align="left">
-                Команда гостей
-            </td>
-            <td>
-                <UaFootball:AutocompleteTextBox ID="actbAwayTeam" BehaviorId="awayTeamAutocomplete" IsRequired="true" runat="server" />
-            </td>
-
-        </tr>
+        
 
         <tr>
             <td align="right">
