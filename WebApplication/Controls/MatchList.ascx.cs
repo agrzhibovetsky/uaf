@@ -11,6 +11,8 @@ namespace UaFootball.WebApplication.Controls
     public partial class MatchList : UserControl
     {
         public string ExtraColumn { get; set; }
+        public object DataSource { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(ExtraColumn) && ExtraColumn.Equals("Spectators"))
@@ -22,6 +24,12 @@ namespace UaFootball.WebApplication.Controls
         public void DataBind(SearchParameters.Match searchParam)
         {
             rptGames.DataSource = new MatchDTOHelper().GetListFromDB(searchParam);
+            rptGames.DataBind();
+        }
+
+        public override void DataBind()
+        {
+            rptGames.DataSource = DataSource;
             rptGames.DataBind();
         }
 

@@ -290,7 +290,7 @@ namespace UaFootball.WebApplication.Admin
                             List<UaFootball.DB.Player> lPlayers = new List<DB.Player>();
                             if (ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.PlayerLogo)
                             {
-                                lPlayers = db.Players.OrderByDescending(c => c.Player_Id).Take(25).OrderBy(p=>p.Last_Name).ToList();
+                                lPlayers = db.Players.OrderByDescending(c => c.Player_Id).Take(50).OrderBy(p=>p.Last_Name).ToList();
                                 foreach (UaFootball.DB.Player p in lPlayers)
                                 {
                                     string fName = p.First_Name ?? "";

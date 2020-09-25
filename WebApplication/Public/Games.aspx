@@ -10,7 +10,10 @@
             <table width="70%">
                 <tr>
                     <td>
-                        <asp:DropDownList ID="ddlCompetitions" runat="server" CssClass="default"></asp:DropDownList>
+                        <asp:DropDownList ID="ddlCompetitions" AutoPostBack="true" OnSelectedIndexChanged="btnGo_Click" runat="server" CssClass="default"></asp:DropDownList>
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="ddlClubs" AutoPostBack="true" OnSelectedIndexChanged="btnGo_Click" runat="server" CssClass="default"></asp:DropDownList>
                     </td>
                     <td>
                         <asp:DropDownList ID="ddlSeasons" runat="server" AutoPostBack="true" OnSelectedIndexChanged="btnGo_Click" CssClass="default"></asp:DropDownList>

@@ -48,7 +48,7 @@ namespace UaFootball.WebApplication
                     ddlSeasons.Items.Insert(0, new ListItem(Constants.UI.DropdownDefaultText, Constants.UI.DropdownDefaultValue));
 
                     SearchParameters.Match searchParam = new SearchParameters.Match { CompetitionCode = competitionLevelCode, Season_Id = seasons.FirstOrDefault().Value };
-                    ml.DataBind(searchParam);
+                    BindData(searchParam);
                 }
             }
         }
@@ -69,7 +69,39 @@ namespace UaFootball.WebApplication
                 searchParam.Season_Id = int.Parse(ddlSeasons.SelectedItem.Value);
             }
 
-            ml.DataBind(searchParam);
+            if (!string.IsNullOrEmpty(ddlClubs.SelectedValue) && ddlClubs.SelectedValue != Constants.UI.DropdownDefaultValue)
+            {
+                searchParam.Club_Id = int.Parse(ddlClubs.SelectedValue);
+            }
+
+            BindData(searchParam);
+        }
+
+        private void BindData(SearchParameters.Match searchParam)
+        {
+            
+            List<MatchDTO> matches = new MatchDTOHelper().GetListFromDB(searchParam);
+            if (searchParam.Club_Id == 0)
+            {
+                if (!IsNationalTeam)
+                {
+                    IEnumerable<ClubDTO> awayClubs = matches.Select(m => new ClubDTO { Club_ID = m.AwayClub_Id.Value, Club_Name = m.AwayTeamName, IsUA = m.AwayTeamCountryCode == Constants.CountryCodeUA });
+                    IEnumerable<ClubDTO> homeClubs = matches.Select(m => new ClubDTO { Club_ID = m.HomeClub_Id.Value, Club_Name = m.HomeTeamName, IsUA = m.HomeTeamCountryCode == Constants.CountryCodeUA });
+                    IEnumerable<ClubDTO> allClubs = awayClubs.Union(homeClubs).Distinct(new ClubDTOComparer());
+                    IEnumerable<ClubDTO> uaClubs = allClubs.Where(c => c.IsUA);
+                    IEnumerable<ClubDTO> foreignClubs = allClubs.Where(c => !c.IsUA);
+
+                    ddlClubs.Items.Clear();
+                    ddlClubs.Items.Insert(0, new ListItem("Клуб", Constants.UI.DropdownDefaultValue));
+                    ddlClubs.Items.AddRange(uaClubs.Select(c => new ListItem(c.Club_Name, c.Club_ID.ToString())).ToArray());
+                    ddlClubs.Items.Add(new ListItem("--------", Constants.UI.DropdownDefaultValue));
+                    ddlClubs.Items.AddRange(foreignClubs.Select(c => new ListItem(c.Club_Name, c.Club_ID.ToString())).ToArray());
+                }
+            }
+
+            ml.DataSource = matches;
+            ml.DataBind();
+
         }
     }
 }

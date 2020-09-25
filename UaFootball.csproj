@@ -354,6 +354,7 @@
     <Compile Include="AppCode\Constants.cs" />
     <Compile Include="AppCode\DTOs\CityDTO.cs" />
     <Compile Include="AppCode\DTOs\CityDTOHelper.cs" />
+    <Compile Include="AppCode\DTOs\ClubDTOComparer.cs" />
     <Compile Include="AppCode\DTOs\NationalTeamDTOHelper.cs" />
     <Compile Include="AppCode\DTOs\NationalTeamDTO.cs" />
     <Compile Include="AppCode\DTOs\ClubDTO.cs" />

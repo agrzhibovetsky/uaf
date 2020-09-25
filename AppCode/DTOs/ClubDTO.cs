@@ -24,6 +24,8 @@ namespace UaFootball.AppCode
 
         public MultimediaDTO Logo { get; set; }
 
+        public bool IsUA { get; set; }
+
         public ClubDTO()
         {
         }

@@ -260,7 +260,7 @@
                             <tr>
                                 <td width="35%"><%#Eval("Last_Name_Int")%>, <%#Eval("First_Name_Int")%></td>
                                 <td width="65%"><a href="/UaFootball/WebApplication/Public/Player.aspx?playerId=<%#Eval("Player_Id")%>">
-                                        <%# FormatName(Eval("First_Name"), Eval("Last_Name"), Eval("Display_Name"), (int)Eval("County_Id"))%>
+                                        <%# FormatName(Eval("First_Name"), Eval("Last_Name"), Eval("Display_Name"), (int)Eval("Country_Id"))%>
                                     </a>
                                 </td>
                             </tr>

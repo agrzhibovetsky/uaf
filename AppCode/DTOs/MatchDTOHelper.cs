@@ -50,16 +50,16 @@ namespace UaFootball.AppCode
         {
             MatchDTO dtoObj = new MatchDTO()
             {
-                //AwayClub_Id = dbObj.AwayClub_Id,
-                //AwayNationalTeam_Id = dbObj.AwayNationalTeam_Id,
+                AwayClub_Id = dbObj.AwayClub_Id,
+                AwayNationalTeam_Id = dbObj.AwayNationalTeam_Id,
                 AwayPenaltyScore = dbObj.AwayPenaltyScore,
                 AwayScore = dbObj.AwayScore,
                 Competition_Id = dbObj.Competition_Id,
                 //CompetitionStage_Id = dbObj.CompetitionStage_Id,
                 CompetitionStageName = dbObj.CompetitionStage_Name,
                 Date = dbObj.Date,
-                //HomeClub_Id = dbObj.HomeClub_Id,
-                //HomeNationalTeam_Id = dbObj.HomeNationalTeam_Id,
+                HomeClub_Id = dbObj.HomeClub_Id,
+                HomeNationalTeam_Id = dbObj.HomeNationalTeam_Id,
                 HomePenaltyScore = dbObj.HomePenaltyScore,
                 HomeScore = dbObj.HomeScore,
                 Match_Id = dbObj.Match_ID,

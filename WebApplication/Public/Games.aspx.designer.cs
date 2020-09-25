@@ -22,6 +22,15 @@ namespace UaFootball.WebApplication {
         protected global::System.Web.UI.WebControls.DropDownList ddlCompetitions;
         
         /// <summary>
+        /// ddlClubs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlClubs;
+        
+        /// <summary>
         /// ddlSeasons control.
         /// </summary>
         /// <remarks>
