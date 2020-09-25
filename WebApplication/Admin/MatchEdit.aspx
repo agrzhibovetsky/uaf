@@ -42,6 +42,45 @@
         }
     }
 
+    function loadLatestLineup(isHome) {
+
+        var isNationalTeamMatch = document.getElementById("cbMatchKind").checked;
+        
+        if (!isNationalTeamMatch) {
+            var teamId = isHome ? <%=DataItem.HomeClub_Id%> : <%=DataItem.AwayClub_Id%>;
+            $.ajax({
+                url: "Admin.ashx?action=getLatestLineup&clubId=" + teamId,
+                data: "",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    for (var i = 0; i < data.length; i++) {
+                        var tbShirtNumber = $("#tblLineups").find("input[id$='tbHomePlayerShirtNumber_" + i + "']");
+                        var tbPlayerName = $("#tblLineups").find("input[id$='tbhomePlayerAutocomplete" + i + "']");
+                        var hfPlayerId = $("#tblLineups").find("input[id$='hfhomePlayerAutocomplete" + i + "']");
+                        tbShirtNumber.val(data[i].shirtNumber);
+                        tbPlayerName.val(data[i].playerName);
+                        hfPlayerId.val(data[i].playerId);
+                        if (data[i].playerFlags > 0)
+                        {
+                            if ((data[i].playerFlags & 1) > 0)
+                            {
+                                cbGoalKeeper = $("#tblLineups").find("input[id$='cbHGoalkeeper_" + i + "']");
+                                cbGoalKeeper[0].checked = true;
+                            }
+                            if ((data[i].playerFlags & 2) > 0)
+                            {
+                                cbCaptain = $("#tblLineups").find("input[id$='cbHCaptain_" + i + "']");
+                                cbCaptain[0].checked = true;
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+    }
+
     $(document).ready(function () {
         $(".tbPlayerShirtNumberSelector").blur(function () {
             
@@ -290,16 +329,21 @@
 
         <tr>
             <td colspan="4">
-                <table width="100%">
+                <table width="100%" id="tblLineups">
 
                     <tr>
-                        <td colspan="2">Команда хозяев</td>
+                        <td colspan="2">
+                            <a onclick="loadLatestLineup(true)"> Команда хозяев</a>
+
+                        </td>
                         <td>
                             <span style="width:20px">Вр</span>
                             <span style="width:20px">Кэп</span>
                             <span style="width:20px">Деб</span>
                         </td>
-                        <td colspan="2">Команда гостей</td>
+                        <td colspan="2">
+                            <a onclick="loadLatestLineup(false)">Команда гостей</a>
+                                </td>
                         <td>
                             <span style="width:20px">Вр</span>
                             <span style="width:20px">Кэп</span>

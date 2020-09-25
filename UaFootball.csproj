@@ -386,6 +386,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="WebApplication\Admin\Admin.ashx.cs">
+      <DependentUpon>Admin.ashx</DependentUpon>
+    </Compile>
     <Compile Include="WebApplication\Admin\CoachEdit.aspx.cs">
       <DependentUpon>CoachEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -713,6 +716,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="WebApplication\Admin\Admin.ashx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DB\UaFootball_DB.dbml.layout">
