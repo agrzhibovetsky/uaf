@@ -180,7 +180,8 @@ namespace UaFootball.WebApplication
             _goalEventFlagsMap.Add(Constants.DB.EventFlags.Razvorot, Constants.UI.EventFlags.Razvorot);
             _goalEventFlagsMap.Add(Constants.DB.EventFlags.GKFault, Constants.UI.EventFlags.GKFault);
             _goalEventFlagsMap.Add(Constants.DB.EventFlags.Dribble, Constants.UI.EventFlags.Dribble);
-            
+            _goalEventFlagsMap.Add(Constants.DB.EventFlags.BetweenLegs, Constants.UI.EventFlags.BetweenLegs);
+
 
             _cardEventFlagsMap = new Dictionary<int, string>();
             _cardEventFlagsMap.Add(Constants.DB.EventFlags.Arm, Constants.UI.EventFlags.Arm);

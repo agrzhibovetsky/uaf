@@ -6,7 +6,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
 <asp:ScriptManager ID="ScriptManager1" runat="server" />
 <script type="text/javascript">
-
+    var notesCount = 0;
+    var noteSetups = null;
     function onTeamChanged(sender) {
         var textBoxControl = sender;
         var hdnInputControl = $("#" + sender.id.replace("tb", "hf"));
@@ -47,17 +48,16 @@
         var isNationalTeamMatch = document.getElementById("cbMatchKind").checked;
         
         if (!isNationalTeamMatch) {
-            var teamId = isHome ? <%=DataItem.HomeClub_Id%> : <%=DataItem.AwayClub_Id%>;
+            var teamId = isHome ? '<%=DataItem.HomeClub_Id%>' : '<%=DataItem.AwayClub_Id%>';
             $.ajax({
                 url: "Admin.ashx?action=getLatestLineup&clubId=" + teamId,
                 data: "",
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
                     for (var i = 0; i < data.length; i++) {
-                        var tbShirtNumber = $("#tblLineups").find("input[id$='tbHomePlayerShirtNumber_" + i + "']");
-                        var tbPlayerName = $("#tblLineups").find("input[id$='tbhomePlayerAutocomplete" + i + "']");
-                        var hfPlayerId = $("#tblLineups").find("input[id$='hfhomePlayerAutocomplete" + i + "']");
+                        var tbShirtNumber = isHome ? $("#tblLineups").find("input[id$='tbHomePlayerShirtNumber_" + i + "']") : $("#tblLineups").find("input[id$='tbAwayPlayerShirtNumber_" + i + "']")
+                        var tbPlayerName = isHome ? $("#tblLineups").find("input[id$='tbhomePlayerAutocomplete" + i + "']") : $("#tblLineups").find("input[id$='awayPlayerAutocomplete" + i + "']");
+                        var hfPlayerId = isHome ? $("#tblLineups").find("input[id$='hfhomePlayerAutocomplete" + i + "']") : $("#tblLineups").find("input[id$='hfawayPlayerAutocomplete" + i + "']");
                         tbShirtNumber.val(data[i].shirtNumber);
                         tbPlayerName.val(data[i].playerName);
                         hfPlayerId.val(data[i].playerId);
@@ -65,12 +65,12 @@
                         {
                             if ((data[i].playerFlags & 1) > 0)
                             {
-                                cbGoalKeeper = $("#tblLineups").find("input[id$='cbHGoalkeeper_" + i + "']");
+                                cbGoalKeeper = isHome ? $("#tblLineups").find("input[id$='cbHGoalkeeper_" + i + "']") : $("#tblLineups").find("input[id$='cbAGoalkeeper_" + i + "']");
                                 cbGoalKeeper[0].checked = true;
                             }
                             if ((data[i].playerFlags & 2) > 0)
                             {
-                                cbCaptain = $("#tblLineups").find("input[id$='cbHCaptain_" + i + "']");
+                                cbCaptain = isHome ? $("#tblLineups").find("input[id$='cbHCaptain_" + i + "']") : $("#tblLineups").find("input[id$='cbACaptain_" + i + "']");
                                 cbCaptain[0].checked = true;
                             }
                         }
@@ -79,6 +79,70 @@
             });
         }
         
+    }
+
+    function loadNoteSetup() {
+        $.ajax({
+                url: "Admin.ashx?action=getNotesTypes",
+                dataType: "json",
+                success: function (data) {
+                    noteSetups = data;
+                    addNote();
+                }
+            });
+    }
+    function addNote() {
+        if (noteSetups == null) {
+            loadNoteSetup()
+        }
+        else {
+            var divContainer = $("#divNoteContainer")[0];
+            var div = document.createElement("div");
+            var noteTypesDropdown = createDropdown("matchNoteCode_" + notesCount, "vertical-align:top;", noteSetups, function (d) { return new Option(d.Description, d.Code) });
+            div.appendChild(noteTypesDropdown);
+            var noteOptionsDropdown = createDropdown("matchNoteOption_" + notesCount, "vertical-align:top;  margin:0px 0px 0px 5px; max-width:200px; display:none", null, null);
+            div.appendChild(noteOptionsDropdown);
+            div.appendChild(createTextArea("matchNoteText_" + notesCount, 2, "width:400px; margin:0px 0px 0px 5px;"));
+            
+            divContainer.appendChild(div);
+
+            $("#matchNoteCode_" + notesCount).change(function () {
+                var noteSetup = null;
+                var noteId = this.id.split("_")[1];
+                var $codeDropdown = $(this);
+                var noteOptionsDropdown = $("#matchNoteOption_" + noteId);
+                    
+                for (var i = 0; i < noteSetups.length; i++) {
+                    if (noteSetups[i].Code == $codeDropdown.val()) noteSetup = noteSetups[i];
+                }
+                if (noteSetup.Options != null) {
+                    noteOptionsDropdown.show();
+                    updateDropdown("#matchNoteOption_" + noteId, noteSetup.Options, function (d) { return new Option(d,d) });
+                }
+                else {
+                    noteOptionsDropdown.hide();
+                }
+            });
+
+            $("#matchNoteOption_" + notesCount).change(function () {
+                var tbId = this.id.replace("Option", "Text");
+                $("#" + tbId).val($(this).val());
+            });
+
+            notesCount++;
+        }
+    }
+
+    function deleteNote(sender) {
+        var noteId = sender.id.split("_")[1];
+
+         $.ajax({
+                url: "Admin.ashx?action=deleteMatchNote&id=" + noteId,
+                dataType: "json",
+                success: function (data) {
+                    $(sender).text("Удалено");
+             }
+        });
     }
 
     $(document).ready(function () {
@@ -109,13 +173,17 @@
                     data: "",
                     dataType: "json",
                     success: function(data){
-                            if (data.id > 0)
-                            {
-                                 tbName.val(data.value);
-								 tbName.css("border", "1px solid black");
-                                 hfId.val(data.id);
-                            }
+                        if (data.id > 0) {
+                            tbName.val(data.value);
+                            tbName.css("border", "1px solid black");
+                            hfId.val(data.id);
                         }
+                        else {
+                            tbName.val("");
+                            tbName.css("border", "1px solid red");
+                            hfId.val("");
+                        }
+                    }
                 });
             }
             
@@ -484,6 +552,30 @@
                     
                 </asp:CheckBoxList>
             </td>
+        </tr>
+
+        <tr>
+            <td colspan="4">
+                <div>Примечания:</div>
+                <div>
+                    <table>
+                    <asp:Repeater ID="rptNotes" runat="server">
+                        <ItemTemplate>
+                            <tr>
+                                <td><%#Eval("CodeDescription")%></td>
+                                <td><%#Eval("Text")%></td>
+                                <td><a href="javascript:void(0)"; onclick="deleteNote(this)" id="btnDelNote_<%#Eval("MatchNote_Id")%>">Удалить</a></td>
+                            </tr>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                    </table>
+                </div>
+                <div id="divNoteContainer">
+                    
+                </div>
+                <input type="button" value="Добавить" onclick="addNote()" />
+            </td>
+
         </tr>
 
          <tr>

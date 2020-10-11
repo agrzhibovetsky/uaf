@@ -195,6 +195,7 @@
       <Association Name="Match_MatchEvent" Member="MatchEvents" ThisKey="Match_Id" OtherKey="Match_Id" Type="MatchEvent" />
       <Association Name="Match_MultimediaTag" Member="MultimediaTags" ThisKey="Match_Id" OtherKey="Match_ID" Type="MultimediaTag" />
       <Association Name="Match_MatchLineup" Member="MatchLineups" ThisKey="Match_Id" OtherKey="Match_Id" Type="MatchLineup" />
+      <Association Name="Match_MatchNote" Member="MatchNotes" ThisKey="Match_Id" OtherKey="Match_Id" Type="MatchNote" />
       <Association Name="Club_Match" Member="Club" ThisKey="HomeClub_Id" OtherKey="Club_ID" Type="Club" IsForeignKey="true" />
       <Association Name="Club_Match1" Member="Club1" ThisKey="AwayClub_Id" OtherKey="Club_ID" Type="Club" IsForeignKey="true" />
       <Association Name="Competition_Match" Member="Competition" ThisKey="Competition_Id" OtherKey="Competition_Id" Type="Competition" IsForeignKey="true" />
@@ -335,6 +336,15 @@
       <Column Name="AwayClub_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="HomeNationalTeam_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="AwayNationalTeam_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MatchNotes" Member="MatchNotes">
+    <Type Name="MatchNote">
+      <Column Name="MatchNote_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Match_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="VarChar(2048) NOT NULL" CanBeNull="false" />
+      <Association Name="Match_MatchNote" Member="Match" ThisKey="Match_Id" OtherKey="Match_Id" Type="Match" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.Player_GetClubs" Method="Player_GetClubs">

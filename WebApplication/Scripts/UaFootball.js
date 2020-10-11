@@ -39,3 +39,40 @@ function open_colorbox_video(e, url) {
     if (e.stopPropagation) e.stopPropagation();
     $.colorbox({ width: "900px", height: "800px", href: url });
 }
+
+function createDropdown(id, style, data, createOptionCallback) {
+    var newSelect = document.createElement("select");
+    newSelect.id = id;
+    newSelect.name = id;
+    if (data !== null) {
+        for (var i = 0; i < data.length; i++) {
+            var option = createOptionCallback(data[i]);
+            newSelect.appendChild(option);
+        }
+    }
+    $(newSelect).attr("style", style);
+    return newSelect;
+}
+
+function updateDropdown(selector, data, createOptionCallback) {
+    var select = $(selector)[0];
+    var selectLength = select.options.length;
+    for (var i = selectLength-1; i >-1; i--) {
+        select.options.remove(i);
+    }
+    for (i = 0; i < data.length; i++) {
+        var option = createOptionCallback(data[i]);
+        select.options.add(option);
+    }
+}
+
+function createTextArea(id, rows, style) {
+    var newInput = document.createElement("textarea");
+    newInput.id = id;
+    newInput.name = id;
+   // $(newInput).attr("name", id);
+    $(newInput).attr("rows", rows);
+    $(newInput).attr("style", style);
+
+    return newInput;
+}

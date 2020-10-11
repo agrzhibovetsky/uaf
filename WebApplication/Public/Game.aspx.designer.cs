@@ -22,6 +22,24 @@ namespace UaFootball.WebApplication {
         protected global::System.Web.UI.WebControls.Label lblSpecialNotes;
         
         /// <summary>
+        /// mnHomeLineup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::UaFootball.WebApplication.Controls.MatchNotes mnHomeLineup;
+        
+        /// <summary>
+        /// mnAwayLineup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::UaFootball.WebApplication.Controls.MatchNotes mnAwayLineup;
+        
+        /// <summary>
         /// iHomeTeamLogo control.
         /// </summary>
         /// <remarks>
@@ -38,6 +56,15 @@ namespace UaFootball.WebApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblNeutralField;
+        
+        /// <summary>
+        /// mnSpect control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::UaFootball.WebApplication.Controls.MatchNotes mnSpect;
         
         /// <summary>
         /// lblStadiumDisq control.
@@ -128,5 +155,14 @@ namespace UaFootball.WebApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rptEvents;
+        
+        /// <summary>
+        /// rptNotes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptNotes;
     }
 }

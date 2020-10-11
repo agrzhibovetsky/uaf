@@ -187,6 +187,9 @@ namespace UaFootball.WebApplication
                 }
             }
 
+            rptNotes.DataSource = DataItem.Notes;
+            rptNotes.DataBind();
+
         }
 
         protected override MatchDTO UIToDTO()
@@ -348,6 +351,16 @@ namespace UaFootball.WebApplication
                 }
 
             }
+
+            foreach (string noteCodeDropdownId in Request.Form.AllKeys.Where(k=>k.StartsWith("matchNoteCode_")))
+            {
+                MatchNoteDTO newNote = new MatchNoteDTO { Code = Request.Form[noteCodeDropdownId], Text= Request.Form[noteCodeDropdownId.Replace("Code", "Text")] };
+                if (!string.IsNullOrEmpty(newNote.Text))
+                {
+                    MatchToSave.Notes.Add(newNote);
+                }
+            }
+
 
             return MatchToSave;
         }

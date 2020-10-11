@@ -141,6 +141,12 @@ namespace UaFootball.AppCode
                 }
             }
 
+            foreach (MatchNoteDTO note in dtoObj.Notes)
+            {
+                MatchNote noteToAdd = new MatchNote { Code = note.Code, Text = note.Text };
+                dbObj.MatchNotes.Add(noteToAdd);
+            }
+
         }
 
         public MatchDTO GetFromDB(int objectId)
@@ -149,7 +155,7 @@ namespace UaFootball.AppCode
             {
                 var dbData = (from match in db.Matches
                               where match.Match_Id == objectId
-                              select new { m = match, r = match.Referee, s = match.Stadium, cn = match.Stadium.City.City_Name }).Single();
+                              select new { m = match, r = match.Referee, s = match.Stadium, cn = match.Stadium.City.City_Name, compName = match.Competition.Competition_Name, compStageName = match.CompetitionStage.CompetitionStage_Name }).Single();
                 
                 MatchDTO ret = ConvertDBObjectToDTO(dbData.m);
 
@@ -160,6 +166,9 @@ namespace UaFootball.AppCode
 
                 ret.Stadium = new StadiumDTOHelper().ConvertDBObjectToDTO(dbData.s);
                 ret.Stadium.City_Name = dbData.cn;
+
+                ret.CompetitionName = dbData.compName;
+                ret.CompetitionStageName = dbData.compStageName;
                 
                 if (ret.HomeNationalTeam_Id.HasValue)
                 {
@@ -249,6 +258,16 @@ namespace UaFootball.AppCode
                 ret.Multimedia = new List<MultimediaDTO>();
                 ret.Multimedia.AddRange(multimedia);
 
+                IQueryable<MatchNoteDTO> notes = from note in db.MatchNotes
+                                                 where note.Match_Id == objectId
+                                                 select new MatchNoteDTO { Code = note.Code.Trim(), Text = note.Text, MatchNote_Id = note.MatchNote_Id };
+                ret.Notes.AddRange(notes);
+                for(int i=0; i<ret.Notes.Count;i++)
+                {
+                    MatchNoteDTO note = ret.Notes[i];
+                    note.CodeDescription = Constants.MatchNoteSetups.Single(s => s.Code == note.Code).Description;
+                    note.RowIndex = i;
+                }
                 return (ret);
             }
         }

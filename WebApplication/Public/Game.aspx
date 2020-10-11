@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WebApplication/Site.master" AutoEventWireup="true" CodeBehind="Game.aspx.cs" Inherits="UaFootball.WebApplication.Game" %>
 <%@ Register TagPrefix="UaFootball" TagName="MatchEvent" Src="~/WebApplication/Controls/MatchEvent.ascx" %>
+<%@ Register TagPrefix="UaFootball" TagName="MatchNote" Src="~/WebApplication/Controls/MatchNotes.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="Stylesheet" href="../Styles/colorbox.css" />
     <title><%=DataItem.HomeTeamName%> - <%=DataItem.AwayTeamName%> (<%=FormatDate(DataItem.Date)%>)</title>
@@ -9,9 +10,15 @@
 <table width="100%">
     <tr>
         <td align="center">
-            <table width="70%" style="border: 1px solid black">
+            <table width="80%">
                 <tr>
-                    <td>
+                    <td style="border-bottom: 1px solid black;">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <%=DataItem.CompetitionName%><%=string.IsNullOrEmpty(DataItem.CompetitionStageName) ? "" : ". " +  DataItem.CompetitionStageName %>. 
                         <asp:Label ID="lblSpecialNotes" runat="server" CssClass="matchSpecialNote"></asp:Label>
                     </td>
                 </tr>
@@ -19,9 +26,15 @@
                     <td>
                         <table width="100%">
                             <tr>
-                                <td width="200" align="center" class="matchReportClubName"><%=DataItem.HomeTeamName%></td>
-                                <td align="center" class="matchReportClubName"><%=FormatScore(DataItem.HomeScore, DataItem.AwayScore, DataItem.HomePenaltyScore, DataItem.AwayPenaltyScore)%></td>
-                                <td width="200" align="center" class="matchReportClubName"><%=DataItem.AwayTeamName%></td>
+                                <td width="33%" align="center" class="matchReportClubName">
+                                    <%=DataItem.HomeTeamName%> 
+                                    <UaFootball:MatchNote id="mnHomeLineup" runat="server" NoteTypeCode="genHmeLnup"></UaFootball:MatchNote>
+                                </td>
+                                <td width="33%" align="center" class="matchReportClubName"><%=FormatScore(DataItem.HomeScore, DataItem.AwayScore, DataItem.HomePenaltyScore, DataItem.AwayPenaltyScore)%></td>
+                                <td width="33%" align="center" class="matchReportClubName">
+                                    <%=DataItem.AwayTeamName%>
+                                    <UaFootball:MatchNote id="mnAwayLineup" runat="server" NoteTypeCode="genAwyLnup"></UaFootball:MatchNote>
+                                </td>
                             </tr>
                             <tr>
                                 <td  align="center">
@@ -61,9 +74,11 @@
                                         <tr>
                                             <td>
                                                 Зрители
+                                                
                                             </td>
                                             <td>
                                                 <%=FormatInt(DataItem.Spectators) %>
+                                                <UaFootball:MatchNote id="mnSpect" runat="server" NoteTypeCode="genSpect"></UaFootball:MatchNote>
                                                 <asp:Label ID="lblStadiumDisq" runat="server" Text="***" ToolTip="Стадион подвергнут санкциям, матч проходил без зрителей" ForeColor="Red" Visible="false"></asp:Label>
                                             </td>
                                         </tr>
@@ -95,7 +110,11 @@
                         </table>
                     </td>
                 </tr>
-                
+                <tr>
+                    <td style="border-bottom: 1px solid black;">
+                        &nbsp;
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <table width="100%" cellpadding="5">
@@ -173,6 +192,22 @@
                 </tr>
                 <tr>
                     <td onclick='window.open(document.location.href.replace("Public/Game", "Admin/MatchEdit"))' style="height:5px; background-color:#EEEEEE;"  >
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:Repeater ID="rptNotes" runat="server">
+                            <ItemTemplate>
+                                <div>
+                                    <span id="matchNote_<%#Eval("RowIndex")%>">
+                                        <sup>[<%#Eval("RowIndex")%>]</sup>
+                                    </span>
+                                    <span>
+                                        <%#Eval("Text")%>
+                                    </span>
+                                </div>
+                            </ItemTemplate>
+                        </asp:Repeater>
                     </td>
                 </tr>
             </table>

@@ -94,10 +94,13 @@ namespace UaFootball.AppCode
 
         public List<MultimediaDTO> Multimedia { get; set; }
 
+        public List<MatchNoteDTO> Notes { get; set; }
+
         public MatchDTO()
         {
             Lineup = new List<MatchLineupDTO>();
             Events = new List<MatchEventDTO>();
+            Notes = new List<MatchNoteDTO>();
         }
     } 
 }

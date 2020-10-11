@@ -138,6 +138,7 @@ namespace UaFootball.AppCode
                 public const int Razvorot = 0x800000;
                 public const int GKFault = 0x1000000;
                 public const int Dribble = 0x2000000;
+                public const int BetweenLegs = 0x4000000;
 
                 //Substitution
                 public const int Injury = 0x01;
@@ -256,6 +257,7 @@ namespace UaFootball.AppCode
                 public const string Razvorot = "Удар с разворота/через себя";
                 public const string GKFault = "Ошибка вратаря";
                 public const string Dribble = "Дриблинг, техника";
+                public const string BetweenLegs = "Между ног вратарю";
 
                 //Substitution
                 public const string Injury = "Травма";
@@ -328,8 +330,26 @@ namespace UaFootball.AppCode
             public const string ColorboxKey = "Colorbox";
         }
 
+        public static List<MatchNoteSetup> MatchNoteSetups
+        {
+            get;
+        }
+        
+
+
+
         static Constants()
         {
+            MatchNoteSetups = new List<MatchNoteSetup>();
+            MatchNoteSetup genericMatch = new MatchNoteSetup { Code = "genMatch", Description = "Общее о матче" };
+            MatchNoteSetup noSpectators = new MatchNoteSetup { Code = "noSpect", Description = "Отсутвие зрителей", Options = new List<string>() };
+            noSpectators.Options.AddRange(new string[] { "Дисквалифицирован - выбегание зрителей", "Дисквалифицирован - расизм", "Запрет на пристуствие зрителей по причине эпидемиологического характера" });
+            MatchNoteSetup genericSpectators = new MatchNoteSetup { Code = "genSpect", Description = "Зрители" };
+            MatchNoteSetup genHomeLineup = new MatchNoteSetup { Code = "genHmeLnup", Description = "Состав хозяев" };
+            MatchNoteSetup genAwayLineup = new MatchNoteSetup { Code = "genAwyLnup", Description = "Состав гостей" };
+            MatchNoteSetup genEvents = new MatchNoteSetup { Code = "genEvents", Description = "События матча" };
+            MatchNoteSetup genStadium = new MatchNoteSetup { Code = "genStadium", Description = "Стадион" };
+            MatchNoteSetups.AddRange(new MatchNoteSetup[] { genericMatch, noSpectators, genericSpectators, genHomeLineup, genAwayLineup, genEvents, genStadium });
         }
     } 
 }

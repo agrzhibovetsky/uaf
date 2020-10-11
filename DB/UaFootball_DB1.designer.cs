@@ -84,6 +84,9 @@ namespace UaFootball.DB
     partial void InsertMultimedia(Multimedia instance);
     partial void UpdateMultimedia(Multimedia instance);
     partial void DeleteMultimedia(Multimedia instance);
+    partial void InsertMatchNote(MatchNote instance);
+    partial void UpdateMatchNote(MatchNote instance);
+    partial void DeleteMatchNote(MatchNote instance);
     #endregion
 		
 		public UaFootball_DBDataContext() : 
@@ -305,6 +308,14 @@ namespace UaFootball.DB
 			get
 			{
 				return this.GetTable<vwMatch>();
+			}
+		}
+		
+		public System.Data.Linq.Table<MatchNote> MatchNotes
+		{
+			get
+			{
+				return this.GetTable<MatchNote>();
 			}
 		}
 		
@@ -4057,6 +4068,8 @@ namespace UaFootball.DB
 		
 		private EntitySet<MatchLineup> _MatchLineups;
 		
+		private EntitySet<MatchNote> _MatchNotes;
+		
 		private EntityRef<Club> _Club;
 		
 		private EntityRef<Club> _Club1;
@@ -4128,6 +4141,7 @@ namespace UaFootball.DB
 			this._MatchEvents = new EntitySet<MatchEvent>(new Action<MatchEvent>(this.attach_MatchEvents), new Action<MatchEvent>(this.detach_MatchEvents));
 			this._MultimediaTags = new EntitySet<MultimediaTag>(new Action<MultimediaTag>(this.attach_MultimediaTags), new Action<MultimediaTag>(this.detach_MultimediaTags));
 			this._MatchLineups = new EntitySet<MatchLineup>(new Action<MatchLineup>(this.attach_MatchLineups), new Action<MatchLineup>(this.detach_MatchLineups));
+			this._MatchNotes = new EntitySet<MatchNote>(new Action<MatchNote>(this.attach_MatchNotes), new Action<MatchNote>(this.detach_MatchNotes));
 			this._Club = default(EntityRef<Club>);
 			this._Club1 = default(EntityRef<Club>);
 			this._Competition = default(EntityRef<Competition>);
@@ -4635,6 +4649,19 @@ namespace UaFootball.DB
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Match_MatchNote", Storage="_MatchNotes", ThisKey="Match_Id", OtherKey="Match_Id")]
+		public EntitySet<MatchNote> MatchNotes
+		{
+			get
+			{
+				return this._MatchNotes;
+			}
+			set
+			{
+				this._MatchNotes.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Club_Match", Storage="_Club", ThisKey="HomeClub_Id", OtherKey="Club_ID", IsForeignKey=true)]
 		public Club Club
 		{
@@ -4992,6 +5019,18 @@ namespace UaFootball.DB
 		}
 		
 		private void detach_MatchLineups(MatchLineup entity)
+		{
+			this.SendPropertyChanging();
+			entity.Match = null;
+		}
+		
+		private void attach_MatchNotes(MatchNote entity)
+		{
+			this.SendPropertyChanging();
+			entity.Match = this;
+		}
+		
+		private void detach_MatchNotes(MatchNote entity)
 		{
 			this.SendPropertyChanging();
 			entity.Match = null;
@@ -7152,6 +7191,181 @@ namespace UaFootball.DB
 				{
 					this._AwayNationalTeam_Id = value;
 				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MatchNotes")]
+	public partial class MatchNote : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _MatchNote_Id;
+		
+		private int _Match_Id;
+		
+		private string _Code;
+		
+		private string _Text;
+		
+		private EntityRef<Match> _Match;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnMatchNote_IdChanging(int value);
+    partial void OnMatchNote_IdChanged();
+    partial void OnMatch_IdChanging(int value);
+    partial void OnMatch_IdChanged();
+    partial void OnCodeChanging(string value);
+    partial void OnCodeChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    #endregion
+		
+		public MatchNote()
+		{
+			this._Match = default(EntityRef<Match>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MatchNote_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int MatchNote_Id
+		{
+			get
+			{
+				return this._MatchNote_Id;
+			}
+			set
+			{
+				if ((this._MatchNote_Id != value))
+				{
+					this.OnMatchNote_IdChanging(value);
+					this.SendPropertyChanging();
+					this._MatchNote_Id = value;
+					this.SendPropertyChanged("MatchNote_Id");
+					this.OnMatchNote_IdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Match_Id", DbType="Int NOT NULL")]
+		public int Match_Id
+		{
+			get
+			{
+				return this._Match_Id;
+			}
+			set
+			{
+				if ((this._Match_Id != value))
+				{
+					if (this._Match.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMatch_IdChanging(value);
+					this.SendPropertyChanging();
+					this._Match_Id = value;
+					this.SendPropertyChanged("Match_Id");
+					this.OnMatch_IdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Code", DbType="NChar(10) NOT NULL", CanBeNull=false)]
+		public string Code
+		{
+			get
+			{
+				return this._Code;
+			}
+			set
+			{
+				if ((this._Code != value))
+				{
+					this.OnCodeChanging(value);
+					this.SendPropertyChanging();
+					this._Code = value;
+					this.SendPropertyChanged("Code");
+					this.OnCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="VarChar(2048) NOT NULL", CanBeNull=false)]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Match_MatchNote", Storage="_Match", ThisKey="Match_Id", OtherKey="Match_Id", IsForeignKey=true)]
+		public Match Match
+		{
+			get
+			{
+				return this._Match.Entity;
+			}
+			set
+			{
+				Match previousValue = this._Match.Entity;
+				if (((previousValue != value) 
+							|| (this._Match.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Match.Entity = null;
+						previousValue.MatchNotes.Remove(this);
+					}
+					this._Match.Entity = value;
+					if ((value != null))
+					{
+						value.MatchNotes.Add(this);
+						this._Match_Id = value.Match_Id;
+					}
+					else
+					{
+						this._Match_Id = default(int);
+					}
+					this.SendPropertyChanged("Match");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

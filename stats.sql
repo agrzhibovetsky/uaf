@@ -51,7 +51,7 @@ order by c desc
 
 
 /* UNT goals without uploaded video*/
-select m.Match_ID, m.HomeTeam, m.AwayTeam, p.First_Name, p.Last_Name, case when me.EventFlags=0 and mt.MultimediaTag_ID is not null THEN 'Missing tags' ELSE 'Missing video' END [Desription] from MatchEvents me
+select m.Match_ID, m.Date, m.HomeTeam, m.AwayTeam, p.First_Name, p.Last_Name, case when me.EventFlags=0 and mt.MultimediaTag_ID is not null THEN 'Missing tags' ELSE 'Missing video' END [Desription] from MatchEvents me
 join Players p on me.Player1_Id = p.Player_Id
 join vwMatches m on me.Match_Id = m.Match_Id
 left outer join MultimediaTags mt on mt.MatchEvent_ID = me.MatchEvent_Id
@@ -61,7 +61,7 @@ select Match_Id from Matches
 where AwayNationalTeam_Id =1 or HomeNationalTeam_Id = 1 
 )
 and (Event_Cd='G' or Event_Cd='P') and p.Country_Id = 1 and EventFlags & 128 =0 and (mt.MultimediaTag_ID is null or me.EventFlags=0)
-order by me.Match_Id
+order by m.Date desc
 
 /* eurocup season - goals without uploaded video or tags */
 select me.MatchEvent_ID, me.Event_Cd, me.Minute, hc.Club_Name, ac.Club_Name, p.First_Name, p.Last_Name, mt.MultimediaTag_ID, EventFlags 
@@ -84,6 +84,21 @@ and (Event_Cd='G' or Event_Cd='P') and ((ml.IsHomeTeamPlayer = 1 and hcn.Country
 and EventFlags & 128 =0 and (MultimediaTag_ID is null or EventFlags=0)
 order by me.Match_Id
 
+/* UNT - number of photos */
+select pCount.cnt, pCount.cnt, m.Date, m.HomeTeam, m.AwayTeam, m.HomeScore, m.AwayScore
+from
+       vwMatches m
+	   left outer join 
+	   (
+			select mt.Match_ID, count(*) cnt from
+			Multimedia mm
+			join MultimediaTags mt on mm.Multimedia_ID = mt.Multimedia_ID
+			where mm.MultimediaSubType_CD='MP'
+			group by mt.Match_ID
+	   ) pCount on pCount.Match_ID = m.Match_ID
+Where 
+		m.HomeNationalTeam_Id=1 or m.AwayNationalTeam_Id = 1	
+Order by m.Date desc	
 
 /* eurocup season - # of photos */
 select d.PhotoCount, g.HomeTeam, g.AwayTeam, g.Date from 

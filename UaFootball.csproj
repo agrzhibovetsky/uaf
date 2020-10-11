@@ -101,6 +101,7 @@
     <Content Include="WebApplication\Controls\MatchEvent.ascx" />
     <Content Include="WebApplication\Controls\MatchList.ascx" />
     <Content Include="WebApplication\Controls\MatchLog_Player.ascx" />
+    <Content Include="WebApplication\Controls\MatchNotes.ascx" />
     <Content Include="WebApplication\Default.aspx" />
     <Content Include="WebApplication\Images\close.gif" />
     <Content Include="WebApplication\Images\delete.gif" />
@@ -355,6 +356,7 @@
     <Compile Include="AppCode\DTOs\CityDTO.cs" />
     <Compile Include="AppCode\DTOs\CityDTOHelper.cs" />
     <Compile Include="AppCode\DTOs\ClubDTOComparer.cs" />
+    <Compile Include="AppCode\DTOs\MatchNoteDTO.cs" />
     <Compile Include="AppCode\DTOs\NationalTeamDTOHelper.cs" />
     <Compile Include="AppCode\DTOs\NationalTeamDTO.cs" />
     <Compile Include="AppCode\DTOs\ClubDTO.cs" />
@@ -379,6 +381,7 @@
     <Compile Include="AppCode\Extensions.cs" />
     <Compile Include="AppCode\GenericReferenceObject.cs" />
     <Compile Include="AppCode\IDTOHelper.cs" />
+    <Compile Include="AppCode\MatchNoteSetup.cs" />
     <Compile Include="DB\Multimedia.cs" />
     <Compile Include="DB\MultimediaTag.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -402,6 +405,13 @@
     </Compile>
     <Compile Include="WebApplication\Admin\CoachList.aspx.designer.cs">
       <DependentUpon>CoachList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Controls\MatchNotes.ascx.cs">
+      <DependentUpon>MatchNotes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Controls\MatchNotes.ascx.designer.cs">
+      <DependentUpon>MatchNotes.ascx</DependentUpon>
     </Compile>
     <Compile Include="WebApplication\Public\NationalTeam.aspx.cs">
       <DependentUpon>NationalTeam.aspx</DependentUpon>

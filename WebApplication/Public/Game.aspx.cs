@@ -55,8 +55,8 @@ namespace UaFootball.WebApplication
                     {
                         DataItem.SpecialNote += "Матч закончился в дополнительное время по правилу золотого гола";
                     }
-                    lblSpecialNotes.Text = DataItem.SpecialNote;
-                    lblSpecialNotes.Visible = !DataItem.SpecialNote.IsEmpty();
+                    /*lblSpecialNotes.Text = DataItem.SpecialNote;
+                    lblSpecialNotes.Visible = !DataItem.SpecialNote.IsEmpty();*/
 
                     int imageCount = DataItem.Multimedia.Count(m => m.MultimediaType_CD == Constants.DB.MutlimediaTypes.Image);
                     int videoCount = DataItem.Multimedia.Count(m => m.MultimediaType_CD == Constants.DB.MutlimediaTypes.Video);
@@ -117,6 +117,16 @@ namespace UaFootball.WebApplication
                     rptEvents.DataSource = DataItem.Events.Where(ev=>ev.Event_Cd != Constants.DB.EventTypeCodes.Substitution).OrderBy(ev=>ev.Minute);
                     rptEvents.DataBind();
 
+                    rptNotes.DataSource = DataItem.Notes;
+                    rptNotes.DataBind();
+
+                    Controls.MatchNotes[] matchNotes = { mnSpect, mnAwayLineup, mnHomeLineup };
+                    foreach (Controls.MatchNotes mn in matchNotes)
+                    {
+                        mn.DataSource = DataItem.Notes;
+                        mn.DataBind();
+                    }
+                    
                     lblStadiumDisq.Visible = (DataItem.Flags.HasValue && ((DataItem.Flags & Constants.DB.MatchFlags.StadiumDisqualifiedNoSpectators) > 0));
                     lblNeutralField.Visible = (DataItem.Flags.HasValue && ((DataItem.Flags & Constants.DB.MatchFlags.NeutralField) > 0));
                     

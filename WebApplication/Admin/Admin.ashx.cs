@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using UaFootball.AppCode;
 using UaFootball.DB;
 
 namespace UaFootball.WebApplication.Admin
@@ -18,12 +19,23 @@ namespace UaFootball.WebApplication.Admin
             
             context.Response.ContentType = "text/plain";
             string action = context.Request["action"];
-            string response = "OK";
+            string response = "{\"result\": \"OK\"}";
             switch (action)
             {
                 case "getLatestLineup":
                     {
                         response = GetLatestLineup(context.Request);
+                        break;
+                    }
+                case "getNotesTypes":
+                    {
+                        response = GetNotesTypes();
+                        break;
+                    }
+                case "deleteMatchNote":
+                    {
+                        int id = int.Parse(context.Request["id"]);
+                        DeleteNote(id);
                         break;
                     }
                 default:
@@ -34,7 +46,26 @@ namespace UaFootball.WebApplication.Admin
             context.Response.Write(response);
         }
 
-        public string GetLatestLineup(HttpRequest request)
+        private void DeleteNote(int noteId)
+        {
+            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            {
+                MatchNote noteToDelete = db.MatchNotes.SingleOrDefault(mn => mn.MatchNote_Id == noteId);
+                if (noteToDelete != null)
+                {
+                    db.MatchNotes.DeleteOnSubmit(noteToDelete);
+                }
+                db.SubmitChanges();
+            }
+        }
+
+        private string GetNotesTypes()
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            return serializer.Serialize(Constants.MatchNoteSetups);
+        }
+
+        private string GetLatestLineup(HttpRequest request)
         {
             int clubId = 0;
             int nationalTeamId = 0;
