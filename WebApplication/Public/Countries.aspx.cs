@@ -4,19 +4,20 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using UaFootball.DB;
+using UaFDatabase;
+using UaFootball.AppCode;
 using AjaxControlToolkit;
 
 namespace UaFootball.WebApplication.Public
 {
     public partial class Countries : System.Web.UI.Page
     {
-        private List<UaFootball.DB.Country> _countryCache;
+        private List<UaFDatabase.Country> _countryCache;
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 _countryCache = db.Countries.ToList();
                 List<FIFAAssociation> ass = db.FIFAAssociations.ToList();
@@ -67,7 +68,7 @@ namespace UaFootball.WebApplication.Public
         protected void rptCountries_DataItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             HyperLink hlCounry = e.Item.FindControl("hlCountry") as HyperLink;
-            UaFootball.DB.Country c = e.Item.DataItem as UaFootball.DB.Country;
+            UaFDatabase.Country c = e.Item.DataItem as UaFDatabase.Country;
             hlCounry.Text = c.Country_Name;
             hlCounry.NavigateUrl = "~/WebApplication/Public/Country.aspx?countryId=" + c.Country_ID;
         }

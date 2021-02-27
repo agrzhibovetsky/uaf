@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using UaFootball.AppCode;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.WebApplication.Public
 {
@@ -58,7 +58,7 @@ namespace UaFootball.WebApplication.Public
                 playerId = int.Parse(Request["PlayerId"]);
             }
             List<jssorData> data = new List<jssorData>();
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
 
                 var multimedias = from m in db.Multimedias
@@ -89,7 +89,7 @@ namespace UaFootball.WebApplication.Public
                 {
                     Multimedia m = tags.First(t => t.Multimedia.Multimedia_ID == multimediaId).Multimedia;
                     vwMatch game = tags.First(t => t.Multimedia.Multimedia_ID == multimediaId).Match;
-                    List<DB.Player> players = tags.Where(t => t.Multimedia.Multimedia_ID == multimediaId && t.Player != null).Select(t => t.Player).Distinct().ToList();
+                    List<UaFDatabase.Player> players = tags.Where(t => t.Multimedia.Multimedia_ID == multimediaId && t.Player != null).Select(t => t.Player).Distinct().ToList();
                     jssorData d = new jssorData()
                     {
                         filePath = PathHelper.GetWebPath(this, Constants.Paths.MutlimediaWebRoot, m.FilePath, m.FileName),

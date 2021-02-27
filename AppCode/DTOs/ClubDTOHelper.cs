@@ -3,7 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.AppCode
 {
@@ -38,7 +38,7 @@ namespace UaFootball.AppCode
 
         public ClubDTO GetFromDB(int objectId)
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 vwClub c = db.vwClubs.Single(cc => cc.Club_ID == objectId);
                 ClubDTO dtoObj = ConvertDBObjectToDTO(c);
@@ -49,7 +49,7 @@ namespace UaFootball.AppCode
 
                 if (mLogo != null)
                 {
-                    dtoObj.Logo = mLogo.ToDTO();
+                    dtoObj.Logo = MultimediaDTO.FromDBObject(mLogo);
                     dtoObj.Logo.IsUploaded = true;
                 }
 
@@ -61,7 +61,7 @@ namespace UaFootball.AppCode
         {
             Club dbObj = new Club();
 
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 if (dtoObj.Club_ID > 0)
                 {
@@ -87,7 +87,7 @@ namespace UaFootball.AppCode
 
         public void DeleteFromDB(int objectId)
         {
-            using (var db = new UaFootball_DBDataContext())
+            using (var db = DBManager.GetDB())
             {
                 Club c = db.Clubs.Single(cc => cc.Club_ID == objectId);
                 db.Clubs.DeleteOnSubmit(c);
@@ -97,7 +97,7 @@ namespace UaFootball.AppCode
 
         public List<ClubDTO> GetAllFromDB()
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 IEnumerable<ClubDTO> objects = from s in db.Clubs
                                                orderby s.Club_Name

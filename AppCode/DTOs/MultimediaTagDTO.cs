@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using UaFDatabase;
 
 namespace UaFootball.AppCode
 {
@@ -17,5 +18,18 @@ namespace UaFootball.AppCode
         public string Description { get; set; }
         public int tmpId { get; set; }
         public int MultimediaTag_ID { get; set; }
+
+        public static MultimediaTagDTO FromDBObject(MultimediaTag mt)
+        {
+            return new MultimediaTagDTO
+            {
+                Club_ID = mt.Club_ID,
+                Match_ID = mt.Match_ID,
+                MatchEvent_ID = mt.MatchEvent_ID,
+                NationalTeam_ID = mt.NationalTeam_ID,
+                Player_ID = mt.Player_ID
+            };
+        }
     }
+    
 }

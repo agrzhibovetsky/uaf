@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
 using System.Web;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.AppCode
 {
@@ -151,7 +151,7 @@ namespace UaFootball.AppCode
 
         public MatchDTO GetFromDB(int objectId)
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 var dbData = (from match in db.Matches
                               where match.Match_Id == objectId
@@ -176,17 +176,17 @@ namespace UaFootball.AppCode
                     ret.AwayTeamName = db.NationalTeams.Single(nt => nt.NationalTeam_Id == ret.AwayNationalTeam_Id).Country.Country_Name;
                     MultimediaTag homeTeamLogoTag = db.MultimediaTags.Where(t => t.NationalTeam_ID == ret.HomeNationalTeam_Id && t.Multimedia.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.NationalTeamLogo).OrderByDescending(m => m.Multimedia_ID).FirstOrDefault();
                     if (homeTeamLogoTag != null)
-                        ret.HomeTeamLogo = homeTeamLogoTag.Multimedia.ToDTO();
+                        ret.HomeTeamLogo = MultimediaDTO.FromDBObject(homeTeamLogoTag.Multimedia);
                     MultimediaTag awayTeamLogoTag = db.MultimediaTags.Where(t => t.NationalTeam_ID == ret.AwayNationalTeam_Id && t.Multimedia.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.NationalTeamLogo).OrderByDescending(m => m.Multimedia_ID).FirstOrDefault();
                     if (awayTeamLogoTag != null)
-                        ret.AwayTeamLogo = awayTeamLogoTag.Multimedia.ToDTO();
+                        ret.AwayTeamLogo = MultimediaDTO.FromDBObject(awayTeamLogoTag.Multimedia);
                 }
                 else
                 {
                     ret.HomeTeamName = db.Clubs.Single(c => c.Club_ID == ret.HomeClub_Id).Club_Name;
                     ret.AwayTeamName = db.Clubs.Single(c => c.Club_ID == ret.AwayClub_Id).Club_Name;
-                    ret.HomeTeamLogo = db.MultimediaTags.Where(t => t.Club_ID == ret.HomeClub_Id && t.Multimedia.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.ClubLogo).OrderByDescending(m => m.Multimedia_ID).Select(m => m.Multimedia.ToDTO()).FirstOrDefault();
-                    ret.AwayTeamLogo = db.MultimediaTags.Where(t => t.Club_ID == ret.AwayClub_Id && t.Multimedia.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.ClubLogo).OrderByDescending(m => m.Multimedia_ID).Select(m => m.Multimedia.ToDTO()).FirstOrDefault();
+                    ret.HomeTeamLogo = db.MultimediaTags.Where(t => t.Club_ID == ret.HomeClub_Id && t.Multimedia.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.ClubLogo).OrderByDescending(m => m.Multimedia_ID).Select(m => MultimediaDTO.FromDBObject(m.Multimedia)).FirstOrDefault();
+                    ret.AwayTeamLogo = db.MultimediaTags.Where(t => t.Club_ID == ret.AwayClub_Id && t.Multimedia.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.ClubLogo).OrderByDescending(m => m.Multimedia_ID).Select(m => MultimediaDTO.FromDBObject(m.Multimedia)).FirstOrDefault();
                 }
 
                 IQueryable<MatchLineupDTO> lineup = from matchLineup in db.MatchLineups
@@ -276,7 +276,7 @@ namespace UaFootball.AppCode
         {
             Match dbObj = new Match();
 
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 if (dtoObj.Match_Id > 0)
                 {
@@ -298,7 +298,7 @@ namespace UaFootball.AppCode
 
         public void DeleteFromDB(int objectId)
         {
-            using (var db = new UaFootball_DBDataContext())
+            using (var db = DBManager.GetDB())
             {
                 Match c = db.Matches.Single(cc => cc.Match_Id == objectId);
                 db.Matches.DeleteOnSubmit(c);
@@ -308,7 +308,7 @@ namespace UaFootball.AppCode
 
         public List<MatchDTO> GetAllFromDB()
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 List<MatchDTO> ret = new List<MatchDTO>();
                 var Matches = (from dbObj in db.Matches
@@ -346,7 +346,7 @@ namespace UaFootball.AppCode
         public List<MatchDTO> GetListFromDB(SearchParameters.Match searchParam)
         {
             List<MatchDTO> ret = new List<MatchDTO>();
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 var dbData = from matchData in db.vwMatches select matchData;
 

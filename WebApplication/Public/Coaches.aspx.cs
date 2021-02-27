@@ -4,7 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using UaFootball.DB;
+using UaFDatabase;
+using UaFootball.AppCode;
 
 namespace UaFootball.WebApplication.Public
 {
@@ -12,7 +13,7 @@ namespace UaFootball.WebApplication.Public
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 //var allCoaches = db.vw_CoachesLists.GroupBy(cl => cl.Country_Name).Select(cl=>new {CountryName = cl.Key, Referees = cl}).ToList();
                 var allCoaches = db.vw_CoachesLists.GroupBy(cl => cl.Country_Name).ToList();

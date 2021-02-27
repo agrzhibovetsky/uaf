@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.UI.WebControls;
 using System.Web.Configuration;
 using UaFootball.AppCode;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.WebApplication
 {
@@ -70,7 +70,10 @@ namespace UaFootball.WebApplication
             if (value != null)
             {
                 int iValue = (int)value;
-                return iValue.ToString("#,#");
+                if (iValue == 0)
+                    return "0";
+                else
+                    return iValue.ToString("#,#");
             }
             else return string.Empty;
         }

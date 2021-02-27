@@ -4,7 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using UaFootball.DB;
+using UaFDatabase;
+using UaFootball.AppCode;
 
 namespace UaFootball.WebApplication
 {
@@ -12,7 +13,7 @@ namespace UaFootball.WebApplication
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 var allReferees = db.vw_RefereeLists.GroupBy(cl => cl.Country_Name).ToList();
                 rptCountries.DataSource = allReferees;

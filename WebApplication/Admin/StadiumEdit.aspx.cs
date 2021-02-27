@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using UaFootball.AppCode;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.WebApplication
 {
@@ -18,7 +18,7 @@ namespace UaFootball.WebApplication
 
         protected override void PrepareUI()
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 BindDropdown(db, Constants.ObjectType.City, ddlCities, false, string.Empty);
             }

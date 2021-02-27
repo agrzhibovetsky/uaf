@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using UaFootball.AppCode;
-using UaFootball.DB;
+using UaFDatabase;
 
 
 namespace UaFootball.WebApplication.Public
@@ -25,7 +25,7 @@ namespace UaFootball.WebApplication.Public
                 playerId = int.Parse(Request["PlayerId"]);
             }
 
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 IQueryable<MatchEvent> events = null;
                 if (playerId > 0)

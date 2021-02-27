@@ -4,7 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using UaFootball.DB;
+using UaFDatabase;
+using UaFootball.AppCode;
 
 namespace UaFootball.WebApplication.Public
 {
@@ -18,19 +19,19 @@ namespace UaFootball.WebApplication.Public
                 int countryId = 0;
                 if (int.TryParse(Request["countryId"], out countryId))
                 {
-                    using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                    using (UaFootball_DBDataContext db = DBManager.GetDB())
                     {
                         List<Match> games = db.Matches.Where(m => m.NationalTeam.Country_Id == countryId || m.NationalTeam1.Country_Id == countryId).ToList();
                         Repeater rptMatches = accCountry.Panes["apMatches"].FindControl("rptMatches") as Repeater;
                         rptMatches.DataSource = games;
                         rptMatches.DataBind();
 
-                        List<DB.Club> clubs = db.Clubs.Where(c => c.City.Country_ID == countryId).ToList();
+                        List<UaFDatabase.Club> clubs = db.Clubs.Where(c => c.City.Country_ID == countryId).ToList();
                         Repeater rptClubs = accCountry.Panes["apClubs"].FindControl("rptClubs") as Repeater;
                         rptClubs.DataSource = clubs;
                         rptClubs.DataBind();
 
-                        List<UaFootball.DB.Player> players = db.Players.Where(p => p.Country_Id == countryId).OrderBy(p=>p.Last_Name).ToList();
+                        List<UaFDatabase.Player> players = db.Players.Where(p => p.Country_Id == countryId).OrderBy(p=>p.Last_Name).ToList();
                         Repeater rptPlayers = accCountry.Panes["apPlayers"].FindControl("rptPlayers") as Repeater;
                         rptPlayers.DataSource = players;
                         rptPlayers.DataBind();

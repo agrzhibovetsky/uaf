@@ -16,6 +16,7 @@ namespace UaFootball.WebApplication
         SearchPlayerByShirtNum,
         Coach,
         MostRecentClubCoach,
-        MostRecentStadium
+        MostRecentStadium,
+        AssistPlayer
     }
 }

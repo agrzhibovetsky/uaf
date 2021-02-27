@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using UaFootball.AppCode;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.WebApplication
 {
@@ -38,7 +38,7 @@ namespace UaFootball.WebApplication
             bool isNationalTeamMatch = DataItem.HomeNationalTeam_Id.HasValue;
             string competitionFilter = isNationalTeamMatch ? Constants.DB.CompetitionLevelCd_NationalTeam : Constants.DB.CompetitionLevelCd_Club;
 
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 BindDropdown(db, Constants.ObjectType.Competition, ddlCompetitions, true, competitionFilter);
                 BindDropdown(db, Constants.ObjectType.Season, ddlSeasons, true, competitionFilter);
@@ -218,7 +218,7 @@ namespace UaFootball.WebApplication
                 },
                 CompetitionStage_Id = ddlStage.SelectedValue.ParseInt(true),
                 Match_Id = DataItem.Match_Id,
-                Spectators = tbSpecatators.Text.ParseInt(true),
+                Spectators = tbSpecatators.Text.ParseInt(false),
                 Referee = refereeId == null ? null : new RefereeDTO
                 {
                     Referee_Id = refereeId.Value
@@ -367,7 +367,7 @@ namespace UaFootball.WebApplication
 
         private int GetCountryId(bool isNationalMatch, int? teamId)
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 if (isNationalMatch)
                 {
@@ -441,7 +441,7 @@ namespace UaFootball.WebApplication
             bool isNationalTeamMatch = cbMatchKind.Checked;
             string competitionFilter = isNationalTeamMatch ? Constants.DB.CompetitionLevelCd_NationalTeam : Constants.DB.CompetitionLevelCd_Club;
 
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 BindDropdown(db, Constants.ObjectType.Competition, ddlCompetitions, true, competitionFilter);
                 BindDropdown(db, Constants.ObjectType.Season, ddlSeasons, true, competitionFilter);
@@ -465,7 +465,7 @@ namespace UaFootball.WebApplication
 
         protected void SetCompetitionStages()
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 BindDropdown(db, Constants.ObjectType.CompetitionStage, ddlStage, true, ddlCompetitions.SelectedValue);
             }

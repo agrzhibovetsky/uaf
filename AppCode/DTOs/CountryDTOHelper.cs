@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.AppCode
 {
@@ -33,7 +33,7 @@ namespace UaFootball.AppCode
 
         public CountryDTO GetFromDB(int objectId)
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 Country c = db.Countries.Single(cc => cc.Country_ID == objectId);
                 return ConvertDBObjectToDTO(c);
@@ -44,7 +44,7 @@ namespace UaFootball.AppCode
         {
             Country dbObj = new Country();
 
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 if (dtoObj.Country_ID > 0)
                 {
@@ -69,7 +69,7 @@ namespace UaFootball.AppCode
 
         public void DeleteFromDB(int objectId)
         {
-            using (var db = new UaFootball_DBDataContext())
+            using (var db = DBManager.GetDB())
             {
                 Country c = db.Countries.Single(cc => cc.Country_ID == objectId);
                 db.Countries.DeleteOnSubmit(c);
@@ -79,7 +79,7 @@ namespace UaFootball.AppCode
 
         public List<CountryDTO> GetAllFromDB()
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 IEnumerable<CountryDTO> countries = from country in db.Countries
                                                     orderby country.FIFAAssociation_ID, country.Country_Name

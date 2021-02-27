@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using UaFootball.AppCode;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.WebApplication.Public
 {
@@ -33,7 +33,7 @@ namespace UaFootball.WebApplication.Public
                 
                 if (int.TryParse(Request["MatchId"], out matchId))
                 {
-                    using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                    using (UaFootball_DBDataContext db = DBManager.GetDB())
                     {
                         var mm = from tag in db.MultimediaTags
                                  where tag.Match_ID == matchId && tag.Multimedia.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.MatchVideo
@@ -49,7 +49,7 @@ namespace UaFootball.WebApplication.Public
                     
                     if (int.TryParse(Request["EventId"], out eventId))
                     {
-                        using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                        using (UaFootball_DBDataContext db = DBManager.GetDB())
                         {
                             var mm = from tag in db.MultimediaTags
                                      where tag.MatchEvent_ID == eventId && tag.Multimedia.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.MatchVideo

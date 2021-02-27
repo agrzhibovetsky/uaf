@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
 using UaFootball.AppCode;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.WebApplication.Admin
 {
@@ -48,7 +48,7 @@ namespace UaFootball.WebApplication.Admin
 
         private void DeleteNote(int noteId)
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 MatchNote noteToDelete = db.MatchNotes.SingleOrDefault(mn => mn.MatchNote_Id == noteId);
                 if (noteToDelete != null)
@@ -78,10 +78,10 @@ namespace UaFootball.WebApplication.Admin
 
             if (clubId > 0)
             {
-                using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                using (UaFootball_DBDataContext db = DBManager.GetDB())
                 {
-                    DB.Match curMatch = db.Matches.Where(m => m.HomeClub_Id == clubId || m.AwayClub_Id == clubId).OrderByDescending(m => m.Date).FirstOrDefault();
-                    DB.Match latestMatch = db.Matches.Where(m => m.Match_Id!=curMatch.Match_Id && (m.HomeClub_Id == clubId || m.AwayClub_Id == clubId)).OrderByDescending(m => m.Date).FirstOrDefault();
+                    Match curMatch = db.Matches.Where(m => m.HomeClub_Id == clubId || m.AwayClub_Id == clubId).OrderByDescending(m => m.Date).FirstOrDefault();
+                    Match latestMatch = db.Matches.Where(m => m.Match_Id!=curMatch.Match_Id && (m.HomeClub_Id == clubId || m.AwayClub_Id == clubId)).OrderByDescending(m => m.Date).FirstOrDefault();
 
                     if (latestMatch != null)
                     {

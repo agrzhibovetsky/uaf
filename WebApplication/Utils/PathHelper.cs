@@ -4,7 +4,7 @@ using System.Data.Linq;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.AppCode
 {
@@ -49,12 +49,12 @@ namespace UaFootball.AppCode
                         if (mmedia.MultimediaTags.Count(mm => mm.Match_ID != null) == 1)
                         {
                             int matchId = mmedia.MultimediaTags.Single(mm => mm.Match_ID != null).Match_ID.Value;
-                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            using (UaFootball_DBDataContext db = DBManager.GetDB())
                             {
                                 DataLoadOptions dlo = new DataLoadOptions();
-                                dlo.LoadWith<DB.Match>(m => m.Competition);
-                                dlo.LoadWith<DB.Match>(m => m.Season);
-                                DB.Match match = db.Matches.Single(m => m.Match_Id == matchId);
+                                dlo.LoadWith<UaFDatabase.Match>(m => m.Competition);
+                                dlo.LoadWith<UaFDatabase.Match>(m => m.Season);
+                                UaFDatabase.Match match = db.Matches.Single(m => m.Match_Id == matchId);
                                 string clubTypeString = match.HomeNationalTeam_Id.HasValue ? "NationalTeam" : "Eurocups";
 
                                 path = string.Format("\\{0}\\{1}\\{2}\\{3}\\", "Matches", clubTypeString, match.Season.Season_Cd, match.Competition.Competition_Cd);

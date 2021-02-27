@@ -4,7 +4,7 @@ using System.Data.Linq;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
-using UaFootball.DB;
+using UaFDatabase;
 using System.IO;
 
 namespace UaFootball.AppCode
@@ -61,7 +61,7 @@ namespace UaFootball.AppCode
 
         public PlayerDTO GetFromDB(int objectId)
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 var dbData = (from player in db.Players
                               where player.Player_Id == objectId
@@ -78,7 +78,7 @@ namespace UaFootball.AppCode
                 
                 foreach (Multimedia m in dbPlayerLogos)
                 {
-                    MultimediaDTO playerLogo = m.ToDTO();
+                    MultimediaDTO playerLogo = MultimediaDTO.FromDBObject(m);
                     playerLogo.IsUploaded = true;
                     ret.Multimedia.Add(playerLogo);
                 }
@@ -92,7 +92,7 @@ namespace UaFootball.AppCode
         {
             Player dbObj = new Player();
 
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 if (dtoObj.Player_Id > 0)
                 {
@@ -149,7 +149,7 @@ namespace UaFootball.AppCode
 
         public void DeleteFromDB(int objectId)
         {
-            using (var db = new UaFootball_DBDataContext())
+            using (var db = DBManager.GetDB())
             {
                 Player c = db.Players.Single(cc => cc.Player_Id == objectId);
                 db.Players.DeleteOnSubmit(c);
@@ -159,7 +159,7 @@ namespace UaFootball.AppCode
 
         public List<PlayerDTO> GetAllFromDB()
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 IEnumerable<PlayerDTO> players = from dbObj in db.Players
                                                  orderby dbObj.Last_Name
@@ -185,7 +185,7 @@ namespace UaFootball.AppCode
         {
             List<PlayerDTO> players = new List<PlayerDTO>();
 
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 IQueryable<Player> dbPlayers = null;
 
@@ -237,7 +237,7 @@ namespace UaFootball.AppCode
 
         public PlayerDTO GetPlayer(int playerId)
         {
-            using (var db = new UaFootball_DBDataContext())
+            using (var db = DBManager.GetDB())
             {
                 DataLoadOptions dlo = new DataLoadOptions();
                 dlo.LoadWith<Multimedia>(m => m.MultimediaTags);
@@ -312,7 +312,7 @@ namespace UaFootball.AppCode
                                                     select m).ToList();
                                                    
                 multimedia.AddRange(multimediaVideo);
-                p.Multimedia = multimedia.Select(m => m.ToDTO()).ToList();
+                p.Multimedia = multimedia.Select(m => MultimediaDTO.FromDBObject(m)).ToList();
 
                 foreach (Multimedia m in multimedia.Where(mm=>mm.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.MatchPhoto || mm.MultimediaSubType_CD == Constants.DB.MutlimediaSubTypes.MatchVideo))
                 {

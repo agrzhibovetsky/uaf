@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.Script.Serialization;
 using UaFootball.AppCode;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.WebApplication
 {
@@ -53,7 +53,7 @@ namespace UaFootball.WebApplication
                         }
                     case AutocompleteType.Club:
                         {
-                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            using (UaFootball_DBDataContext db = DBManager.GetDB())
                             {
                                 IQueryable<AutoCompleteResponse> searchMatches = db.Clubs.Where(c => c.Club_Name.Contains(searchTerm)).Select(c => new AutoCompleteResponse { id = c.Club_ID, value = string.Concat(c.Club_Name, " (", c.City.City_Name, ")") });
                                 result.AddRange(searchMatches);
@@ -63,7 +63,7 @@ namespace UaFootball.WebApplication
                         }
                     case AutocompleteType.NationalTeam:
                         {
-                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            using (UaFootball_DBDataContext db = DBManager.GetDB())
                             {
                                 var searchMatches =
                                     from natTeam in db.NationalTeams
@@ -82,7 +82,7 @@ namespace UaFootball.WebApplication
                         }
                     case AutocompleteType.Referee:
                         {
-                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            using (UaFootball_DBDataContext db = DBManager.GetDB())
                             {
                                 IQueryable<AutoCompleteResponse> searchMatches = db.Referees.Where(r => r.LastName.Contains(searchTerm)).Select(r => new AutoCompleteResponse { id = r.Referee_Id, value = r.FirstName + " " + r.LastName });
                                 result.AddRange(searchMatches);
@@ -92,7 +92,7 @@ namespace UaFootball.WebApplication
                         }
                     case AutocompleteType.Coach:
                         {
-                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            using (UaFootball_DBDataContext db = DBManager.GetDB())
                             {
                                 IQueryable<AutoCompleteResponse> searchMatches = db.Coaches.Where(r => r.LastName.Contains(searchTerm)).Select(r => new AutoCompleteResponse { id = r.CoachId, value = r.FirstName + " " + r.LastName });
                                 result.AddRange(searchMatches);
@@ -102,10 +102,10 @@ namespace UaFootball.WebApplication
                         }
                     case AutocompleteType.Player:
                         {
-                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            using (UaFootball_DBDataContext db = DBManager.GetDB())
                             {
-                                List<DB.Player> searchMatches = db.Players.Where(r => r.Last_Name.StartsWith(searchTerm) || r.Display_Name.StartsWith(searchTerm) || r.Last_Name_Int.StartsWith(searchTerm)).ToList();
-                                foreach (DB.Player p in searchMatches)
+                                List<UaFDatabase.Player> searchMatches = db.Players.Where(r => r.Last_Name.StartsWith(searchTerm) || r.Display_Name.StartsWith(searchTerm) || r.Last_Name_Int.StartsWith(searchTerm)).ToList();
+                                foreach (UaFDatabase.Player p in searchMatches)
                                 {
                                     AutoCompleteResponse r = new AutoCompleteResponse { id = p.Player_Id };
                                     string formattedName = string.Format("{0} {1} '{2}'", p.First_Name, p.Last_Name, p.Display_Name);
@@ -126,7 +126,7 @@ namespace UaFootball.WebApplication
                                 int shirtNum = int.Parse(parameters[1]);
                                 bool isNationalTeamMatch = bool.Parse(parameters[2]);
                                 bool searchBackward = bool.Parse(parameters[3]);
-                                using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                                using (UaFootball_DBDataContext db = DBManager.GetDB())
                                 {
                                     IQueryable<MatchLineup> dbLineups = null;
 
@@ -155,7 +155,7 @@ namespace UaFootball.WebApplication
                                     AutoCompleteResponse resp = null;
                                     if (lu != null)
                                     {
-                                        DB.Player p = lu.Player;
+                                        UaFDatabase.Player p = lu.Player;
                                         string formattedName = string.Empty;
                                         if (!string.IsNullOrEmpty(p.Display_Name))
                                         {
@@ -165,6 +165,9 @@ namespace UaFootball.WebApplication
                                         {
                                             formattedName = string.Format("{0} {1}", p.First_Name, p.Last_Name);
                                         }
+
+                                        if ((lu.Flags & Constants.DB.LineupFlags.Goalkeeper) > 0)
+                                            formattedName = "*" + formattedName;
                                         resp = new AutoCompleteResponse { id = p.Player_Id, value = formattedName };
                                     }
                                     else
@@ -182,16 +185,17 @@ namespace UaFootball.WebApplication
                             bool isNational = searchTerm[0] == 'n';
                             int teamId = int.Parse(searchTerm.Substring(1));
                             AutoCompleteResponse resp = new AutoCompleteResponse();
-                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            using (UaFootball_DBDataContext db = DBManager.GetDB())
                             {
                                 Match mostRecentMatch = (from match in db.Matches
-                                              where (match.HomeClub_Id == teamId) && !isNational || (match.HomeNationalTeam_Id == teamId) && isNational
+                                              where (match.HomeClub_Id == teamId || match.AwayClub_Id == teamId) && !isNational || (match.HomeNationalTeam_Id == teamId || match.AwayNationalTeam_Id == teamId) && isNational
                                               orderby match.Date descending
                                               select match).FirstOrDefault();
                                 if (mostRecentMatch != null)
                                 {
+                                    bool isHomeTeam = mostRecentMatch.HomeClub_Id == teamId || mostRecentMatch.HomeNationalTeam_Id == teamId;
                                     Coach teamCoach = (from ml in db.MatchLineups
-                                                       where ml.Match_Id == mostRecentMatch.Match_Id && ml.IsHomeTeamPlayer && ml.Coach_Id > 0
+                                                       where (ml.Match_Id == mostRecentMatch.Match_Id) && (ml.IsHomeTeamPlayer == isHomeTeam) && (ml.Coach_Id > 0)
                                                        select ml.Coach).FirstOrDefault();
                                     if (teamCoach != null)
                                     {
@@ -206,7 +210,7 @@ namespace UaFootball.WebApplication
                         }
                     case AutocompleteType.MostRecentStadium:
                         {
-                            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                            using (UaFootball_DBDataContext db = DBManager.GetDB())
                             {
                                 //term: [nc]Id
                                 bool isNational = searchTerm[0] == 'n';

@@ -3,7 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.AppCode
 {
@@ -34,7 +34,7 @@ namespace UaFootball.AppCode
 
         public NationalTeamDTO GetFromDB(int objectId)
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 var dbData = (from nationalTeam in db.NationalTeams
                              join country in db.Countries on nationalTeam.Country_Id equals country.Country_ID
@@ -50,7 +50,7 @@ namespace UaFootball.AppCode
 
                 if (mLogo != null)
                 {
-                    dtoObj.Logo = mLogo.ToDTO();
+                    dtoObj.Logo = MultimediaDTO.FromDBObject(mLogo);
                     dtoObj.Logo.IsUploaded = true;
                 }
 

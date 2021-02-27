@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.AppCode
 {
@@ -29,7 +29,7 @@ namespace UaFootball.AppCode
 
         public CityDTO GetFromDB(int objectId)
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 City c = db.Cities.Single(cc => cc.City_ID == objectId);
                 return ConvertDBObjectToDTO(c);
@@ -40,7 +40,7 @@ namespace UaFootball.AppCode
         {
             City dbObj = new City();
 
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 if (dtoObj.City_ID > 0)
                 {
@@ -61,7 +61,7 @@ namespace UaFootball.AppCode
 
         public void DeleteFromDB(int objectId)
         {
-            using (var db = new UaFootball_DBDataContext())
+            using (var db = DBManager.GetDB())
             {
                 City c = db.Cities.Single(cc => cc.City_ID == objectId);
                 db.Cities.DeleteOnSubmit(c);
@@ -71,7 +71,7 @@ namespace UaFootball.AppCode
 
         public List<CityDTO> GetAllFromDB()
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 IEnumerable<CityDTO> cities = from city in db.Cities
                                               orderby city.Country.Country_Name, city.City_Name

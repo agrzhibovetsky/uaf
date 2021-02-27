@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using UaFootball.AppCode;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.WebApplication.Public
 {
@@ -53,7 +53,7 @@ namespace UaFootball.WebApplication.Public
                         searchParam.NationalTeam_Id = objectId;
                         ml.DataBind(searchParam);
 
-                        using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                        using (UaFootball_DBDataContext db = DBManager.GetDB())
                         {
                             IEnumerable<vGamesByPlayerByTeam> playersForClub = db.vGamesByPlayerByTeams.Where(d => d.IsNational == 1 && d.PlayedFor == objectId).OrderByDescending(d=>d.TotalMatches).ThenByDescending(d=>d.TotalMinutes);
                             rptPlayers.DataSource = playersForClub;

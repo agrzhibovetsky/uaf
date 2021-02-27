@@ -283,7 +283,7 @@
                             <uc:HighlightedLabel runat="server" ID="hl" CssClassForHighlight="editFormError"/>
                         </a>
                     </td>
-                    <td><%# FormatName(Eval("First_Name"), Eval("Last_Name"), Eval("Display_Name"), (int)Eval("Country_Id"))%></td>
+                    <td><%# FormatName(Eval("First_Name"), Eval("Last_Name"), Eval("Display_Name"), (int)Eval("Country_Id"))%> (<%#FormatDate(Eval("DOB"))%>)</td>
                     <td><span class="editFormError"><%#CheckAndDisplayDOB(Eval("DOB"))%></span></td>
                     <td><%#Eval("Country.Country_Name")%></td>
                                 

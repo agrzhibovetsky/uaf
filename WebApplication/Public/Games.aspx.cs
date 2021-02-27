@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using UaFootball.AppCode;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.WebApplication
 {
@@ -30,7 +30,7 @@ namespace UaFootball.WebApplication
 
             if (!IsPostBack)
             {
-                using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                using (UaFootball_DBDataContext db = DBManager.GetDB())
                 {
                     ddlCompetitions.DataSource = GetGenericReferenceData(db, Constants.ObjectType.Competition).Where(grd => grd.GenericStringValue.Equals(competitionLevelCode));
                     ddlCompetitions.DataTextField = "Name";

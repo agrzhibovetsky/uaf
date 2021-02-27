@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using UaFootball.AppCode;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.WebApplication
 {
@@ -120,7 +120,7 @@ namespace UaFootball.WebApplication
                     rptNotes.DataSource = DataItem.Notes;
                     rptNotes.DataBind();
 
-                    Controls.MatchNotes[] matchNotes = { mnSpect, mnAwayLineup, mnHomeLineup };
+                    Controls.MatchNotes[] matchNotes = { mnSpect, mnAwayLineup, mnHomeLineup, mnAwayCoach, mnNoSpect, mnHomeCoach };
                     foreach (Controls.MatchNotes mn in matchNotes)
                     {
                         mn.DataSource = DataItem.Notes;

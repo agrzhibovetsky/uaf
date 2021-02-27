@@ -9,7 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Configuration;
 using UaFootball.AppCode;
-using UaFootball.DB;
+using UaFDatabase;
 using UaFootball.WebApplication.Controls;
 
 namespace UaFootball.WebApplication
@@ -23,7 +23,7 @@ namespace UaFootball.WebApplication
 
         protected override void PrepareUI()
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 BindDropdown(db, Constants.ObjectType.Country, ddlCountries, false, string.Empty);
                 for (int i = 1; i < 32; i++)
@@ -153,7 +153,7 @@ namespace UaFootball.WebApplication
 
         protected void rptDuplicates_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            DB.Player data = e.Item.DataItem as DB.Player;
+            UaFDatabase.Player data = e.Item.DataItem as UaFDatabase.Player;
             HighlightedLabel hl = e.Item.FindControl("hl") as HighlightedLabel;
             
             CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
@@ -181,7 +181,7 @@ namespace UaFootball.WebApplication
         protected void btnSearchByCountry_Click(object sender, EventArgs e)
         {
             int countryId = int.Parse(ddlCountries.SelectedValue);
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 var playersList = from player in db.Players where player.Country_Id == countryId && !(player.RequiresReview ?? false) orderby player.Last_Name_Int, player.Last_Name select player;
                 rptSearchPlayers.Visible = true;
@@ -201,13 +201,13 @@ namespace UaFootball.WebApplication
             {
                 PlayerDTO playerToSave = UIToDTO();
                 List<PlayerDTO> duplicatecandidates = new List<PlayerDTO>();
-                using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+                using (UaFootball_DBDataContext db = DBManager.GetDB())
                 {
                     DataLoadOptions opt = new DataLoadOptions();
-                    opt.LoadWith<UaFootball.DB.Player>(p => p.Country);
+                    opt.LoadWith<UaFDatabase.Player>(p => p.Country);
                                        
                     // первые кандидаты - совпадение по дате рождения
-                    List<UaFootball.DB.Player> candidates = db.Players.Where(p => p.DOB == playerToSave.DOB).ToList();
+                    List<UaFDatabase.Player> candidates = db.Players.Where(p => p.DOB == playerToSave.DOB).ToList();
 
                     List<string> nameChecks = new List<string>();
                     //ищем по имени только если оно составное
@@ -233,7 +233,7 @@ namespace UaFootball.WebApplication
 
                     candidates.RemoveAll(p => p.Player_Id == playerToSave.Player_Id);
 
-                    foreach (DB.Player pl in candidates)
+                    foreach (UaFDatabase.Player pl in candidates)
                     {
                         pl.Weight = 0;
                         

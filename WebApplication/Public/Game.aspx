@@ -79,7 +79,8 @@
                                             <td>
                                                 <%=FormatInt(DataItem.Spectators) %>
                                                 <UaFootball:MatchNote id="mnSpect" runat="server" NoteTypeCode="genSpect"></UaFootball:MatchNote>
-                                                <asp:Label ID="lblStadiumDisq" runat="server" Text="***" ToolTip="Стадион подвергнут санкциям, матч проходил без зрителей" ForeColor="Red" Visible="false"></asp:Label>
+                                                
+                                                <asp:Label ID="lblStadiumDisq" runat="server" Text="Без зрителей" Visible="false"></asp:Label><UaFootball:MatchNote id="mnNoSpect" runat="server" NoteTypeCode="noSpect"></UaFootball:MatchNote>
                                             </td>
                                         </tr>
                                         <tr>
@@ -152,8 +153,18 @@
                                 </ItemTemplate>
                             </asp:Repeater>
                             <tr>
-                                <td colspan="2"><br />Тренер: <asp:HyperLink ID="hlHomeTeamCoach" runat="server"></asp:HyperLink><asp:Literal ID="ltHomeCoachInCharge" runat="server" Visible="false"> (и.о.)</asp:Literal></td>
-                                <td colspan="2"><br />Тренер: <asp:HyperLink ID="hlAwayTeamCoach" runat="server"></asp:HyperLink><asp:Literal ID="ltAwayCoachInCharge" runat="server" Visible="false"> (и.о.)</asp:Literal></td>
+                                <td colspan="2">
+                                    <br />Тренер: 
+                                    <asp:HyperLink ID="hlHomeTeamCoach" runat="server"></asp:HyperLink>
+                                    <asp:Literal ID="ltHomeCoachInCharge" runat="server" Visible="false"> (и.о.)</asp:Literal>
+                                    <UaFootball:MatchNote id="mnHomeCoach" runat="server" NoteTypeCode="homeCoach"></UaFootball:MatchNote>
+                                </td>
+                                <td colspan="2">
+                                    <br />Тренер: 
+                                    <asp:HyperLink ID="hlAwayTeamCoach" runat="server"></asp:HyperLink>
+                                    <asp:Literal ID="ltAwayCoachInCharge" runat="server" Visible="false"> (и.о.)</asp:Literal>
+                                    <UaFootball:MatchNote id="mnAwayCoach" runat="server" NoteTypeCode="awayCoach"></UaFootball:MatchNote>
+                                </td>
                             </tr>
                         </table>
                     </td>

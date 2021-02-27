@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.AppCode
 {
@@ -36,7 +36,7 @@ namespace UaFootball.AppCode
 
         public StadiumDTO GetFromDB(int objectId)
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 Stadium c = db.Stadiums.Single(cc => cc.Stadium_Id == objectId);
                 return ConvertDBObjectToDTO(c);
@@ -47,7 +47,7 @@ namespace UaFootball.AppCode
         {
             Stadium dbObj = new Stadium();
 
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 if (dtoObj.Stadium_ID > 0)
                 {
@@ -69,7 +69,7 @@ namespace UaFootball.AppCode
 
         public void DeleteFromDB(int objectId)
         {
-            using (var db = new UaFootball_DBDataContext())
+            using (var db = DBManager.GetDB())
             {
                 Stadium c = db.Stadiums.Single(cc => cc.Stadium_Id == objectId);
                 db.Stadiums.DeleteOnSubmit(c);
@@ -79,7 +79,7 @@ namespace UaFootball.AppCode
 
         public List<StadiumDTO> GetAllFromDB()
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 IEnumerable<StadiumDTO> objects = from s in db.Stadiums
                                                   

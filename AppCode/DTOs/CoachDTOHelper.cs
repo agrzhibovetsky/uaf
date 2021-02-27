@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.AppCode
 {
@@ -39,7 +39,7 @@ namespace UaFootball.AppCode
 
         public CoachDTO GetFromDB(int objectId)
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 var dbData = (from Coach in db.Coaches
                               where Coach.CoachId == objectId
@@ -52,7 +52,7 @@ namespace UaFootball.AppCode
 
         //public CoachDTO GetFullFromDB(int objectId)
         //{
-        //    using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+        //    using (UaFootball_DBDataContext db = DBManager.GetDB())
         //    {
         //        DataLoadOptions options = new DataLoadOptions();
         //        options.LoadWith<Match>(m => m.MatchEvents);
@@ -87,7 +87,7 @@ namespace UaFootball.AppCode
         {
             Coach dbObj = new Coach();
             dtoObj.ModifiedDate = DateTime.Now;
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 if (dtoObj.CoachId > 0)
                 {
@@ -108,7 +108,7 @@ namespace UaFootball.AppCode
 
         public void DeleteFromDB(int objectId)
         {
-            using (var db = new UaFootball_DBDataContext())
+            using (var db = DBManager.GetDB())
             {
                 Coach c = db.Coaches.Single(cc => cc.CoachId == objectId);
                 db.Coaches.DeleteOnSubmit(c);
@@ -118,7 +118,7 @@ namespace UaFootball.AppCode
 
         public List<CoachDTO> GetAllFromDB()
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
 
                 List<CoachDTO> Coachs = new List<CoachDTO>();

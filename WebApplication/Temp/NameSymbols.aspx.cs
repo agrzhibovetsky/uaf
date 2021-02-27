@@ -4,7 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using UaFootball.DB;
+using UaFDatabase;
+using UaFootball.AppCode;
 
 namespace UaFootball.WebApplication.Temp
 {
@@ -18,9 +19,9 @@ namespace UaFootball.WebApplication.Temp
             string extraSymbols =  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' -éćáíšöčúóçüëñãřäăžôŠłÁČşÖýěøèïńßůÉŁĎśÓÍâŽșęźţțĆÇØđ";
             Dictionary<char, int> stats = new Dictionary<char, int>();
 
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
-                List<UaFootball.DB.Player> pls = db.Players.ToList();
+                List<UaFDatabase.Player> pls = db.Players.ToList();
                 
                 //for (int i = 0; i < pls.Count; i++)
                 //{

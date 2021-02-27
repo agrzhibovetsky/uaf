@@ -76,6 +76,15 @@ namespace UaFootball.WebApplication {
         protected global::System.Web.UI.WebControls.Label lblStadiumDisq;
         
         /// <summary>
+        /// mnNoSpect control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::UaFootball.WebApplication.Controls.MatchNotes mnNoSpect;
+        
+        /// <summary>
         /// hlPhoto control.
         /// </summary>
         /// <remarks>
@@ -130,6 +139,15 @@ namespace UaFootball.WebApplication {
         protected global::System.Web.UI.WebControls.Literal ltHomeCoachInCharge;
         
         /// <summary>
+        /// mnHomeCoach control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::UaFootball.WebApplication.Controls.MatchNotes mnHomeCoach;
+        
+        /// <summary>
         /// hlAwayTeamCoach control.
         /// </summary>
         /// <remarks>
@@ -146,6 +164,15 @@ namespace UaFootball.WebApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltAwayCoachInCharge;
+        
+        /// <summary>
+        /// mnAwayCoach control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::UaFootball.WebApplication.Controls.MatchNotes mnAwayCoach;
         
         /// <summary>
         /// rptEvents control.

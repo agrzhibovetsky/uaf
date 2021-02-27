@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
 using System.Web;
-using UaFootball.DB;
+using UaFDatabase;
 
 namespace UaFootball.AppCode
 {
@@ -42,7 +42,7 @@ namespace UaFootball.AppCode
 
         public RefereeDTO GetFromDB(int objectId)
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 var dbData = (from Referee in db.Referees
                               where Referee.Referee_Id == objectId
@@ -55,7 +55,7 @@ namespace UaFootball.AppCode
 
         //public RefereeDTO GetFullFromDB(int objectId)
         //{
-        //    using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+        //    using (UaFootball_DBDataContext db = DBManager.GetDB())
         //    {
         //        DataLoadOptions options = new DataLoadOptions();
         //        options.LoadWith<Match>(m => m.MatchEvents);
@@ -90,7 +90,7 @@ namespace UaFootball.AppCode
         {
             Referee dbObj = new Referee();
 
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
                 if (dtoObj.Referee_Id > 0)
                 {
@@ -111,7 +111,7 @@ namespace UaFootball.AppCode
 
         public void DeleteFromDB(int objectId)
         {
-            using (var db = new UaFootball_DBDataContext())
+            using (var db = DBManager.GetDB())
             {
                 Referee c = db.Referees.Single(cc => cc.Referee_Id == objectId);
                 db.Referees.DeleteOnSubmit(c);
@@ -121,7 +121,7 @@ namespace UaFootball.AppCode
 
         public List<RefereeDTO> GetAllFromDB()
         {
-            using (UaFootball_DBDataContext db = new UaFootball_DBDataContext())
+            using (UaFootball_DBDataContext db = DBManager.GetDB())
             {
 
                 List<RefereeDTO> Referees = new List<RefereeDTO>();

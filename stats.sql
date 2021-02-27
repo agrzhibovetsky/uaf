@@ -63,6 +63,37 @@ where AwayNationalTeam_Id =1 or HomeNationalTeam_Id = 1
 and (Event_Cd='G' or Event_Cd='P') and p.Country_Id = 1 and EventFlags & 128 =0 and (mt.MultimediaTag_ID is null or me.EventFlags=0)
 order by m.Date desc
 
+
+/* UNT - number of photos */
+select pCount.cnt, m.Date, m.HomeTeam, m.AwayTeam, m.HomeScore, m.AwayScore
+from
+       vwMatches m
+	   left outer join 
+	   (
+			select mt.Match_ID, count(*) cnt from
+			Multimedia mm
+			join MultimediaTags mt on mm.Multimedia_ID = mt.Multimedia_ID
+			where mm.MultimediaSubType_CD='MP'
+			group by mt.Match_ID
+	   ) pCount on pCount.Match_ID = m.Match_ID
+Where 
+		(m.HomeNationalTeam_Id=1 or m.AwayNationalTeam_Id = 1) --AND pCount.cnt IS NULL	
+Order by m.Date desc	
+
+/* eurocup season - # of photos */
+select d.PhotoCount, g.HomeTeam, g.AwayTeam, g.Date from 
+vwMatches g left outer join
+(
+select count(*) as PhotoCount, g.Match_Id from 
+Multimedia m join
+MultimediaTags mt on m.Multimedia_ID = mt.Multimedia_ID
+join Matches g on mt.Match_ID = g.Match_Id
+where m.MultimediaSubType_CD = 'MP'
+group by g.Match_Id) d
+on g.Match_Id = d.Match_Id
+where g.Season_Id=29--24--19--17
+order by g.Date desc
+
 /* eurocup season - goals without uploaded video or tags */
 select me.MatchEvent_ID, me.Event_Cd, me.Minute, hc.Club_Name, ac.Club_Name, p.First_Name, p.Last_Name, mt.MultimediaTag_ID, EventFlags 
 from MatchEvents me
@@ -78,41 +109,11 @@ join Countries acn on act.Country_ID = acn.Country_ID
 join MatchLineups ml on ml.Match_Id = m.Match_ID and ml.Player_Id = me.Player1_Id
 where me.Match_Id in 
 (
-select Match_Id from Matches where Season_Id=24
+select Match_Id from Matches where Season_Id=29
 )
 and (Event_Cd='G' or Event_Cd='P') and ((ml.IsHomeTeamPlayer = 1 and hcn.Country_ID=1) or (ml.IsHomeTeamPlayer = 0 and acn.Country_ID=1))
 and EventFlags & 128 =0 and (MultimediaTag_ID is null or EventFlags=0)
 order by me.Match_Id
-
-/* UNT - number of photos */
-select pCount.cnt, pCount.cnt, m.Date, m.HomeTeam, m.AwayTeam, m.HomeScore, m.AwayScore
-from
-       vwMatches m
-	   left outer join 
-	   (
-			select mt.Match_ID, count(*) cnt from
-			Multimedia mm
-			join MultimediaTags mt on mm.Multimedia_ID = mt.Multimedia_ID
-			where mm.MultimediaSubType_CD='MP'
-			group by mt.Match_ID
-	   ) pCount on pCount.Match_ID = m.Match_ID
-Where 
-		m.HomeNationalTeam_Id=1 or m.AwayNationalTeam_Id = 1	
-Order by m.Date desc	
-
-/* eurocup season - # of photos */
-select d.PhotoCount, g.HomeTeam, g.AwayTeam, g.Date from 
-vwMatches g left outer join
-(
-select count(*) as PhotoCount, g.Match_Id from 
-Multimedia m join
-MultimediaTags mt on m.Multimedia_ID = mt.Multimedia_ID
-join Matches g on mt.Match_ID = g.Match_Id
-where m.MultimediaSubType_CD = 'MP'
-group by g.Match_Id) d
-on g.Match_Id = d.Match_Id
-where g.Season_Id=24--19--17
-order by g.Date desc
 
 
 /*all dynamo players  dk=2, shahta=7, dnipro=17*/
@@ -154,17 +155,7 @@ select p.First_Name, p.Last_Name, c.FirstName, c.LastName, p.*
 from Players p 
 join Coaches c on p.DOB=c.DOB and p.Country_Id=c.CountryId
 
-/*--UNT captains, including missing--*/
-select top 1000 
-  matches.Match_ID, HomeTeamCountryCode, AwayTeamCountryCode, First_Name, Last_Name
-  from 
-	(select * from vwMatches where (AwayTeamCountryCode='UA' or HomeTeamCountryCode='UA') And CompetitionLevel_Cd='N') as matches
-   left outer join
-     (	select p.*, Match_Id from MatchLineups ml 
-		left outer join Players p on ml.Player_Id = p.Player_Id
-		where Flags & 2 >0 and p.Country_Id=1
-	 ) as captains on matches.Match_ID = captains.Match_Id
-	order by Date
+
 
 /**-- players - logo count- */
 select count(*) as c, First_Name, Last_Name, p.Player_Id
@@ -174,3 +165,19 @@ JOIN PLayers p on mt.Player_ID= p.Player_Id
 where MultimediaSubType_CD='PL' and mt.Player_ID is not null and m.DateTaken is null
 group by mt.Player_ID, p.First_Name, p.Last_Name, p.Player_Id
 order by c desc
+
+/* UNT cocaches and Captains */
+select c.FirstName + ' '+ c.LastName as Coach, p.First_Name + ' ' + p.Last_Name as Captain, m.Match_ID, m.Date, m.HomeTeam, m.AwayTeam, m.HomeScore, m.AwayScore 
+from UaFootball.dbo.vwMatches m
+left outer join 
+	(select Coach_Id, Match_Id, IsHomeTeamPlayer from 
+	 UaFootball.dbo.MatchLineups where Coach_Id is not null) Coaches
+	 on m.Match_ID = Coaches.Match_Id and (Coaches.IsHomeTeamPlayer = CASE WHEN m.HomeNationalTeam_Id=1 THEN 1 ELSE 0 END)
+left outer join UaFootball.dbo.Coaches c on Coaches.Coach_Id = c.CoachId
+left outer join 
+	(select Player_Id, Match_Id, IsHomeTeamPlayer from 
+	 UaFootball.dbo.MatchLineups where Flags & 2 >0) Captains
+	 on m.Match_ID = Captains.Match_Id and (Captains.IsHomeTeamPlayer = CASE WHEN m.HomeNationalTeam_Id=1 THEN 1 ELSE 0 END)
+left outer join UaFootball.dbo.Players p on Captains.Player_Id = p.Player_Id
+where HomeNationalTeam_Id = 1 or AwayNationalTeam_Id=1
+order by m.Date desc

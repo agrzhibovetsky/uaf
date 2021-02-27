@@ -163,8 +163,9 @@
             var shirtNum = this.value;
             var isNationalTeamMatch =  document.getElementById("cbMatchKind").checked;
             var searchBackward = document.getElementById("cbSearchBackwards").checked
-            var request = teamId + ";"+shirtNum+";"+isNationalTeamMatch+";"+searchBackward;
-
+            var request = teamId + ";" + shirtNum + ";" + isNationalTeamMatch + ";" + searchBackward;
+            var gkCheckboxId = this.id.replace("tbHomePlayerShirtNumber", "cbHGoalkeeper").replace("tbAwayPlayerShirtNumber","cbAGoalkeeper");
+            
             if (shirtNum.length > 0 && shirtNum!="0")
             {
             
@@ -174,6 +175,11 @@
                     dataType: "json",
                     success: function(data){
                         if (data.id > 0) {
+
+                            if (data.value.indexOf("*") == 0) {
+                                data.value = data.value.substring(1);
+                                $("#" + gkCheckboxId).prop("checked", true);
+                            }
                             tbName.val(data.value);
                             tbName.css("border", "1px solid black");
                             hfId.val(data.id);
