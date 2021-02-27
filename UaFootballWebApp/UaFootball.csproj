@@ -1,0 +1,765 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C877C301-15CB-44C6-BA54-9A5187DBDCAD}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UaFootball</RootNamespace>
+    <AssemblyName>UaFootball</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit">
+      <HintPath>packages\AjaxControlToolkit.7.1005\lib\40\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="AjaxMin">
+      <HintPath>packages\AjaxMin.4.97.4951.28483\lib\net40\AjaxMin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="WebApplication\Admin\CityList.aspx" />
+    <Content Include="WebApplication\Admin\CityEdit.aspx" />
+    <Content Include="WebApplication\Admin\ClubList.aspx" />
+    <Content Include="WebApplication\Admin\ClubEdit.aspx" />
+    <Content Include="WebApplication\Admin\CoachEdit.aspx" />
+    <Content Include="WebApplication\Admin\CoachList.aspx" />
+    <Content Include="WebApplication\Admin\CountryList.aspx" />
+    <Content Include="WebApplication\Admin\CountryEdit.aspx" />
+    <Content Include="WebApplication\Admin\MatchList.aspx" />
+    <Content Include="WebApplication\Admin\MatchEdit.aspx" />
+    <Content Include="WebApplication\Admin\Multimedia.aspx" />
+    <Content Include="WebApplication\Admin\PlayerList.aspx" />
+    <Content Include="WebApplication\Admin\PlayerEdit.aspx" />
+    <Content Include="WebApplication\Admin\PlayerReviewList.aspx" />
+    <Content Include="WebApplication\Admin\RefereeList.aspx" />
+    <Content Include="WebApplication\Admin\RefereeEdit.aspx" />
+    <Content Include="WebApplication\Admin\StadiumList.aspx" />
+    <Content Include="WebApplication\Admin\StadiumEdit.aspx" />
+    <Content Include="WebApplication\Controls\AutocompleteTextBox.ascx" />
+    <Content Include="WebApplication\Controls\MatchEvent.ascx" />
+    <Content Include="WebApplication\Controls\MatchList.ascx" />
+    <Content Include="WebApplication\Controls\MatchLog_Player.ascx" />
+    <Content Include="WebApplication\Controls\MatchNotes.ascx" />
+    <Content Include="WebApplication\Default.aspx" />
+    <Content Include="WebApplication\Images\close.gif" />
+    <Content Include="WebApplication\Images\delete.gif" />
+    <Content Include="WebApplication\Images\delete.jpg" />
+    <Content Include="WebApplication\Images\down_arrow.png" />
+    <Content Include="WebApplication\Images\edit.gif" />
+    <Content Include="WebApplication\Images\edit.jpg" />
+    <Content Include="WebApplication\Images\logos\cska_kiev.gif" />
+    <Content Include="WebApplication\Images\logos\cska_kiev_sm.gif" />
+    <Content Include="WebApplication\Images\logos\dinamo_kiev2.gif" />
+    <Content Include="WebApplication\Images\logos\dinamo_kiev2_sm.gif" />
+    <Content Include="WebApplication\Images\logos\dnipro.gif" />
+    <Content Include="WebApplication\Images\logos\dnipro_sm.gif" />
+    <Content Include="WebApplication\Images\logos\metal_donetsk.gif" />
+    <Content Include="WebApplication\Images\logos\metal_donetsk_sm.gif" />
+    <Content Include="WebApplication\Images\logos\metal_zaporizhzya.gif" />
+    <Content Include="WebApplication\Images\logos\metal_zaporizhzya_sm.gif" />
+    <Content Include="WebApplication\Images\logos\shahter.gif" />
+    <Content Include="WebApplication\Images\logos\shahter_sm.gif" />
+    <Content Include="WebApplication\Images\logos\ukraine.gif" />
+    <Content Include="WebApplication\Images\photo.gif" />
+    <Content Include="WebApplication\Images\players\akopyan.jpg" />
+    <Content Include="WebApplication\Images\players\alekseenko.jpg" />
+    <Content Include="WebApplication\Images\players\aliev.jpg" />
+    <Content Include="WebApplication\Images\players\anischenko.gif" />
+    <Content Include="WebApplication\Images\players\atelkin.jpg" />
+    <Content Include="WebApplication\Images\players\baharev.jpg" />
+    <Content Include="WebApplication\Images\players\balabanov.jpg" />
+    <Content Include="WebApplication\Images\players\balanchuk.jpg" />
+    <Content Include="WebApplication\Images\players\belik.jpg" />
+    <Content Include="WebApplication\Images\players\benyo.jpg" />
+    <Content Include="WebApplication\Images\players\bilozor.jpg" />
+    <Content Include="WebApplication\Images\players\bliznyuk.jpg" />
+    <Content Include="WebApplication\Images\players\bogodelov.jpg" />
+    <Content Include="WebApplication\Images\players\bondarenko.jpg" />
+    <Content Include="WebApplication\Images\players\bredun.jpg" />
+    <Content Include="WebApplication\Images\players\checher.gif" />
+    <Content Include="WebApplication\Images\players\chizhevskij.jpg" />
+    <Content Include="WebApplication\Images\players\dmytrulin.jpg" />
+    <Content Include="WebApplication\Images\players\docenko.jpg" />
+    <Content Include="WebApplication\Images\players\dolganskiy.jpg" />
+    <Content Include="WebApplication\Images\players\doroshenko.gif" />
+    <Content Include="WebApplication\Images\players\dranov.jpg" />
+    <Content Include="WebApplication\Images\players\evglevskiy.gif" />
+    <Content Include="WebApplication\Images\players\evtushok.gif" />
+    <Content Include="WebApplication\Images\players\ezerskij.jpg" />
+    <Content Include="WebApplication\Images\players\fedorov.jpg" />
+    <Content Include="WebApplication\Images\players\gai.jpg" />
+    <Content Include="WebApplication\Images\players\gaj.jpg" />
+    <Content Include="WebApplication\Images\players\getsko.gif" />
+    <Content Include="WebApplication\Images\players\gluschenko.jpg" />
+    <Content Include="WebApplication\Images\players\gorshkov.jpg" />
+    <Content Include="WebApplication\Images\players\granovsky.gif" />
+    <Content Include="WebApplication\Images\players\grebinyuk.gif" />
+    <Content Include="WebApplication\Images\players\gritsaj.jpg" />
+    <Content Include="WebApplication\Images\players\gusev.jpg" />
+    <Content Include="WebApplication\Images\players\holovko.jpg" />
+    <Content Include="WebApplication\Images\players\homa.gif" />
+    <Content Include="WebApplication\Images\players\hudzhamov.jpg" />
+    <Content Include="WebApplication\Images\players\husin.jpg" />
+    <Content Include="WebApplication\Images\players\ivaschenko.jpg" />
+    <Content Include="WebApplication\Images\players\kabanov.jpg" />
+    <Content Include="WebApplication\Images\players\kalinichenko.jpg" />
+    <Content Include="WebApplication\Images\players\kandaurov.jpg" />
+    <Content Include="WebApplication\Images\players\kardash.jpg" />
+    <Content Include="WebApplication\Images\players\kernozenko.jpg" />
+    <Content Include="WebApplication\Images\players\kirlik.jpg" />
+    <Content Include="WebApplication\Images\players\kiruchin.jpg" />
+    <Content Include="WebApplication\Images\players\klyuchik.jpg" />
+    <Content Include="WebApplication\Images\players\kobzar.jpg" />
+    <Content Include="WebApplication\Images\players\kolodin.gif" />
+    <Content Include="WebApplication\Images\players\konovalov.jpg" />
+    <Content Include="WebApplication\Images\players\konyushenko.jpg" />
+    <Content Include="WebApplication\Images\players\kormiltsev.jpg" />
+    <Content Include="WebApplication\Images\players\kosilov.jpg" />
+    <Content Include="WebApplication\Images\players\kosovsky.jpg" />
+    <Content Include="WebApplication\Images\players\kostyshin.jpg" />
+    <Content Include="WebApplication\Images\players\kostyuk.jpg" />
+    <Content Include="WebApplication\Images\players\kosyrin.jpg" />
+    <Content Include="WebApplication\Images\players\kotov.jpg" />
+    <Content Include="WebApplication\Images\players\koval.jpg" />
+    <Content Include="WebApplication\Images\players\kovalenko.jpg" />
+    <Content Include="WebApplication\Images\players\kovalets.gif" />
+    <Content Include="WebApplication\Images\players\kovalev.jpg" />
+    <Content Include="WebApplication\Images\players\kovtun.jpg" />
+    <Content Include="WebApplication\Images\players\kozar.jpg" />
+    <Content Include="WebApplication\Images\players\kripak.jpg" />
+    <Content Include="WebApplication\Images\players\kriulin.gif" />
+    <Content Include="WebApplication\Images\players\kriventsov.jpg" />
+    <Content Include="WebApplication\Images\players\kuslij.jpg" />
+    <Content Include="WebApplication\Images\players\lapko.jpg" />
+    <Content Include="WebApplication\Images\players\lavrencov.jpg" />
+    <Content Include="WebApplication\Images\players\lazarchuk.gif" />
+    <Content Include="WebApplication\Images\players\levchenko.jpg" />
+    <Content Include="WebApplication\Images\players\levickij.jpg" />
+    <Content Include="WebApplication\Images\players\lezhencev.jpg" />
+    <Content Include="WebApplication\Images\players\lisickij.jpg" />
+    <Content Include="WebApplication\Images\players\lucenko.jpg" />
+    <Content Include="WebApplication\Images\players\lutsishin.gif" />
+    <Content Include="WebApplication\Images\players\luzhnyj.jpg" />
+    <Content Include="WebApplication\Images\players\maksimyuk.jpg" />
+    <Content Include="WebApplication\Images\players\malcev.jpg" />
+    <Content Include="WebApplication\Images\players\maruschak.jpg" />
+    <Content Include="WebApplication\Images\players\matveev.jpg" />
+    <Content Include="WebApplication\Images\players\matyuhin.jpg" />
+    <Content Include="WebApplication\Images\players\maximov.gif" />
+    <Content Include="WebApplication\Images\players\mazyar.jpg" />
+    <Content Include="WebApplication\Images\players\medin.jpg" />
+    <Content Include="WebApplication\Images\players\melaschenko.jpg" />
+    <Content Include="WebApplication\Images\players\melnik.jpg" />
+    <Content Include="WebApplication\Images\players\mihajlenko.jpg" />
+    <Content Include="WebApplication\Images\players\mikitin.jpg" />
+    <Content Include="WebApplication\Images\players\milevskij.jpg" />
+    <Content Include="WebApplication\Images\players\mizin.gif" />
+    <Content Include="WebApplication\Images\players\monahov.gif" />
+    <Content Include="WebApplication\Images\players\monarev.jpg" />
+    <Content Include="WebApplication\Images\players\moroz.jpg" />
+    <Content Include="WebApplication\Images\players\nagornyak.jpg" />
+    <Content Include="WebApplication\Images\players\nazarenko.jpg" />
+    <Content Include="WebApplication\Images\players\nazarov.jpg" />
+    <Content Include="WebApplication\Images\players\nesmachnyj.jpg" />
+    <Content Include="WebApplication\Images\players\nikitin.jpg" />
+    <Content Include="WebApplication\Images\players\nofoto.jpg" />
+    <Content Include="WebApplication\Images\players\oksimec.gif" />
+    <Content Include="WebApplication\Images\players\onischenko.jpg" />
+    <Content Include="WebApplication\Images\players\onopko.jpg" />
+    <Content Include="WebApplication\Images\players\orbu.jpg" />
+    <Content Include="WebApplication\Images\players\paholyuk.jpg" />
+    <Content Include="WebApplication\Images\players\palyanica.gif" />
+    <Content Include="WebApplication\Images\players\parfenov.jpg" />
+    <Content Include="WebApplication\Images\players\pavlyuh.gif" />
+    <Content Include="WebApplication\Images\players\perhun.jpg" />
+    <Content Include="WebApplication\Images\players\pershin.jpg" />
+    <Content Include="WebApplication\Images\players\pestryakov.jpg" />
+    <Content Include="WebApplication\Images\players\platonov.gif" />
+    <Content Include="WebApplication\Images\players\pokladok.gif" />
+    <Content Include="WebApplication\Images\players\poklonskij.jpg" />
+    <Content Include="WebApplication\Images\players\polischuk.jpg" />
+    <Content Include="WebApplication\Images\players\poltavec.jpg" />
+    <Content Include="WebApplication\Images\players\ponomarenko.gif" />
+    <Content Include="WebApplication\Images\players\popov.jpg" />
+    <Content Include="WebApplication\Images\players\pravkin.gif" />
+    <Content Include="WebApplication\Images\players\prizetko.jpg" />
+    <Content Include="WebApplication\Images\players\pukanych.jpg" />
+    <Content Include="WebApplication\Images\players\radchenko.jpg" />
+    <Content Include="WebApplication\Images\players\ratij.jpg" />
+    <Content Include="WebApplication\Images\players\rebrov2.jpg" />
+    <Content Include="WebApplication\Images\players\reva.jpg" />
+    <Content Include="WebApplication\Images\players\rotan.jpg" />
+    <Content Include="WebApplication\Images\players\rusol.gif" />
+    <Content Include="WebApplication\Images\players\rusol.jpg" />
+    <Content Include="WebApplication\Images\players\rykun.jpg" />
+    <Content Include="WebApplication\Images\players\rymshin.gif" />
+    <Content Include="WebApplication\Images\players\seleznev.jpg" />
+    <Content Include="WebApplication\Images\players\semochko.jpg" />
+    <Content Include="WebApplication\Images\players\serebrennikov.jpg" />
+    <Content Include="WebApplication\Images\players\sharan.gif" />
+    <Content Include="WebApplication\Images\players\shelaev.gif" />
+    <Content Include="WebApplication\Images\players\shelaev.jpg" />
+    <Content Include="WebApplication\Images\players\shershun.jpg" />
+    <Content Include="WebApplication\Images\players\shevchenko.jpg" />
+    <Content Include="WebApplication\Images\players\shevchuk.jpg" />
+    <Content Include="WebApplication\Images\players\shischenko.jpg" />
+    <Content Include="WebApplication\Images\players\shovkovskij.jpg" />
+    <Content Include="WebApplication\Images\players\shutkov.jpg" />
+    <Content Include="WebApplication\Images\players\simonenko.jpg" />
+    <Content Include="WebApplication\Images\players\skachenko.jpg" />
+    <Content Include="WebApplication\Images\players\skoba.jpg" />
+    <Content Include="WebApplication\Images\players\skripnik.jpg" />
+    <Content Include="WebApplication\Images\players\slabyshev.jpg" />
+    <Content Include="WebApplication\Images\players\spevak.jpg" />
+    <Content Include="WebApplication\Images\players\starostyak.jpg" />
+    <Content Include="WebApplication\Images\players\stroncickiy.gif" />
+    <Content Include="WebApplication\Images\players\suhoruchenko.gif" />
+    <Content Include="WebApplication\Images\players\tanasyuk.gif" />
+    <Content Include="WebApplication\Images\players\timoschuk.jpg" />
+    <Content Include="WebApplication\Images\players\tkachenko.jpg" />
+    <Content Include="WebApplication\Images\players\tlumak.jpg" />
+    <Content Include="WebApplication\Images\players\tolochko.gif" />
+    <Content Include="WebApplication\Images\players\ts.gif" />
+    <Content Include="WebApplication\Images\players\tselyh.jpg" />
+    <Content Include="WebApplication\Images\players\tsykhmeistruk.jpg" />
+    <Content Include="WebApplication\Images\players\tymchishin.gif" />
+    <Content Include="WebApplication\Images\players\valyaev.jpg" />
+    <Content Include="WebApplication\Images\players\vaschuk.jpg" />
+    <Content Include="WebApplication\Images\players\venglinskiy.jpg" />
+    <Content Include="WebApplication\Images\players\vilchinskiy.gif" />
+    <Content Include="WebApplication\Images\players\virt.jpg" />
+    <Content Include="WebApplication\Images\players\volosyanko.jpg" />
+    <Content Include="WebApplication\Images\players\vorobey.jpg" />
+    <Content Include="WebApplication\Images\players\voronin.jpg" />
+    <Content Include="WebApplication\Images\players\vovchuk.gif" />
+    <Content Include="WebApplication\Images\players\yakimenko.gif" />
+    <Content Include="WebApplication\Images\players\yaksmanickij.jpg" />
+    <Content Include="WebApplication\Images\players\yashkin.jpg" />
+    <Content Include="WebApplication\Images\players\yaskov.jpg" />
+    <Content Include="WebApplication\Images\players\zadorozhnyj.jpg" />
+    <Content Include="WebApplication\Images\players\zakarlyuka.jpg" />
+    <Content Include="WebApplication\Images\players\zayac.jpg" />
+    <Content Include="WebApplication\Images\players\zgura.jpg" />
+    <Content Include="WebApplication\Images\players\zotov.gif" />
+    <Content Include="WebApplication\Images\players\zubchenko.jpg" />
+    <Content Include="WebApplication\Images\players\zubov.jpg" />
+    <Content Include="WebApplication\Images\players\лднгсршл.jpg" />
+    <Content Include="WebApplication\Images\up_arrow.png" />
+    <Content Include="WebApplication\Images\video.gif" />
+    <Content Include="WebApplication\Public\NationalTeam.aspx" />
+    <Content Include="WebApplication\Public\Coach.aspx" />
+    <Content Include="WebApplication\Public\Coaches.aspx" />
+    <Content Include="WebApplication\Public\Countries.aspx" />
+    <Content Include="WebApplication\Public\Country.aspx" />
+    <Content Include="WebApplication\Public\Game.aspx" />
+    <Content Include="WebApplication\Public\Games.aspx" />
+    <Content Include="WebApplication\Public\Photo.aspx" />
+    <Content Include="WebApplication\Public\Player.aspx" />
+    <Content Include="WebApplication\Public\Players.aspx" />
+    <Content Include="WebApplication\Public\Club.aspx" />
+    <Content Include="WebApplication\Public\Referee.aspx" />
+    <Content Include="WebApplication\Public\Stadium.aspx" />
+    <Content Include="WebApplication\Public\Video.aspx" />
+    <Content Include="WebApplication\Public\Videos.aspx" />
+    <Content Include="WebApplication\Public\Referees.aspx" />
+    <Content Include="WebApplication\Scripts\autocomplete.js" />
+    <Content Include="WebApplication\Scripts\jquery-1.9.0.js" />
+    <Content Include="WebApplication\Scripts\jquery-ui-1.10.0.custom.min.js" />
+    <Content Include="WebApplication\Scripts\jquery.colorbox.js" />
+    <Content Include="WebApplication\Scripts\jssor.js" />
+    <Content Include="WebApplication\Scripts\jssor.slider.js" />
+    <Content Include="WebApplication\Scripts\UaFootball.js" />
+    <Content Include="WebApplication\Styles\colorbox.css" />
+    <Content Include="WebApplication\Styles\images\controls.png" />
+    <Content Include="WebApplication\Styles\images\loading.gif" />
+    <Content Include="WebApplication\Styles\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="WebApplication\Styles\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="WebApplication\Styles\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="WebApplication\Styles\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="WebApplication\Styles\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="WebApplication\Styles\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="WebApplication\Styles\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="WebApplication\Styles\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="WebApplication\Styles\images\ui-icons_222222_256x240.png" />
+    <Content Include="WebApplication\Styles\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="WebApplication\Styles\images\ui-icons_454545_256x240.png" />
+    <Content Include="WebApplication\Styles\images\ui-icons_888888_256x240.png" />
+    <Content Include="WebApplication\Styles\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="WebApplication\Styles\jquery-ui-1.10.0.custom.css" />
+    <Content Include="WebApplication\Styles\Site.css" />
+    <Content Include="WebApplication\Temp\NameSymbols.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppCode\Constants.cs" />
+    <Compile Include="AppCode\DBManager.cs" />
+    <Compile Include="AppCode\DTOs\CityDTO.cs" />
+    <Compile Include="AppCode\DTOs\CityDTOHelper.cs" />
+    <Compile Include="AppCode\DTOs\ClubDTOComparer.cs" />
+    <Compile Include="AppCode\DTOs\MatchNoteDTO.cs" />
+    <Compile Include="AppCode\DTOs\NationalTeamDTOHelper.cs" />
+    <Compile Include="AppCode\DTOs\NationalTeamDTO.cs" />
+    <Compile Include="AppCode\DTOs\ClubDTO.cs" />
+    <Compile Include="AppCode\DTOs\ClubDTOHelper.cs" />
+    <Compile Include="AppCode\DTOs\CoachDTO.cs" />
+    <Compile Include="AppCode\DTOs\CoachDTOHelper.cs" />
+    <Compile Include="AppCode\DTOs\CountryDTO.cs" />
+    <Compile Include="AppCode\DTOs\CountryDTOHelper.cs" />
+    <Compile Include="AppCode\DTOs\MatchDTO.cs" />
+    <Compile Include="AppCode\DTOs\MatchDTOHelper.cs" />
+    <Compile Include="AppCode\DTOs\MatchEventDTO.cs" />
+    <Compile Include="AppCode\DTOs\MatchLineupDTO.cs" />
+    <Compile Include="AppCode\DTOs\MultimediaDTO.cs" />
+    <Compile Include="AppCode\DTOs\MultimediaTagDTO.cs" />
+    <Compile Include="AppCode\DTOs\PlayerDTO.cs" />
+    <Compile Include="AppCode\DTOs\PlayerDTOHelper.cs" />
+    <Compile Include="AppCode\DTOs\PlayerPositionDTO.cs" />
+    <Compile Include="AppCode\DTOs\RefereeDTO.cs" />
+    <Compile Include="AppCode\DTOs\RefereeDTOHelper.cs" />
+    <Compile Include="AppCode\DTOs\StadiumDTO.cs" />
+    <Compile Include="AppCode\DTOs\StadiumDTOHelper.cs" />
+    <Compile Include="AppCode\Extensions.cs" />
+    <Compile Include="AppCode\GenericReferenceObject.cs" />
+    <Compile Include="AppCode\IDTOHelper.cs" />
+    <Compile Include="AppCode\MatchNoteSetup.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\Admin.ashx.cs">
+      <DependentUpon>Admin.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\CoachEdit.aspx.cs">
+      <DependentUpon>CoachEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\CoachEdit.aspx.designer.cs">
+      <DependentUpon>CoachEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\CoachList.aspx.cs">
+      <DependentUpon>CoachList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\CoachList.aspx.designer.cs">
+      <DependentUpon>CoachList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Controls\MatchNotes.ascx.cs">
+      <DependentUpon>MatchNotes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Controls\MatchNotes.ascx.designer.cs">
+      <DependentUpon>MatchNotes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\NationalTeam.aspx.cs">
+      <DependentUpon>NationalTeam.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\NationalTeam.aspx.designer.cs">
+      <DependentUpon>NationalTeam.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Coach.aspx.cs">
+      <DependentUpon>Coach.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Coach.aspx.designer.cs">
+      <DependentUpon>Coach.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Coaches.aspx.cs">
+      <DependentUpon>Coaches.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Coaches.aspx.designer.cs">
+      <DependentUpon>Coaches.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Club.aspx.cs">
+      <DependentUpon>Club.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Club.aspx.designer.cs">
+      <DependentUpon>Club.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Videos.aspx.cs">
+      <DependentUpon>Videos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Videos.aspx.designer.cs">
+      <DependentUpon>Videos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Referees.aspx.cs">
+      <DependentUpon>Referees.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Referees.aspx.designer.cs">
+      <DependentUpon>Referees.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Utils\BitmapHelper.cs" />
+    <Compile Include="WebApplication\Utils\PathHelper.cs" />
+    <Compile Include="AppCode\SearchParameters.cs" />
+    <Compile Include="WebApplication\Controls\ClubLabel.cs" />
+    <Compile Include="WebApplication\Utils\UIHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebApplication\Admin\CityList.aspx.cs">
+      <DependentUpon>CityList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\CityList.aspx.designer.cs">
+      <DependentUpon>CityList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\CityEdit.aspx.cs">
+      <DependentUpon>CityEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\CityEdit.aspx.designer.cs">
+      <DependentUpon>CityEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\ClubList.aspx.cs">
+      <DependentUpon>ClubList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\ClubList.aspx.designer.cs">
+      <DependentUpon>ClubList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\ClubEdit.aspx.cs">
+      <DependentUpon>ClubEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\ClubEdit.aspx.designer.cs">
+      <DependentUpon>ClubEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\CountryList.aspx.cs">
+      <DependentUpon>CountryList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\CountryList.aspx.designer.cs">
+      <DependentUpon>CountryList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\CountryEdit.aspx.cs">
+      <DependentUpon>CountryEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\CountryEdit.aspx.designer.cs">
+      <DependentUpon>CountryEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\MatchList.aspx.cs">
+      <DependentUpon>MatchList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\MatchList.aspx.designer.cs">
+      <DependentUpon>MatchList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\MatchEdit.aspx.cs">
+      <DependentUpon>MatchEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\MatchEdit.aspx.designer.cs">
+      <DependentUpon>MatchEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\Multimedia.aspx.cs">
+      <DependentUpon>Multimedia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\Multimedia.aspx.designer.cs">
+      <DependentUpon>Multimedia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\PlayerList.aspx.cs">
+      <DependentUpon>PlayerList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\PlayerList.aspx.designer.cs">
+      <DependentUpon>PlayerList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\PlayerEdit.aspx.cs">
+      <DependentUpon>PlayerEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\PlayerEdit.aspx.designer.cs">
+      <DependentUpon>PlayerEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\PlayerReviewList.aspx.cs">
+      <DependentUpon>PlayerReviewList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\PlayerReviewList.aspx.designer.cs">
+      <DependentUpon>PlayerReviewList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\RefereeList.aspx.cs">
+      <DependentUpon>RefereeList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\RefereeList.aspx.designer.cs">
+      <DependentUpon>RefereeList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\RefereeEdit.aspx.cs">
+      <DependentUpon>RefereeEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\RefereeEdit.aspx.designer.cs">
+      <DependentUpon>RefereeEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\StadiumList.aspx.cs">
+      <DependentUpon>StadiumList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\StadiumList.aspx.designer.cs">
+      <DependentUpon>StadiumList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\StadiumEdit.aspx.cs">
+      <DependentUpon>StadiumEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\StadiumEdit.aspx.designer.cs">
+      <DependentUpon>StadiumEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Autocomplete.ashx.cs">
+      <DependentUpon>Autocomplete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\AutocompleteTypes.cs" />
+    <Compile Include="WebApplication\Controls\AutocompleteTextBox.ascx.cs">
+      <DependentUpon>AutocompleteTextBox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Controls\AutocompleteTextBox.ascx.designer.cs">
+      <DependentUpon>AutocompleteTextBox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Controls\HighlightedLabel.cs" />
+    <Compile Include="WebApplication\Controls\MatchEvent.ascx.cs">
+      <DependentUpon>MatchEvent.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Controls\MatchEvent.ascx.designer.cs">
+      <DependentUpon>MatchEvent.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Controls\MatchList.ascx.cs">
+      <DependentUpon>MatchList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Controls\MatchList.ascx.designer.cs">
+      <DependentUpon>MatchList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Controls\MatchLog_Player.ascx.cs">
+      <DependentUpon>MatchLog_Player.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Controls\MatchLog_Player.ascx.designer.cs">
+      <DependentUpon>MatchLog_Player.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\ObjectEditPageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\ObjectListPageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Countries.aspx.cs">
+      <DependentUpon>Countries.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Countries.aspx.designer.cs">
+      <DependentUpon>Countries.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Country.aspx.cs">
+      <DependentUpon>Country.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Country.aspx.designer.cs">
+      <DependentUpon>Country.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Game.aspx.cs">
+      <DependentUpon>Game.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Game.aspx.designer.cs">
+      <DependentUpon>Game.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Games.aspx.cs">
+      <DependentUpon>Games.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Games.aspx.designer.cs">
+      <DependentUpon>Games.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Photo.aspx.cs">
+      <DependentUpon>Photo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Photo.aspx.designer.cs">
+      <DependentUpon>Photo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Player.aspx.cs">
+      <DependentUpon>Player.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Player.aspx.designer.cs">
+      <DependentUpon>Player.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Players.aspx.cs">
+      <DependentUpon>Players.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Players.aspx.designer.cs">
+      <DependentUpon>Players.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Referee.aspx.cs">
+      <DependentUpon>Referee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Referee.aspx.designer.cs">
+      <DependentUpon>Referee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Stadium.aspx.cs">
+      <DependentUpon>Stadium.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Stadium.aspx.designer.cs">
+      <DependentUpon>Stadium.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\Video.aspx.cs">
+      <DependentUpon>Video.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\Video.aspx.designer.cs">
+      <DependentUpon>Video.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Site.master.cs">
+      <DependentUpon>Site.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Site.master.designer.cs">
+      <DependentUpon>Site.master</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Temp\NameSymbols.aspx.cs">
+      <DependentUpon>NameSymbols.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Temp\NameSymbols.aspx.designer.cs">
+      <DependentUpon>NameSymbols.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Utils\UaFootballPageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UaFDatabase\UaFDatabase.csproj">
+      <Project>{d969c1e7-d9ee-49f2-8453-1a7e32fbb023}</Project>
+      <Name>UaFDatabase</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="WebApplication\Site.master" />
+    <Content Include="WebApplication\Autocomplete.ashx" />
+    <Content Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="WebApplication\Admin\Admin.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DB\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>18001</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/UaFootball</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
