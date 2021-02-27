@@ -1,0 +1,7 @@
+D:\Andrey\Projects\git\UaFDatabase\obj\Debug\UaFDatabase.csprojAssemblyReference.cache
+D:\Andrey\Projects\git\UaFDatabase\obj\Debug\UaFDatabase.csproj.CoreCompileInputs.cache
+D:\Andrey\Projects\git\UaFDatabase\bin\Debug\UaFDatabase.dll
+D:\Andrey\Projects\git\UaFDatabase\bin\Debug\UaFDatabase.pdb
+D:\Andrey\Projects\git\UaFDatabase\obj\Debug\UaFDatabase.dll
+D:\Andrey\Projects\git\UaFDatabase\obj\Debug\UaFDatabase.pdb
+D:\Andrey\Projects\git\UaFDatabase\bin\Debug\UaFDatabase.dll.config
