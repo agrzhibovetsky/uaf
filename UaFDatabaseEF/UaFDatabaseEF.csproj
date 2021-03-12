@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Cities.cs" />
+    <Compile Remove="Class1.cs" />
+    <Compile Remove="Clubs.cs" />
+    <Compile Remove="Coaches.cs" />
+    <Compile Remove="Competitions.cs" />
+    <Compile Remove="CompetitionStages.cs" />
+    <Compile Remove="Countries.cs" />
+    <Compile Remove="Fifaassociations.cs" />
+    <Compile Remove="Matches.cs" />
+    <Compile Remove="MatchEvents.cs" />
+    <Compile Remove="MatchLineups.cs" />
+    <Compile Remove="MatchLineupsBackup.cs" />
+    <Compile Remove="MatchNotes.cs" />
+    <Compile Remove="MigrationHistory.cs" />
+    <Compile Remove="Multimedia.cs" />
+    <Compile Remove="MultimediaTags.cs" />
+    <Compile Remove="NationalTeams.cs" />
+    <Compile Remove="PhotoGalleryAlbums.cs" />
+    <Compile Remove="PlayerPositions.cs" />
+    <Compile Remove="Players.cs" />
+    <Compile Remove="Referees.cs" />
+    <Compile Remove="Seasons.cs" />
+    <Compile Remove="Stadiums.cs" />
+    <Compile Remove="Tasks.cs" />
+    <Compile Remove="UaFootballContext.cs" />
+    <Compile Remove="VGamesByPlayerByTeam.cs" />
+    <Compile Remove="VMatchDuration.cs" />
+    <Compile Remove="VPlayerEventsStat.cs" />
+    <Compile Remove="VPlayerMatches.cs" />
+    <Compile Remove="VwCities.cs" />
+    <Compile Remove="VwClubs.cs" />
+    <Compile Remove="VwCoachesList.cs" />
+    <Compile Remove="VwMatches.cs" />
+    <Compile Remove="VwMatchesRefrees.cs" />
+    <Compile Remove="VwRefereeList.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.14" />
+  </ItemGroup>
+
+</Project>
