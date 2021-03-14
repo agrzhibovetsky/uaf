@@ -17,6 +17,6 @@ namespace UaFootball.WebApplication
         Coach,
         MostRecentClubCoach,
         MostRecentStadium,
-        AssistPlayer
+        EventPlayer
     }
 }

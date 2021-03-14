@@ -24,6 +24,14 @@ namespace UaFootball.WebApplication
             }
         }
 
+        protected string AdminApiPath
+        {
+            get
+            {
+                return ResolveClientUrl(Constants.Pages.AdminApi);
+            }
+        }
+
         protected string FormatDate(object oDate)
         {
             return UIHelper.FormatDate(oDate);

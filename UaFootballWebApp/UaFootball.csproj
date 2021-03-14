@@ -99,6 +99,7 @@
     <Content Include="WebApplication\Admin\RefereeEdit.aspx" />
     <Content Include="WebApplication\Admin\StadiumList.aspx" />
     <Content Include="WebApplication\Admin\StadiumEdit.aspx" />
+    <Content Include="WebApplication\Controls\AdminEventPopup.ascx" />
     <Content Include="WebApplication\Controls\AutocompleteTextBox.ascx" />
     <Content Include="WebApplication\Controls\MatchEvent.ascx" />
     <Content Include="WebApplication\Controls\MatchList.ascx" />
@@ -406,6 +407,13 @@
     </Compile>
     <Compile Include="WebApplication\Admin\CoachList.aspx.designer.cs">
       <DependentUpon>CoachList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Controls\AdminEventPopup.ascx.cs">
+      <DependentUpon>AdminEventPopup.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Controls\AdminEventPopup.ascx.designer.cs">
+      <DependentUpon>AdminEventPopup.ascx</DependentUpon>
     </Compile>
     <Compile Include="WebApplication\Controls\MatchNotes.ascx.cs">
       <DependentUpon>MatchNotes.ascx</DependentUpon>

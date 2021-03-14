@@ -58,15 +58,6 @@ namespace UaFootball.WebApplication.Admin {
         protected global::System.Web.UI.WebControls.Repeater rptTags;
         
         /// <summary>
-        /// btnTest control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnTest;
-        
-        /// <summary>
         /// ddlTagType control.
         /// </summary>
         /// <remarks>
@@ -148,33 +139,6 @@ namespace UaFootball.WebApplication.Admin {
         protected global::System.Web.UI.WebControls.CheckBoxList cbl1;
         
         /// <summary>
-        /// cblGoalFlags control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList cblGoalFlags;
-        
-        /// <summary>
-        /// cblPenaltyFlags control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList cblPenaltyFlags;
-        
-        /// <summary>
-        /// actbAssistPlayer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::UaFootball.WebApplication.AutocompleteTextBox actbAssistPlayer;
-        
-        /// <summary>
         /// imgMultimedia control.
         /// </summary>
         /// <remarks>
@@ -209,5 +173,41 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblError;
+        
+        /// <summary>
+        /// lbOpenAdminEventPopup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbOpenAdminEventPopup;
+        
+        /// <summary>
+        /// mpe1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender mpe1;
+        
+        /// <summary>
+        /// pAdminEventPopup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pAdminEventPopup;
+        
+        /// <summary>
+        /// evPopup1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::UaFootball.WebApplication.Controls.AdminEventPopup evPopup1;
     }
 }

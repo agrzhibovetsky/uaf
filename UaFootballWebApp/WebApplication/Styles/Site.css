@@ -457,3 +457,15 @@ tr.new_competition td
     padding: 5px;
     padding-top: 10px;
 }
+
+.modalPopupBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: gray;
+    z-index: 1800;
+    min-height: 100%;
+    width: 100%;
+    overflow: hidden;
+    opacity:80%;
+}

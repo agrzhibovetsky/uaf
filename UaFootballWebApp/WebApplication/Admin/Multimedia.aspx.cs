@@ -86,18 +86,7 @@ namespace UaFootball.WebApplication.Admin
                 cbl1.Items.Add(new ListItem(Constants.UI.MultimediaTags.AwayTeamPhoto, Constants.DB.MultimediaTags.AwayTeamPhoto.ToString()));
                 cbl1.Items.Add(new ListItem(Constants.UI.MultimediaTags.HomeTeamPhoto, Constants.DB.MultimediaTags.HomeTeamPhoto.ToString()));
 
-                Dictionary<int, string> goalEventFlags = UIHelper.EventCodeEventFlagsMap[Constants.DB.EventTypeCodes.Goal];
-                cblGoalFlags.DataSource = goalEventFlags;
-                cblGoalFlags.DataTextField = "Value";
-                cblGoalFlags.DataValueField = "Key";
-                cblGoalFlags.DataBind();
-
-                Dictionary<int, string> penaltyEventFlags = UIHelper.EventCodeEventFlagsMap[Constants.DB.EventTypeCodes.Penalty];
-                cblPenaltyFlags.DataSource = penaltyEventFlags;
-                cblPenaltyFlags.DataTextField = "Value";
-                cblPenaltyFlags.DataValueField = "Key";
-                cblPenaltyFlags.DataBind();
-
+                
 
                 if (!string.IsNullOrEmpty(Request["id"]))
                 {
@@ -821,7 +810,18 @@ namespace UaFootball.WebApplication.Admin
             }
         }
 
-        
+        protected void rptTags_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                MultimediaTagDTO tag = e.Item.DataItem as MultimediaTagDTO;
+                if (!tag.MatchEvent_ID.HasValue)
+                {
+                    Control btnEdit = e.Item.FindControl("btnEventEdit");
+                    btnEdit.Visible = false;
+                }
+            }
+        }
     }
 
     

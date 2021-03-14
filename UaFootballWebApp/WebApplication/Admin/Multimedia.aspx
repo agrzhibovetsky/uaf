@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/WebApplication/Site.master" AutoEventWireup="true" CodeBehind="Multimedia.aspx.cs" Inherits="UaFootball.WebApplication.Admin.Multimedia" %>
 <%@ Register TagPrefix="ajax" Namespace="AjaxControlToolkit" Assembly="AjaxControlToolkit"%>
 <%@ Register TagPrefix="UaFootball" TagName="AutocompleteTextBox" Src="~/WebApplication/Controls/AutocompleteTextBox.ascx" %>
+<%@ Register TagPrefix="UaFootball" TagName="AdminEventPopup" Src="~/WebApplication/Controls/AdminEventPopup.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <style type="text/css">
         .tmpAsyncFileUploadBugFix input
@@ -39,15 +40,77 @@
             };
         }
 
-        function onTagAdded() {
-            var selectedTypeOption = $("#ddlTagType")[0].selectedOptions[0];
-            if ($(selectedTypeOption).attr("isEventType") == "true") {
-                var selectedValueOption = $("#ddlTagValue")[0].selectedOptions[0];
-                var selectedEventType = $(selectedValueOption).attr("eventType");
-                console.log(selectedEventType);
-            }
+        function openEditEventPopup(sender) {
+            var eventId = $(sender).attr("eventId");
+            $("#hdnAdminEventPopupEventId").val(eventId);
+            $.ajax({
+                url: "<%=AdminApiPath%>/GetMatchEvent?matchEventId="+eventId,
+                data: "",
+                dataType: "json",
+                success: function (data) {
+                    $(".eventFlagsDiv").hide();
+                    var eventFlagsDiv = $(".eventFlagsDiv[eventType='" + data.event_Cd.toUpperCase() + "']");
+                    eventFlagsDiv.show();
+                    actbPlayer1.tb.val(data.player1.first_Name + " " + data.player1.last_Name);
+                    actbPlayer1.hf.val(data.player1_Id);
+
+                    var autocompleteUrl = actbPlayer2.tb.autocomplete("option", "source");
+                    var eventIdParamIndex = autocompleteUrl.indexOf("&eventId");
+                    if (eventIdParamIndex > 0) {
+                        autocompleteUrl = autocompleteUrl.substr(0, eventIdParamIndex);
+                    }
+                    actbPlayer2.tb.autocomplete("option", "source", autocompleteUrl + "&eventId=" + eventId);
+
+                    if (data.player2_Id != null) {
+                        actbPlayer2.tb.val(data.player2.first_Name + " " + data.player2.last_Name);
+                        actbPlayer2.hf.val(data.player2_Id);
+                    }
+                    else {
+                        actbPlayer2.tb.val("");
+                        actbPlayer2.hf.val("");
+                    }
+
+                    $("#eventFlagsContainer input").prop("checked", "");
+                    var flagCheckboxes = eventFlagsDiv.find("input");
+                    for (var i = 0; i < flagCheckboxes.length; i++) {
+                        var checkbox = $(flagCheckboxes[i]);
+                        var checked = (checkbox.val() & data.eventFlags) > 0 ? "checked" : "";
+                        checkbox.prop("checked", checked);
+                    }
+                    $find("mpe1").show();
+                }
+            });
+            
             
         }
+
+        function closeEditEventPopup() {
+            $find("mpe1").hide();
+        }
+
+        function saveEvent() {
+            var eventId = $("#hdnAdminEventPopupEventId").val();
+            var player2Id = actbPlayer2.hf.val();
+            var eventFlags = 0;
+            var flagCheckboxes = $("#eventFlagsContainer input");
+            for (var i = 0; i < flagCheckboxes.length; i++) {
+                var checkbox = $(flagCheckboxes[i]);
+                if (checkbox.prop("checked")) eventFlags = eventFlags | checkbox.val();
+            }
+
+            $.ajax({
+                url: "<%=AdminApiPath%>/UpdateMatchEvent?matchEventId=" + eventId + "&player2Id=" + player2Id + "&flags=" + eventFlags,
+                data: "",
+                dataType: "json",
+                success: function (data) {
+                    $find("mpe1").hide();
+                }
+            });
+            
+                    
+        }
+               
+        
     </script>
 </asp:Content>
 
@@ -75,7 +138,7 @@
             <asp:UpdatePanel ID="upTags" runat="server">
                 <ContentTemplate>
                     <table cellpadding="3" width="100%" style="border: 1px solid gray" >
-                    <asp:Repeater ID="rptTags" runat="server" OnItemCommand="rptTags_ItemCommand">
+                    <asp:Repeater ID="rptTags" runat="server" OnItemCommand="rptTags_ItemCommand" OnItemDataBound="rptTags_ItemDataBound">
                         <HeaderTemplate>
                             <tr>
                                 <td>
@@ -100,11 +163,16 @@
                                 <td>
                                     <asp:ImageButton ID="btnDelete" runat="server" ImageUrl="~/WebApplication/Images/delete.gif" CommandArgument='<%#Eval("tmpId")%>' />
                                 </td>
+                                <td>
+                                    <a href="javascript:void(0)" class="aEventEditPopup" onclick="javascript:openEditEventPopup(this); return false;" eventId="<%#Eval("MatchEvent_ID")%>">
+                                        <asp:Image ID="btnEventEdit" runat="server" ImageUrl="~/WebApplication/Images/edit.gif" />
+                                    </a>
+                                </td>
                             </tr>
                         </ItemTemplate>
                     </asp:Repeater>
                         
-                    </table><asp:Button ID="btnTest" runat="server" />
+                    </table>
                 </ContentTemplate>
                 <Triggers>
                    
@@ -133,8 +201,8 @@
                     <asp:AsyncPostBackTrigger ControlID="ddlMultimediaSubType" />
                 </Triggers>
             </asp:UpdatePanel>
-            <asp:Button runat="server" ID="btnAddTag" Text="Добавить" OnClientClick="onTagAdded()" OnClick="btnAdd_Click" />
-        </td>
+            <asp:Button runat="server" ID="btnAddTag" Text="Добавить" OnClick="btnAdd_Click" />
+            </td>
     </tr>
     <tr>
         <td colspan="2">
@@ -157,15 +225,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            <div class="eventFlagsDiv" eventType="G" style="display:noned;">
-                <asp:CheckBoxList ID="cblGoalFlags" runat="server"></asp:CheckBoxList>
-            </div>
-            <div class="eventFlagsDiv" eventType="P" style="display:noned;">
-                <asp:CheckBoxList ID="cblPenaltyFlags" runat="server"></asp:CheckBoxList>
-            </div>
-            <div id="divGoalAssist" style="display:block">
-                <UaFootball:AutocompleteTextBox runat="server" ID="actbAssistPlayer" BehaviorId="actbAssistPlayer" AutocompleteType="AssistPlayer" />
-            </div>
+            
         </td>
     </tr>
     <tr>
@@ -184,5 +244,9 @@
         </td>
     </tr>
 </table>
-
+    <asp:LinkButton ID="lbOpenAdminEventPopup" runat="server" />
+    <ajax:ModalPopupExtender ID="mpe1" BehaviorID="mpe1" ClientIDMode="Static" runat="server" BackgroundCssClass="modalPopupBackground" TargetControlID="lbOpenAdminEventPopup" PopupControlID="pAdminEventPopup"></ajax:ModalPopupExtender>
+    <asp:Panel id="pAdminEventPopup" runat="server">
+        <UaFootball:AdminEventPopup ID="evPopup1" runat="server" />
+    </asp:Panel>
 </asp:Content>

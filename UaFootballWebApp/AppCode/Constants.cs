@@ -54,6 +54,7 @@ namespace UaFootball.AppCode
             public const string List_Match = "~/WebApplication/Admin/MatchList.aspx";
             public const string Edit_Match = "~/WebApplication/Admin/MatchEdit.aspx";
             public const string Autocomplete = "~/WebApplication/Autocomplete.ashx";
+            public const string AdminApi = "/UaFootballAPI/Admin";
         }
 
         public static class ConfigKeys

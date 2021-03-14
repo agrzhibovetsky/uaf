@@ -232,6 +232,34 @@ namespace UaFootball.WebApplication
                             }
                             break;
                         }
+                    case AutocompleteType.EventPlayer:
+                        string response = String.Empty;
+                        using (UaFootball_DBDataContext db = DBManager.GetDB())
+                        {
+                            string eventIdParam = context.Request["eventId"];
+                            if (!string.IsNullOrEmpty(eventIdParam))
+                            {
+                                int eventId = int.Parse(eventIdParam);
+                                UaFDatabase.MatchEvent me = db.MatchEvents.Single(m => m.MatchEvent_Id == eventId);
+                                List<MatchLineup> lineups = db.MatchLineups.Where(ml => ml.Match_Id == me.Match_Id).ToList();
+                                bool isHomeTeamPlayer = lineups.Single(l => l.Player_Id == me.Player1_Id).IsHomeTeamPlayer;
+                                List<UaFDatabase.Player> sameTeamPlayers = db.Players.Where(p => lineups.Where(l => l.IsHomeTeamPlayer == isHomeTeamPlayer).Select(l => l.Player_Id).Contains(p.Player_Id)).ToList();
+                                foreach (UaFDatabase.Player p in sameTeamPlayers)
+                                {
+                                    if (p.Last_Name.ToLower().StartsWith(searchTerm.ToLower()) || (p.Display_Name??string.Empty).ToLower().StartsWith(searchTerm.ToLower()))
+                                    {
+                                        AutoCompleteResponse r = new AutoCompleteResponse { id = p.Player_Id };
+                                        string formattedName = string.Format("{0} {1} '{2}'", p.First_Name, p.Last_Name, p.Display_Name);
+                                        formattedName = formattedName.Replace("''", "").Trim();
+                                        r.value = formattedName;
+                                        result.Add(r);
+                                    }
+                                }
+                                response = serializer.Serialize(result);
+                            }
+                        }
+                        context.Response.Write(response);
+                        break;
                 }
             }
             else
