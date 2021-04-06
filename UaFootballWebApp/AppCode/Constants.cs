@@ -322,8 +322,8 @@ namespace UaFootball.AppCode
             
 
             //file system
-            public const string DropBoxPath = @"D:\Andrey\Projects\git\UaFootball\WebApplication\Dropbox\";
-            public const string MultimediaStorageRoot = @"D:\Andrey\Projects\git\UaFootball\WebApplication\Multimedia\";
+            public const string DropBoxPath = @"D:\Andrey\Projects\git\UaFootball\UaFootballWebApp\WebApplication\Dropbox\";
+            public const string MultimediaStorageRoot = @"D:\Andrey\Projects\git\UaFootball\UaFootballWebApp\WebApplication\Multimedia\";
 
             public const string JQueryKey = "JQuery";
             public const string JQueryUIKey = "JQueryUI";

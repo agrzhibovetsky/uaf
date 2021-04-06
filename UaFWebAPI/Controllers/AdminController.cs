@@ -66,7 +66,7 @@ namespace UaFWebAPI.Controllers
         }
 
         [HttpGet("UpdateMatchEvent")]
-        public ActionResult<string> UpdateMatchEvent(int matchEventId, int player2Id, long flags)
+        public ActionResult<string> UpdateMatchEvent(int matchEventId, int? player2Id, long flags)
         {
             string response = "success";
             using (UaFootballContext db = new UaFootballContext())
