@@ -31,13 +31,16 @@ namespace UaFootball.WebApplication
             if (EventType_CD != null)
             {
                 iEvent.ToolTip = Minute.ToString() + "'";
-                Dictionary<int, string> eventFlagMap = UIHelper.EventCodeEventFlagsMap[EventType_CD];
-
-                foreach (int flag in eventFlagMap.Keys)
+                if (UIHelper.EventCodeEventFlagsMap.ContainsKey(EventType_CD))
                 {
-                    if ((flag & EventFlags) > 0)
+                    Dictionary<int, string> eventFlagMap = UIHelper.EventCodeEventFlagsMap[EventType_CD];
+
+                    foreach (int flag in eventFlagMap.Keys)
                     {
-                        iEvent.ToolTip += ", " + eventFlagMap[flag];
+                        if ((flag & EventFlags) > 0)
+                        {
+                            iEvent.ToolTip += ", " + eventFlagMap[flag];
+                        }
                     }
                 }
 
@@ -73,6 +76,7 @@ namespace UaFootball.WebApplication
                             break;
                         }
                     case Constants.DB.EventTypeCodes.YellowCard:
+                    case Constants.DB.EventTypeCodes.CoachYellowCard:
                         {
                             iEvent.ImageUrl = ResolveClientUrl("~/WebApplication/images/yells.gif");
                             break;

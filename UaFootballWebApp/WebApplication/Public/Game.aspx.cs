@@ -208,7 +208,15 @@ namespace UaFootball.WebApplication
         protected void rptEvents_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             MatchEventDTO ev = e.Item.DataItem as MatchEventDTO;
-            MatchLineupDTO lineup = DataItem.Lineup.FirstOrDefault(l => l.Player_Id == ev.Player1_Id);
+            MatchLineupDTO lineup;
+            if (ev.Event_Cd == Constants.DB.EventTypeCodes.CoachYellowCard)
+            {
+                lineup = DataItem.Lineup.FirstOrDefault(l => l.CoachId == ev.Coach_Id);
+            }
+            else
+            {
+                lineup = DataItem.Lineup.FirstOrDefault(l => l.Player_Id == ev.Player1_Id);
+            }
             if (lineup != null)
             {
                 MatchEvent meControl = null;
@@ -233,7 +241,14 @@ namespace UaFootball.WebApplication
                 meControl.EventFlags = ev.EventFlags;
                 meControl.Player1 = ev.Player1;
                 meControl.Player2 = ev.Player2;
-                lblPlayerName.Text = FormatName(lineup.Player_FirstName, lineup.Player_LastName, lineup.Player_DisplayName, lineup.Player_CountryId) + ", " + ev.Minute.ToString();
+                if (ev.Event_Cd == Constants.DB.EventTypeCodes.CoachYellowCard)
+                {
+                    lblPlayerName.Text = FormatName(lineup.Coach_FirstName, lineup.Coach_LastName, null, null) + " (тр), " + ev.Minute.ToString();
+                }
+                else
+                {
+                    lblPlayerName.Text = FormatName(lineup.Player_FirstName, lineup.Player_LastName, lineup.Player_DisplayName, lineup.Player_CountryId) + ", " + ev.Minute.ToString();
+                }
             }
         }
     }

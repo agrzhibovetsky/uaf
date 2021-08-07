@@ -146,6 +146,22 @@
     }
 
     $(document).ready(function () {
+
+        $("input[id^='tbhomePlayerAutocomplete'], input[id^='tbawayPlayerAutocomplete']").each(function () {
+
+            var autoCompleteTextBox = eval(this.id.substr(2));
+            
+            autoCompleteTextBox.getAdditionalParams = function () {
+                if ($("#cbMatchKind:checked").length == 1) {
+                    var isHomeTeam = this.autocompleteTextBoxId.indexOf("home") > 0;
+                    var nationalTeamId = isHomeTeam ? homeTeamAutocomplete.hf.val() : awayTeamAutocomplete.hf.val();
+                    return "&nationalTeam=" + nationalTeamId;
+                }
+                else
+                    return ""
+            }
+        })
+
         $(".tbPlayerShirtNumberSelector").blur(function () {
             
             if (this.id.indexOf("Home")>0)

@@ -12,7 +12,7 @@ namespace UaFDatabaseEF.DTO
 
         public int Minute { get; set; }
 
-        public int Player1_Id { get; set; }
+        public int? Player1_Id { get; set; }
 
         public int? Player2_Id { get; set; }
 

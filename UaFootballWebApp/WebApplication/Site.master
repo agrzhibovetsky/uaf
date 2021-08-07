@@ -44,6 +44,7 @@
                             <asp:MenuItem NavigateUrl="~/WebApplication/Public/Countries.aspx" Text="Страны"></asp:MenuItem>
                             <asp:MenuItem NavigateUrl="~/WebApplication/Public/Referees.aspx" Text="Судьи"></asp:MenuItem>
                             <asp:MenuItem NavigateUrl="~/WebApplication/Public/Coaches.aspx" Text="Тренеры"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebApplication/Public/UkraineRegions.aspx" Text="Карта Украины"></asp:MenuItem>
                             <asp:MenuItem NavigateUrl="~/WebApplication/Public/Games.aspx?nt=1" Text="Матчи (сборная)"></asp:MenuItem>
                             <asp:MenuItem NavigateUrl="~/WebApplication/Public/Games.aspx?nt=0" Text="Матчи (еврокубки)"></asp:MenuItem>
                         </asp:MenuItem>

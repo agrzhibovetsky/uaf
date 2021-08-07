@@ -5,10 +5,11 @@
     this.autocompleteHiddenFieldId = "";
     this.tb = "";
     this.hf = "";
+    this.getAdditionalParams = function () { return "" };
 }
 
 autocompleteTextBox.prototype.getAutocompleteUrl = function () {
-    return (this.autocompletePath + "?type="+ this.autocompleteType);
+    return (this.autocompletePath + "?type=" + this.autocompleteType + this.getAdditionalParams());
 }
 
 autocompleteTextBox.prototype.setAutocompletePath = function (path) {
@@ -29,9 +30,10 @@ autocompleteTextBox.prototype.setHiddenFiedlId = function (id) {
 
 
 autocompleteTextBox.prototype.init = function () {
+    var me = this;
     this.tb = $("#" + this.autocompleteTextBoxId);
     this.hf = $("#" + this.autocompleteHiddenFieldId);
-    var source = this.getAutocompleteUrl();
+    
     
     this.tb.autocomplete();
     this.tb.autocomplete("option", "minLength", 2);
@@ -40,16 +42,36 @@ autocompleteTextBox.prototype.init = function () {
     {
         this.tb.autocomplete("option", "delay", 150);
     }
-    this.tb.autocomplete("option", "source", source);
+    this.tb.autocomplete("option", "source", function (request, response) {
+        var source = me.getAutocompleteUrl();
+        var data = { term: request.term };
+        //if ($("#cbMatchKind:checked").length == 1) {
+        //    var isHomeTeam = document.activeElement.id.indexOf("homePlayer") > 0;
+        //    data.nationalTeam = isHomeTeam ? homeTeamAutocomplete.hf.val() : awayTeamAutocomplete.hf.val();
+        //}
+        $.ajax(
+            {
+                url: source,
+                data: data,
+                success: function (data) {
+                    response(data);
+                },
+                dataType: 'json',
+                error: function () {
+                    response([]);
+                }
+            }
+        );
+    });
     this.tb.autocomplete("option", "search", function (e, ui) {
-
+        
         var matchedName = "";
         var matchedId = "";
         var matchesCount = 0;
         if (this.id.indexOf("actbEventPlayer") > 0 && document.location.href.indexOf("MatchEdit.aspx") > 0)
         {
             var matchedPlayers = [];
-            var playersTextboxes = $("[id*='PlayerAutocomplete']");
+            var playersTextboxes = $("[id*='PlayerAutocomplete'],#tbactbHomeCoach,#tbactbAwayCoach");
             for (var i = 0; i < playersTextboxes.length; i++) {
                 if ($(playersTextboxes[i]).val().toUpperCase().indexOf($(this).val().toUpperCase()) > -1) {
                     matchedName = $(playersTextboxes[i]).val();

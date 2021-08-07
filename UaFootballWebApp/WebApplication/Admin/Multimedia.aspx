@@ -54,12 +54,9 @@
                     actbPlayer1.tb.val(data.player1.first_Name + " " + data.player1.last_Name);
                     actbPlayer1.hf.val(data.player1_Id);
 
-                    var autocompleteUrl = actbPlayer2.tb.autocomplete("option", "source");
-                    var eventIdParamIndex = autocompleteUrl.indexOf("&eventId");
-                    if (eventIdParamIndex > 0) {
-                        autocompleteUrl = autocompleteUrl.substr(0, eventIdParamIndex);
+                    actbPlayer2.getAdditionalParams = function () {
+                        return "&eventId=" + eventId;        
                     }
-                    actbPlayer2.tb.autocomplete("option", "source", autocompleteUrl + "&eventId=" + eventId);
 
                     if (data.player2_Id != null) {
                         actbPlayer2.tb.val(data.player2.first_Name + " " + data.player2.last_Name);
@@ -109,6 +106,19 @@
             
                     
         }
+
+        function checkTags() {
+            var mmMode = $("#ddlMultimediaSubType").val();
+            var ret = true;
+            if (mmMode == "PL") {
+                var footballerRows = $(".tagRow[mmtype='Футболист']");
+                var clubRows = $(".tagRow[mmtype='Клуб']");
+                if (footballerRows.length == 0 || clubRows.length == 0)
+                    ret = confirm("Футболист или клуб не заданы, сохранить?")
+            }
+
+            return ret;
+        }
                
         
     </script>
@@ -120,7 +130,7 @@
 <table cellpadding="5" width="100%">
     <tr>
         <td width="200">Тип мультимедиа:</td>
-        <td align="left"><asp:DropDownList ID="ddlMultimediaSubType" runat="server" 
+        <td align="left"><asp:DropDownList ID="ddlMultimediaSubType" runat="server" ClientIDMode="Static"
                 onselectedindexchanged="ddlMultimediaSubType_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList></td>
     </tr>
     <tr>
@@ -153,7 +163,7 @@
                             </tr>
                         </HeaderTemplate>
                         <ItemTemplate>
-                            <tr>
+                            <tr class="tagRow" mmType="<%#Eval("Type")%>">
                                 <td>
                                     <%#Eval("Type")%>
                                 </td>
@@ -238,7 +248,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            <asp:Button ID="btnSave" runat="server" Text="Сохранить" ValidationGroup="trueValidation" OnClick="btnSave_Click" />
+            <asp:Button ID="btnSave" runat="server" Text="Сохранить" ValidationGroup="trueValidation" OnClientClick="return checkTags();" OnClick="btnSave_Click" />
             <asp:Button ID="btnDelete" runat="server" Text="Удалить" ValidationGroup="trueValidation" OnClick="btnDelete_Click" Visible="false" />
             <asp:Label ID="lblError" Font-Bold="true" CssClass="editFormError" runat="server"></asp:Label>
         </td>

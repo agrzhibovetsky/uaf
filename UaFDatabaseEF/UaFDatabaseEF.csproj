@@ -19,6 +19,10 @@
     <Compile Remove="MatchLineupsBackup.cs" />
     <Compile Remove="MatchNotes.cs" />
     <Compile Remove="MigrationHistory.cs" />
+    <Compile Remove="Migrations\20210807171728_Adding coach to match events.cs" />
+    <Compile Remove="Migrations\20210807172537_Adding coach to match events - 2.cs" />
+    <Compile Remove="Migrations\20210807172904_Initial model load.cs" />
+    <Compile Remove="Migrations\20210807173454_Add coaches to MatchEvents.cs" />
     <Compile Remove="Multimedia.cs" />
     <Compile Remove="MultimediaTags.cs" />
     <Compile Remove="NationalTeams.cs" />
@@ -44,6 +48,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.14" />
   </ItemGroup>
 

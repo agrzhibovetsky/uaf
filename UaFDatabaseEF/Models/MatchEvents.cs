@@ -13,7 +13,7 @@ namespace UaFDatabaseEF.Models
         public int MatchEventId { get; set; }
         public string EventCd { get; set; }
         public int Minute { get; set; }
-        public int Player1Id { get; set; }
+        public int? Player1Id { get; set; }
         public int? Player2Id { get; set; }
         public int MatchId { get; set; }
         public long? EventFlags { get; set; }
@@ -21,6 +21,8 @@ namespace UaFDatabaseEF.Models
         public Matches Match { get; set; }
         public Players Player1 { get; set; }
         public Players Player2 { get; set; }
+        public Coaches Coach { get; set; }
         public ICollection<MultimediaTags> MultimediaTags { get; set; }
+
     }
 }

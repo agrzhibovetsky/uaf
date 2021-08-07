@@ -337,7 +337,13 @@ namespace UaFootball.WebApplication
                         Match_Id = DataItem.Match_Id
                     };
 
-                    if (newEvent.Player1_Id > 0)
+                    if (ddlEventType.SelectedValue == Constants.DB.EventTypeCodes.CoachYellowCard)
+                    {
+                        newEvent.Player1_Id = null;
+                        newEvent.Coach_Id = int.Parse(actbPlayer1.Value);
+                    }
+
+                    if (newEvent.Player1_Id.HasValue || newEvent.Coach_Id.HasValue)
                     {
                         int eventFlags = 0;
                         foreach (ListItem item in cblEventFlags.Items)
@@ -592,17 +598,20 @@ namespace UaFootball.WebApplication
                 if (ev.Event_Cd != Constants.UI.DropdownDefaultValue)
                 {
                     ddlEventTypeCd.SelectedValue = ev.Event_Cd;
-                    cblEvents.DataSource = UIHelper.EventCodeEventFlagsMap[ev.Event_Cd];
-                    cblEvents.DataTextField = "Value";
-                    cblEvents.DataValueField = "Key";
-                    cblEvents.DataBind();
-
-                    if (ev.EventFlags.HasValue)
+                    if (UIHelper.EventCodeEventFlagsMap.ContainsKey(ev.Event_Cd))
                     {
-                        foreach (ListItem li in cblEvents.Items)
+                        cblEvents.DataSource = UIHelper.EventCodeEventFlagsMap[ev.Event_Cd];
+                        cblEvents.DataTextField = "Value";
+                        cblEvents.DataValueField = "Key";
+                        cblEvents.DataBind();
+
+                        if (ev.EventFlags.HasValue)
                         {
-                            int flag = int.Parse(li.Value);
-                            li.Selected = (ev.EventFlags.Value & flag) > 0;
+                            foreach (ListItem li in cblEvents.Items)
+                            {
+                                int flag = int.Parse(li.Value);
+                                li.Selected = (ev.EventFlags.Value & flag) > 0;
+                            }
                         }
                     }
                 }

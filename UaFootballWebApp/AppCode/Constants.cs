@@ -95,6 +95,7 @@ namespace UaFootball.AppCode
                 public const string Substitution = "S";
                 public const string Penalty = "P";
                 public const string MissedPenalty = "MP";
+                public const string CoachYellowCard = "YC";
                 //public const string PenaltyShootoutScored = "PSS";
                 //public const string PenaltyShootoutMissed = "PSM";
             }
@@ -215,6 +216,7 @@ namespace UaFootball.AppCode
                 public const string Substitution = "Замена";
                 public const string MissedPenalty = "Незабитый пенальти";
                 public const string Penalty = "Пенальти";
+                public const string CoachYellowCard = "Желтая карточка (тренер)";
                 //public const string PenaltyShootoutScored = "Послематчевый пенальти - гол";
                 //public const string PenaltyShootoutMissed = "Послематчевый пенальти - мимо";
             }

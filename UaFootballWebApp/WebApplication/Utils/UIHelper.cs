@@ -67,7 +67,7 @@ namespace UaFootball.WebApplication
             else return string.Empty;
         }
 
-        public static string FormatName(object FirstName, object LastName, object DisplayName, int countryId)
+        public static string FormatName(object FirstName, object LastName, object DisplayName, int? countryId)
         {
             string fNameStg = FirstName as string;
             string sNameStg = LastName as string;
@@ -150,6 +150,7 @@ namespace UaFootball.WebApplication
             _eventCodeMap.Add(Constants.DB.EventTypeCodes.SecondYellowCard, Constants.UI.EventTypeCodes.SecondYellowCard);
             _eventCodeMap.Add(Constants.DB.EventTypeCodes.RedCard, Constants.UI.EventTypeCodes.RedCard);
             _eventCodeMap.Add(Constants.DB.EventTypeCodes.MissedPenalty, Constants.UI.EventTypeCodes.MissedPenalty);
+            _eventCodeMap.Add(Constants.DB.EventTypeCodes.CoachYellowCard, Constants.UI.EventTypeCodes.CoachYellowCard);
             //_eventCodeMap.Add(Constants.DB.EventTypeCodes.PenaltyShootoutScored, Constants.UI.EventTypeCodes.PenaltyShootoutScored);
             //_eventCodeMap.Add(Constants.DB.EventTypeCodes.PenaltyShootoutMissed, Constants.UI.EventTypeCodes.PenaltyShootoutMissed);
 

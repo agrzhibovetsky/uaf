@@ -3,35 +3,45 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
     
     <script type="text/javascript">
+        var dateChanged = false;
+
         function parseDate(tbObj) {
             var dt = tbObj.value;
-            var regexp = /(\w{3})\s([0-9]{1,2}),\s([0-9]{4})\s?/gi; //Apr 3, 1984
-            
-            var a = regexp.exec(dt);
-            if (a.length == 4) {
-                var m = a[1];
-                var d = a[2];
-                switch (m) {
-                    case "Jan": m = 1; break;
-                    case "Feb": m = 2; break;
-                    case "Mar": m = 3; break
-                    case "Apr": m = 4; break;
-                    case "May": m = 5; break;
-                    case "Jun": m = 6; break;
-                    case "Jul": m = 7; break;
-                    case "Aug": m = 8; break;
-                    case "Sep": m = 9; break;
-                    case "Oct": m = 10; break;
-                    case "Nov": m = 11; break;
-                    case "Dec": m = 12; break;
-                }
-                var y = a[3];
-                ddlDay.value = d;
-                ddlMonth.value = m;
-                ddlYear.value = y;
+            if (dt.length > 0) {
+                var regexp = /(\w{3})\s([0-9]{1,2}),\s([0-9]{4})\s?/gi; //Apr 3, 1984
 
+                var a = regexp.exec(dt);
+                if (a.length == 4) {
+                    var m = a[1];
+                    var d = a[2];
+                    switch (m) {
+                        case "Jan": m = 1; break;
+                        case "Feb": m = 2; break;
+                        case "Mar": m = 3; break
+                        case "Apr": m = 4; break;
+                        case "May": m = 5; break;
+                        case "Jun": m = 6; break;
+                        case "Jul": m = 7; break;
+                        case "Aug": m = 8; break;
+                        case "Sep": m = 9; break;
+                        case "Oct": m = 10; break;
+                        case "Nov": m = 11; break;
+                        case "Dec": m = 12; break;
+                    }
+                    var y = a[3];
+                    ddlDay.value = d;
+                    ddlMonth.value = m;
+                    ddlYear.value = y;
+
+                }
             }
             
+        }
+
+        function checkDateChanged() {
+
+            if (!dateChanged) return confirm("Дата рождения по умолчанию - сохранить?")
+            else return true;
         }
 
         $(document).ready(function () {
@@ -72,6 +82,11 @@
                     $("#itbFirstNameIntDown").click();
                 }
             });
+
+            $("#ddlDay, #ddlMonth, #ddlYear, #tbDate, #cbUnknownDOB").change(function () {
+                dateChanged = true;
+                console.log("date changed");
+            })
            
         });
     </script>
@@ -131,8 +146,8 @@
                 <asp:DropDownList ID="ddlDay" runat="server" ClientIDMode="Static"></asp:DropDownList>
                 <asp:DropDownList ID="ddlMonth" runat="server" ClientIDMode="Static"></asp:DropDownList>
                 <asp:DropDownList ID="ddlYear" runat="server" ClientIDMode="Static"></asp:DropDownList>
-                <input type="text" id="tbDate" onblur="parseDate(this)" />
-                Неизвестно <asp:CheckBox runat="server" ID="cbUnknownDOB" />
+                <input type="text" id="tbDate" onblur="parseDate(this)" / >
+                Неизвестно <asp:CheckBox runat="server" ID="cbUnknownDOB" ClientIDMode="Static" />
                 <asp:CustomValidator ID="cvDOB" runat="server" OnServerValidate="cvDOB_ServerValidate" ErrorMessage="Неверная дата" CssClass="editFormError"></asp:CustomValidator>
             </td>
         </tr>
@@ -234,7 +249,7 @@
         
         <tr>
             <td colspan="2">
-                <asp:Button ID="btnSave" runat="server" Text="Сохранить" OnClick="btnSave_Click" />
+                <asp:Button ID="btnSave" runat="server" Text="Сохранить" OnClick="btnSave_Click" OnClientClick="checkDateChanged()" />
                 <asp:Button ID="btnCancel" runat="server" Text="Отмена" CausesValidation="false" OnClick="ReturnToObjectList" />
             </td>
         </tr>

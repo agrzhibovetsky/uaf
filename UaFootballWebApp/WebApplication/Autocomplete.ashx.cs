@@ -105,6 +105,12 @@ namespace UaFootball.WebApplication
                             using (UaFootball_DBDataContext db = DBManager.GetDB())
                             {
                                 List<UaFDatabase.Player> searchMatches = db.Players.Where(r => r.Last_Name.StartsWith(searchTerm) || r.Display_Name.StartsWith(searchTerm) || r.Last_Name_Int.StartsWith(searchTerm)).ToList();
+                                if (!string.IsNullOrEmpty(context.Request["nationalTeam"]))
+                                {
+                                    int nationalTeamId = int.Parse(context.Request["nationalTeam"]);
+                                    int countryId = db.NationalTeams.Single(nt => nt.NationalTeam_Id == nationalTeamId).Country_Id;
+                                    searchMatches = searchMatches.Where(m => m.Country_Id == countryId).ToList();
+                                }
                                 foreach (UaFDatabase.Player p in searchMatches)
                                 {
                                     AutoCompleteResponse r = new AutoCompleteResponse { id = p.Player_Id };

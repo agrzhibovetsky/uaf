@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="UaFootball" Class="UaFootball_DBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost;Initial Catalog=UaFootball;User ID=UaFootball" SettingsObjectName="UaFootball.Properties.Settings" SettingsPropertyName="UaFootballConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost;Initial Catalog=UaFootball;User ID=UaFootball" SettingsObjectName="UaFDatabase.Properties.Settings" SettingsPropertyName="UaFootballConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Cities" Member="Cities">
     <Type Name="City">
       <Column Name="City_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -47,21 +47,6 @@
       <Association Name="Player_PlayerPosition" Member="Player" ThisKey="Player_Id" OtherKey="Player_Id" Type="Player" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.MatchEvents" Member="MatchEvents">
-    <Type Name="MatchEvent">
-      <Column Name="MatchEvent_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Event_Cd" Type="System.String" DbType="VarChar(3) NOT NULL" CanBeNull="false" />
-      <Column Name="Minute" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Player1_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Player2_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Match_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="EventFlags" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Association Name="MatchEvent_MultimediaTag" Member="MultimediaTags" ThisKey="MatchEvent_Id" OtherKey="MatchEvent_ID" Type="MultimediaTag" />
-      <Association Name="Player_MatchEvent" Member="Player" ThisKey="Player1_Id" OtherKey="Player_Id" Type="Player" IsForeignKey="true" />
-      <Association Name="Player_MatchEvent1" Member="Player1" ThisKey="Player2_Id" OtherKey="Player_Id" Type="Player" IsForeignKey="true" />
-      <Association Name="Match_MatchEvent" Member="Match" ThisKey="Match_Id" OtherKey="Match_Id" Type="Match" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.NationalTeams" Member="NationalTeams">
     <Type Name="NationalTeam">
       <Column Name="NationalTeam_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -105,11 +90,11 @@
       <Column Name="Club_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="NationalTeam_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Club_MultimediaTag" Member="Club" ThisKey="Club_ID" OtherKey="Club_ID" Type="Club" IsForeignKey="true" />
-      <Association Name="MatchEvent_MultimediaTag" Member="MatchEvent" ThisKey="MatchEvent_ID" OtherKey="MatchEvent_Id" Type="MatchEvent" IsForeignKey="true" />
       <Association Name="NationalTeam_MultimediaTag" Member="NationalTeam" ThisKey="NationalTeam_ID" OtherKey="NationalTeam_Id" Type="NationalTeam" IsForeignKey="true" />
       <Association Name="Player_MultimediaTag" Member="Player" ThisKey="Player_ID" OtherKey="Player_Id" Type="Player" IsForeignKey="true" />
       <Association Name="Match_MultimediaTag" Member="Match" ThisKey="Match_ID" OtherKey="Match_Id" Type="Match" IsForeignKey="true" />
       <Association Name="Multimedia_MultimediaTag" Member="Multimedia" ThisKey="Multimedia_ID" OtherKey="Multimedia_ID" Type="Multimedia" IsForeignKey="true" />
+      <Association Name="MatchEvent_MultimediaTag" Member="MatchEvent" ThisKey="MatchEvent_ID" OtherKey="MatchEvent_Id" Type="MatchEvent" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.FIFAAssociations" Member="FIFAAssociations">
@@ -139,10 +124,10 @@
       <Column Name="LastUpdate_DT" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="NameSearchString" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Association Name="Player_PlayerPosition" Member="PlayerPositions" ThisKey="Player_Id" OtherKey="Player_Id" Type="PlayerPosition" />
-      <Association Name="Player_MatchEvent" Member="MatchEvents" ThisKey="Player_Id" OtherKey="Player1_Id" Type="MatchEvent" />
-      <Association Name="Player_MatchEvent1" Member="MatchEvents1" ThisKey="Player_Id" OtherKey="Player2_Id" Type="MatchEvent" />
       <Association Name="Player_MultimediaTag" Member="MultimediaTags" ThisKey="Player_Id" OtherKey="Player_ID" Type="MultimediaTag" />
       <Association Name="Player_MatchLineup" Member="MatchLineups" ThisKey="Player_Id" OtherKey="Player_Id" Type="MatchLineup" />
+      <Association Name="Player_MatchEvent" Member="MatchEvents" ThisKey="Player_Id" OtherKey="Player1_Id" Type="MatchEvent" />
+      <Association Name="Player_MatchEvent1" Member="MatchEvents1" ThisKey="Player_Id" OtherKey="Player2_Id" Type="MatchEvent" />
       <Association Name="Country_Player" Member="Country" ThisKey="Country_Id" OtherKey="Country_ID" Type="Country" IsForeignKey="true" />
     </Type>
   </Table>
@@ -166,6 +151,7 @@
       <Column Name="DOB" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="Coach_MatchLineup" Member="MatchLineups" ThisKey="CoachId" OtherKey="Coach_Id" Type="MatchLineup" />
+      <Association Name="Coach_MatchEvent" Member="MatchEvents" ThisKey="CoachId" OtherKey="CoachId" Type="MatchEvent" />
       <Association Name="Country_Coach" Member="Country" ThisKey="CountryId" OtherKey="Country_ID" Type="Country" IsForeignKey="true" />
     </Type>
   </Table>
@@ -192,10 +178,10 @@
       <Column Name="AdminNotes" Type="System.String" DbType="VarChar(4096)" CanBeNull="true" />
       <Column Name="Sources" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
       <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="Match_MatchEvent" Member="MatchEvents" ThisKey="Match_Id" OtherKey="Match_Id" Type="MatchEvent" />
       <Association Name="Match_MultimediaTag" Member="MultimediaTags" ThisKey="Match_Id" OtherKey="Match_ID" Type="MultimediaTag" />
       <Association Name="Match_MatchLineup" Member="MatchLineups" ThisKey="Match_Id" OtherKey="Match_Id" Type="MatchLineup" />
       <Association Name="Match_MatchNote" Member="MatchNotes" ThisKey="Match_Id" OtherKey="Match_Id" Type="MatchNote" />
+      <Association Name="Match_MatchEvent" Member="MatchEvents" ThisKey="Match_Id" OtherKey="Match_Id" Type="MatchEvent" />
       <Association Name="Club_Match" Member="Club" ThisKey="HomeClub_Id" OtherKey="Club_ID" Type="Club" IsForeignKey="true" />
       <Association Name="Club_Match1" Member="Club1" ThisKey="AwayClub_Id" OtherKey="Club_ID" Type="Club" IsForeignKey="true" />
       <Association Name="Competition_Match" Member="Competition" ThisKey="Competition_Id" OtherKey="Competition_Id" Type="Competition" IsForeignKey="true" />
@@ -345,6 +331,23 @@
       <Column Name="Code" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
       <Column Name="Text" Type="System.String" DbType="VarChar(2048) NOT NULL" CanBeNull="false" />
       <Association Name="Match_MatchNote" Member="Match" ThisKey="Match_Id" OtherKey="Match_Id" Type="Match" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MatchEvents" Member="MatchEvents">
+    <Type Name="MatchEvent">
+      <Column Name="MatchEvent_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Event_Cd" Type="System.String" DbType="VarChar(3) NOT NULL" CanBeNull="false" />
+      <Column Name="Minute" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Player1_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Player2_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Match_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EventFlags" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="CoachId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="MatchEvent_MultimediaTag" Member="MultimediaTags" ThisKey="MatchEvent_Id" OtherKey="MatchEvent_ID" Type="MultimediaTag" />
+      <Association Name="Coach_MatchEvent" Member="Coach" ThisKey="CoachId" OtherKey="CoachId" Type="Coach" IsForeignKey="true" />
+      <Association Name="Match_MatchEvent" Member="Match" ThisKey="Match_Id" OtherKey="Match_Id" Type="Match" IsForeignKey="true" />
+      <Association Name="Player_MatchEvent" Member="Player" ThisKey="Player1_Id" OtherKey="Player_Id" Type="Player" IsForeignKey="true" />
+      <Association Name="Player_MatchEvent1" Member="Player1" ThisKey="Player2_Id" OtherKey="Player_Id" Type="Player" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.Player_GetClubs" Method="Player_GetClubs">

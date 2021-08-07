@@ -324,6 +324,7 @@
     <Content Include="WebApplication\Public\Club.aspx" />
     <Content Include="WebApplication\Public\Referee.aspx" />
     <Content Include="WebApplication\Public\Stadium.aspx" />
+    <Content Include="WebApplication\Public\UkraineRegions.aspx" />
     <Content Include="WebApplication\Public\Video.aspx" />
     <Content Include="WebApplication\Public\Videos.aspx" />
     <Content Include="WebApplication\Public\Referees.aspx" />
@@ -333,7 +334,9 @@
     <Content Include="WebApplication\Scripts\jquery.colorbox.js" />
     <Content Include="WebApplication\Scripts\jssor.js" />
     <Content Include="WebApplication\Scripts\jssor.slider.js" />
+    <Content Include="WebApplication\Scripts\raphael.min.js" />
     <Content Include="WebApplication\Scripts\UaFootball.js" />
+    <Content Include="WebApplication\Scripts\ukraine-map.js" />
     <Content Include="WebApplication\Styles\colorbox.css" />
     <Content Include="WebApplication\Styles\images\controls.png" />
     <Content Include="WebApplication\Styles\images\loading.gif" />
@@ -449,6 +452,13 @@
     </Compile>
     <Compile Include="WebApplication\Public\Club.aspx.designer.cs">
       <DependentUpon>Club.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Public\UkraineRegions.aspx.cs">
+      <DependentUpon>UkraineRegions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Public\UkraineRegions.aspx.designer.cs">
+      <DependentUpon>UkraineRegions.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebApplication\Public\Videos.aspx.cs">
       <DependentUpon>Videos.aspx</DependentUpon>

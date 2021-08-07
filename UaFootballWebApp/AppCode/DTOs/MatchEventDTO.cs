@@ -15,7 +15,7 @@ namespace UaFootball.AppCode
 
         public int Minute { get; set; }
 
-        public int Player1_Id { get; set; }
+        public int? Player1_Id { get; set; }
 
         public int? Player2_Id { get; set; }
 
@@ -23,10 +23,14 @@ namespace UaFootball.AppCode
 
         public long? EventFlags { get; set; }
 
+        public int? Coach_Id { get; set; }
+
 
         public PlayerDTO Player1 { get; set; }
 
         public PlayerDTO Player2 { get; set; }
+
+        public CoachDTO Coach { get; set; }
         //public string Player1_FName { get; set; }
 
         //public string Player2_FName { get; set; }
@@ -47,6 +51,7 @@ namespace UaFootball.AppCode
         {
             Player1 = new PlayerDTO();
             Player2 = new PlayerDTO();
+            Coach = new CoachDTO();
         }
 
         public void CopyDTOToDbObject(MatchEvent dbObj)
@@ -58,6 +63,7 @@ namespace UaFootball.AppCode
             dbObj.Player2_Id = Player2_Id;
             dbObj.EventFlags = EventFlags;
             dbObj.Minute = Minute;
+            dbObj.CoachId = Coach_Id;
         }
 
         public MatchEventDTO ConvertDBObjectToDTO(MatchEvent dbObj)
@@ -70,7 +76,8 @@ namespace UaFootball.AppCode
                 Event_Cd = dbObj.Event_Cd,
                 Player2_Id = dbObj.Player2_Id,
                 Player1_Id = dbObj.Player1_Id,
-                Minute = dbObj.Minute
+                Minute = dbObj.Minute,
+                Coach_Id = dbObj.CoachId
             };
         }
     }

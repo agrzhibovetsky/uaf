@@ -81,7 +81,7 @@ Where
 Order by m.Date desc	
 
 /* eurocup season - # of photos */
-select d.PhotoCount, g.HomeTeam, g.AwayTeam, g.Date from 
+select ISNULL(d.PhotoCount,0), g.HomeTeam, g.AwayTeam, g.Date from 
 vwMatches g left outer join
 (
 select count(*) as PhotoCount, g.Match_Id from 
@@ -91,7 +91,7 @@ join Matches g on mt.Match_ID = g.Match_Id
 where m.MultimediaSubType_CD = 'MP'
 group by g.Match_Id) d
 on g.Match_Id = d.Match_Id
-where g.Season_Id=29--24--19--17
+where g.Season_Id=29 and PhotoCount is null--24--19--17 
 order by g.Date desc
 
 /* eurocup season - goals without uploaded video or tags */
@@ -118,7 +118,8 @@ order by me.Match_Id
 
 /*all dynamo players  dk=2, shahta=7, dnipro=17*/
 
-select distinct(p.Player_Id), p.First_Name, p.Last_Name, p.Display_Name, ml.ShirtNumber from MatchLineups ml
+select distinct(p.Player_Id), p.First_Name, p.Last_Name, p.Display_Name, ml.ShirtNumber 
+from MatchLineups ml
 join Matches m on ml.Match_Id = m.Match_Id
 join Players p on ml.Player_Id = p.Player_Id
 where ((m.HomeClub_Id = 2 and ml.IsHomeTeamPlayer = 1) or (m.AwayClub_Id = 2 and ml.IsHomeTeamPlayer = 0))
@@ -181,3 +182,11 @@ left outer join
 left outer join UaFootball.dbo.Players p on Captains.Player_Id = p.Player_Id
 where HomeNationalTeam_Id = 1 or AwayNationalTeam_Id=1
 order by m.Date desc
+
+
+/*players by region*/
+SELECT count(*) as c, UARegion_Name
+  FROM [UaFootball].[dbo].[Players] 
+  where Country_ID=1 and UARegion_Name is not null
+group by UARegion_Name
+order by c

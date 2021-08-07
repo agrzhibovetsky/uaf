@@ -245,6 +245,12 @@ namespace UaFootball.AppCode
                                                            Last_Name = matchEvent.Player1.Last_Name,
                                                            Display_Name = matchEvent.Player1.Display_Name,
                                                            Country_Id = matchEvent.Player1.Player_Id > 0 ? matchEvent.Player1.Country_Id : 0
+                                                       },
+                                                       Coach_Id = matchEvent.CoachId,
+                                                       Coach = new CoachDTO
+                                                       {
+                                                           FirstName = matchEvent.Coach.FirstName,
+                                                           LastName = matchEvent.Coach.LastName
                                                        }
                                                    };
                 ret.Events.AddRange(events.AsEnumerable());
@@ -268,6 +274,18 @@ namespace UaFootball.AppCode
                     note.CodeDescription = Constants.MatchNoteSetups.Single(s => s.Code == note.Code).Description;
                     note.RowIndex = i;
                 }
+
+                for (int i = 0; i < ret.Events.Count; i++)
+                {
+                    //need this hack to display event on match edit
+                    if (ret.Events[i].Event_Cd == Constants.DB.EventTypeCodes.CoachYellowCard)
+                    {
+                        ret.Events[i].Player1.First_Name = ret.Events[i].Coach.FirstName;
+                        ret.Events[i].Player1.Last_Name = ret.Events[i].Coach.LastName;
+                        ret.Events[i].Player1.Player_Id = ret.Events[i].Coach_Id.Value;
+                    }
+                }
+
                 return (ret);
             }
         }
