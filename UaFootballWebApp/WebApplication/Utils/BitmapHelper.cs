@@ -58,7 +58,10 @@ namespace UaFootball.WebApplication
                         Graphics canvas = Graphics.FromImage(bmp);
                         canvas.DrawImage(bmp, 0, 0);
 
-                        bmp.Save(destinationFilePath);
+                        if (sourceFilePath.ToLower().IndexOf(".jpg") > 0)
+                            bmp.Save(destinationFilePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        else
+                            bmp.Save(destinationFilePath);
 
                         originalImg.Dispose();
                         canvas.Dispose();

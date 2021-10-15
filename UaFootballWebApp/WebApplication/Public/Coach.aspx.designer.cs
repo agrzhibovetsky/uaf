@@ -13,13 +13,13 @@ namespace UaFootball.WebApplication.Public {
     public partial class Coach {
         
         /// <summary>
-        /// iRefereeLogo control.
+        /// iCoachLogo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image iRefereeLogo;
+        protected global::System.Web.UI.WebControls.Image iCoachLogo;
         
         /// <summary>
         /// ml control.

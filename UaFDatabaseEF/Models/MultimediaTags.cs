@@ -12,6 +12,7 @@ namespace UaFDatabaseEF.Models
         public int? MatchEventId { get; set; }
         public int? ClubId { get; set; }
         public int? NationalTeamId { get; set; }
+        public int? CoachId { get; set; }
 
         public Clubs Club { get; set; }
         public Matches Match { get; set; }
@@ -19,5 +20,6 @@ namespace UaFDatabaseEF.Models
         public Multimedia Multimedia { get; set; }
         public NationalTeams NationalTeam { get; set; }
         public Players Player { get; set; }
+        public Coaches Coach { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace UaFootball.WebApplication.Admin
         const string _tagTypePlayer = "Футболист";
         const string _tagTypeGame = "Матч";
         const string _tagTypeEvent = "Событие";
+        const string _tagTypeCoach = "Тренер";
 
         const string _tmpUploadPath = "\\tmpUpload\\";
 
@@ -76,9 +77,10 @@ namespace UaFootball.WebApplication.Admin
                 ddlMultimediaSubType.Items.Add(new ListItem(Constants.UI.MutlimediaSubTypes.ClubLogo, Constants.DB.MutlimediaSubTypes.ClubLogo));
                 ddlMultimediaSubType.Items.Add(new ListItem(Constants.UI.MutlimediaSubTypes.NationalTeamLogo, Constants.DB.MutlimediaSubTypes.NationalTeamLogo));
                 ddlMultimediaSubType.Items.Add(new ListItem(Constants.UI.MutlimediaSubTypes.PlayerLogo, Constants.DB.MutlimediaSubTypes.PlayerLogo));
+                ddlMultimediaSubType.Items.Add(new ListItem(Constants.UI.MutlimediaSubTypes.CoachLogo, Constants.DB.MutlimediaSubTypes.CoachLogo));
                 ddlMultimediaSubType.Items.Add(new ListItem(Constants.UI.MutlimediaSubTypes.MatchPhoto, Constants.DB.MutlimediaSubTypes.MatchPhoto));
                 ddlMultimediaSubType.Items.Add(new ListItem(Constants.UI.MutlimediaSubTypes.MatchVideo, Constants.DB.MutlimediaSubTypes.MatchVideo));
-
+                
                 ddlMultimediaSubType.SelectedIndex = 3;
                 ddlMultimediaSubType_SelectedIndexChanged(ddlMultimediaSubType, new EventArgs());
 
@@ -224,6 +226,12 @@ namespace UaFootball.WebApplication.Admin
                         eventListItem.Attributes.Add("isEventType","true");
                         ddlTagType.Items.Add(eventListItem);
                         
+                        ddlTagType.Enabled = true;
+                        break;
+                    }
+                case Constants.DB.MutlimediaSubTypes.CoachLogo:
+                    {
+                        ddlTagType.Items.Add(new ListItem("Тренер", _tagTypeCoach));
                         ddlTagType.Enabled = true;
                         break;
                     }
@@ -373,6 +381,15 @@ namespace UaFootball.WebApplication.Admin
                         }
                         break;
                     }
+                case _tagTypeCoach:
+                    {
+                        using (UaFootball_DBDataContext db = DBManager.GetDB())
+                        {
+                            var lst = (from coach in db.Coaches orderby coach.CoachId descending select coach).Take(50);
+                            lTagValueSource = lst.Select(l => new GenericReferenceObject { Name = FormatName(l.FirstName, l.LastName, "", l.CountryId), Value = l.CoachId }).ToList();
+                        }
+                        break;
+                    }
             }
 
             ddlTagValue.Items.Clear();
@@ -430,6 +447,20 @@ namespace UaFootball.WebApplication.Admin
                                     ListItem li = new ListItem();
                                     li.Text = string.Format("{0} {1}", p.First_Name, p.Last_Name);
                                     li.Value = p.Player_Id.ToString();
+                                    ddlTagValue.Items.Insert(0, li);
+                                    ddlTagValue.SelectedIndex = 0;
+
+                                }
+                                break;
+                            }
+                        case _tagTypeCoach:
+                            {
+                                Coach c = db.Coaches.SingleOrDefault(co => co.CoachId == id);
+                                if (c != null)
+                                {
+                                    ListItem li = new ListItem();
+                                    li.Text = string.Format("{0} {1}", c.FirstName, c.LastName);
+                                    li.Value = c.CoachId.ToString();
                                     ddlTagValue.Items.Insert(0, li);
                                     ddlTagValue.SelectedIndex = 0;
 
@@ -496,6 +527,15 @@ namespace UaFootball.WebApplication.Admin
                         }
                         break;
                     }
+                case _tagTypeCoach:
+                    {
+                        if (!TagsCache.Any(tc => tc.Coach_ID.ToString() == ddlTagValue.SelectedItem.Value))
+                        {
+                            newTagExt.Coach_ID = int.Parse(ddlTagValue.SelectedValue);
+                            isValid = true;
+                        }
+                        break;
+                    }
             }
 
             if (isValid)
@@ -549,7 +589,8 @@ namespace UaFootball.WebApplication.Admin
                                 Match_ID = mmTag.Match_ID,
                                 NationalTeam_ID = mmTag.NationalTeam_ID,
                                 Player_ID = mmTag.Player_ID,
-                                MatchEvent_ID = mmTag.MatchEvent_ID
+                                MatchEvent_ID = mmTag.MatchEvent_ID,
+                                CoachId = mmTag.Coach_ID
                             };
                             newMM.MultimediaTags.Add(mt);
                         }
@@ -575,10 +616,7 @@ namespace UaFootball.WebApplication.Admin
                                 File.Copy(uploadedFilePath, destinationFilePath);
 
                                 //Create thumbnail for image
-                                if (ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.MatchPhoto ||
-                                    ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.NationalTeamLogo ||
-                                    ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.ClubLogo ||
-                                    ddlMultimediaSubType.SelectedValue == Constants.DB.MutlimediaSubTypes.PlayerLogo)
+                                if (newMM.MultimediaType_CD == Constants.DB.MutlimediaTypes.Image)
                                 {
                                     string thumbnailDirectoryPath = PathHelper.GetFileSystemPath(destinationDirectoryPath, "thumb", "");
                                     if (!Directory.Exists(thumbnailDirectoryPath)) Directory.CreateDirectory(thumbnailDirectoryPath);
@@ -599,6 +637,7 @@ namespace UaFootball.WebApplication.Admin
                                                 thumbnailMaxHeight = 150; break;
                                             }
                                         case Constants.DB.MutlimediaSubTypes.PlayerLogo:
+                                        case Constants.DB.MutlimediaSubTypes.CoachLogo:
                                             {
                                                 thumbnailMaxHeight = 300; break;
                                             }
@@ -737,6 +776,12 @@ namespace UaFootball.WebApplication.Admin
                         int clubTagsCount = TagsCache.Count(c => c.Club_ID.HasValue);
                         int nteamTagsCount = TagsCache.Count(c => c.NationalTeam_ID.HasValue);
                         isValid = isImg && (playerTagsCount == 1 && clubTagsCount + nteamTagsCount < 2);
+                        break;
+                    }
+                case Constants.DB.MutlimediaSubTypes.CoachLogo:
+                    {
+                        int coachTagsCount = TagsCache.Count(c => c.Coach_ID.HasValue);
+                        isValid = isImg && (coachTagsCount == 1);
                         break;
                     }
             }

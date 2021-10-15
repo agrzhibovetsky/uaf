@@ -46,6 +46,9 @@ namespace UaFootball.AppCode
                               select new { p = Coach, c = Coach.Country.Country_Name }).Single();
                 CoachDTO ret = ConvertDBObjectToDTO(dbData.p);
                 ret.CountryName = dbData.c;
+
+                var mm = db.MultimediaTags.Where(mt => mt.CoachId == objectId).Select(mt => mt.Multimedia);
+                ret.Multimedia = mm.Select(m => MultimediaDTO.FromDBObject(m)).ToList();
                 return (ret);
             }
         }

@@ -35,6 +35,12 @@ namespace UaFootball.WebApplication.Public
                     int coachId = int.Parse(Request[Constants.QueryParam.ObjectId]);
                     DataItem = new CoachDTOHelper().GetFromDB(coachId);
 
+                    if (DataItem.Multimedia.Count > 0)
+                    {
+                        string thumbPath = "\\thumb\\";
+                        MultimediaDTO logo = DataItem.Multimedia.OrderByDescending(pl => pl.Multimedia_ID).First();
+                        iCoachLogo.ImageUrl = PathHelper.GetWebPath(this, Constants.Paths.MutlimediaWebRoot, logo.FilePath + thumbPath, logo.FileName);
+                    }
                     SearchParameters.Match searchParam = new SearchParameters.Match();
                     searchParam.Coach_Id = coachId;
                     ml.DataBind(searchParam);

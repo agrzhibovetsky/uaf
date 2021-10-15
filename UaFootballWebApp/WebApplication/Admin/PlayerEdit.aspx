@@ -39,9 +39,14 @@
         }
 
         function checkDateChanged() {
+            //if (document.location.href.indexOf("objectId") == -1) {
+            var month = $("#ddlMonth").val();
+            var day = $("#ddlDay").val();
 
-            if (!dateChanged) return confirm("Дата рождения по умолчанию - сохранить?")
-            else return true;
+                if (!dateChanged && month == "1" && day == "1") return confirm("Дата рождения по умолчанию - сохранить?")
+                else return true;
+            //}
+            //else return true;
         }
 
         $(document).ready(function () {

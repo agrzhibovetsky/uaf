@@ -15,7 +15,7 @@
             <table>
                 <tr>
                     <td>
-                        <asp:Image ID="iRefereeLogo" ImageUrl="~/WebApplication/Images/nofoto.jpg" runat="server" />
+                        <asp:Image ID="iCoachLogo" ImageUrl="~/WebApplication/Images/nofoto.jpg" runat="server" />
                     </td>
                     <td>
                         <table style="margin-left : 15px">

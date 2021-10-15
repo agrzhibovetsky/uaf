@@ -26,10 +26,13 @@ namespace UaFootball.AppCode
 
         public string CountryName { get; set; }
 
+        public List<MultimediaDTO> Multimedia { get; set; }
+
         public List<MatchDTO> Matches { get; set; }
         public CoachDTO()
         {
             Matches = new List<MatchDTO>();
+            Multimedia = new List<MultimediaDTO>();
         }
     }
 }

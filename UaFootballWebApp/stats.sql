@@ -91,7 +91,7 @@ join Matches g on mt.Match_ID = g.Match_Id
 where m.MultimediaSubType_CD = 'MP'
 group by g.Match_Id) d
 on g.Match_Id = d.Match_Id
-where g.Season_Id=29 and PhotoCount is null--24--19--17 
+where g.Season_Id=30 and PhotoCount is null--29--24--19--17 
 order by g.Date desc
 
 /* eurocup season - goals without uploaded video or tags */
@@ -109,7 +109,7 @@ join Countries acn on act.Country_ID = acn.Country_ID
 join MatchLineups ml on ml.Match_Id = m.Match_ID and ml.Player_Id = me.Player1_Id
 where me.Match_Id in 
 (
-select Match_Id from Matches where Season_Id=29
+select Match_Id from Matches where Season_Id=30
 )
 and (Event_Cd='G' or Event_Cd='P') and ((ml.IsHomeTeamPlayer = 1 and hcn.Country_ID=1) or (ml.IsHomeTeamPlayer = 0 and acn.Country_ID=1))
 and EventFlags & 128 =0 and (MultimediaTag_ID is null or EventFlags=0)
@@ -190,3 +190,13 @@ SELECT count(*) as c, UARegion_Name
   where Country_ID=1 and UARegion_Name is not null
 group by UARegion_Name
 order by c
+
+
+/**matches I was on stadium*/
+
+
+SELECT *
+  FROM [UaFootball].[dbo].[vwMatches] vm
+  --join dbo.Matches m on vm.Match_Id = m.Match_Id
+  where Flags & 32 > 0 
+  order by CompetitionLevel_Cd, Date desc

@@ -68,6 +68,8 @@ namespace UaFootball.AppCode
                     return "\\PL\\";
                 case Constants.DB.MutlimediaSubTypes.NationalTeamLogo:
                     return "\\NTL\\";
+                case Constants.DB.MutlimediaSubTypes.CoachLogo:
+                    return "\\CoachLogo\\";
             }
 
             return path;

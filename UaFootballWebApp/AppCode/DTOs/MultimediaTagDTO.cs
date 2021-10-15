@@ -14,6 +14,7 @@ namespace UaFootball.AppCode
         public int? MatchEvent_ID { get; set; }
         public int? Club_ID { get; set; }
         public int? NationalTeam_ID { get; set; }
+        public int? Coach_ID { get; set; }
         public string Type { get; set; }
         public string Description { get; set; }
         public int tmpId { get; set; }
@@ -27,7 +28,8 @@ namespace UaFootball.AppCode
                 Match_ID = mt.Match_ID,
                 MatchEvent_ID = mt.MatchEvent_ID,
                 NationalTeam_ID = mt.NationalTeam_ID,
-                Player_ID = mt.Player_ID
+                Player_ID = mt.Player_ID,
+                Coach_ID = mt.CoachId
             };
         }
     }

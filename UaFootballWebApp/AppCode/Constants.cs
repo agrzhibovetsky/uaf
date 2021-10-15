@@ -84,6 +84,7 @@ namespace UaFootball.AppCode
                 public const string NationalTeamLogo = "NL";
                 public const string MatchPhoto = "MP";
                 public const string MatchVideo = "MV";
+                public const string CoachLogo = "TL";
             }
             
             public static class EventTypeCodes
@@ -205,6 +206,7 @@ namespace UaFootball.AppCode
                 public const string NationalTeamLogo = "Сборная - лого";
                 public const string MatchPhoto = "Фото - матч";
                 public const string MatchVideo = "Видео - матч";
+                public const string CoachLogo = "Тренер - фото";
             }
 
             public static class EventTypeCodes

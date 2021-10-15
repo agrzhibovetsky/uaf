@@ -51,9 +51,6 @@ namespace UaFDatabase
     partial void InsertReferee(Referee instance);
     partial void UpdateReferee(Referee instance);
     partial void DeleteReferee(Referee instance);
-    partial void InsertMultimediaTag(MultimediaTag instance);
-    partial void UpdateMultimediaTag(MultimediaTag instance);
-    partial void DeleteMultimediaTag(MultimediaTag instance);
     partial void InsertFIFAAssociation(FIFAAssociation instance);
     partial void UpdateFIFAAssociation(FIFAAssociation instance);
     partial void DeleteFIFAAssociation(FIFAAssociation instance);
@@ -87,6 +84,9 @@ namespace UaFDatabase
     partial void InsertMatchEvent(MatchEvent instance);
     partial void UpdateMatchEvent(MatchEvent instance);
     partial void DeleteMatchEvent(MatchEvent instance);
+    partial void InsertMultimediaTag(MultimediaTag instance);
+    partial void UpdateMultimediaTag(MultimediaTag instance);
+    partial void DeleteMultimediaTag(MultimediaTag instance);
     #endregion
 		
 		public UaFootball_DBDataContext() : 
@@ -172,14 +172,6 @@ namespace UaFDatabase
 			get
 			{
 				return this.GetTable<Referee>();
-			}
-		}
-		
-		public System.Data.Linq.Table<MultimediaTag> MultimediaTags
-		{
-			get
-			{
-				return this.GetTable<MultimediaTag>();
 			}
 		}
 		
@@ -316,6 +308,14 @@ namespace UaFDatabase
 			get
 			{
 				return this.GetTable<MatchEvent>();
+			}
+		}
+		
+		public System.Data.Linq.Table<MultimediaTag> MultimediaTags
+		{
+			get
+			{
+				return this.GetTable<MultimediaTag>();
 			}
 		}
 		
@@ -867,11 +867,11 @@ namespace UaFDatabase
 		
 		private int _City_ID;
 		
-		private EntitySet<MultimediaTag> _MultimediaTags;
-		
 		private EntitySet<Match> _Matches;
 		
 		private EntitySet<Match> _Matches1;
+		
+		private EntitySet<MultimediaTag> _MultimediaTags;
 		
 		private EntityRef<City> _City;
 		
@@ -895,9 +895,9 @@ namespace UaFDatabase
 		
 		public Club()
 		{
-			this._MultimediaTags = new EntitySet<MultimediaTag>(new Action<MultimediaTag>(this.attach_MultimediaTags), new Action<MultimediaTag>(this.detach_MultimediaTags));
 			this._Matches = new EntitySet<Match>(new Action<Match>(this.attach_Matches), new Action<Match>(this.detach_Matches));
 			this._Matches1 = new EntitySet<Match>(new Action<Match>(this.attach_Matches1), new Action<Match>(this.detach_Matches1));
+			this._MultimediaTags = new EntitySet<MultimediaTag>(new Action<MultimediaTag>(this.attach_MultimediaTags), new Action<MultimediaTag>(this.detach_MultimediaTags));
 			this._City = default(EntityRef<City>);
 			OnCreated();
 		}
@@ -1026,19 +1026,6 @@ namespace UaFDatabase
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Club_MultimediaTag", Storage="_MultimediaTags", ThisKey="Club_ID", OtherKey="Club_ID")]
-		public EntitySet<MultimediaTag> MultimediaTags
-		{
-			get
-			{
-				return this._MultimediaTags;
-			}
-			set
-			{
-				this._MultimediaTags.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Club_Match", Storage="_Matches", ThisKey="Club_ID", OtherKey="HomeClub_Id")]
 		public EntitySet<Match> Matches
 		{
@@ -1062,6 +1049,19 @@ namespace UaFDatabase
 			set
 			{
 				this._Matches1.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Club_MultimediaTag", Storage="_MultimediaTags", ThisKey="Club_ID", OtherKey="Club_ID")]
+		public EntitySet<MultimediaTag> MultimediaTags
+		{
+			get
+			{
+				return this._MultimediaTags;
+			}
+			set
+			{
+				this._MultimediaTags.Assign(value);
 			}
 		}
 		
@@ -1119,18 +1119,6 @@ namespace UaFDatabase
 			}
 		}
 		
-		private void attach_MultimediaTags(MultimediaTag entity)
-		{
-			this.SendPropertyChanging();
-			entity.Club = this;
-		}
-		
-		private void detach_MultimediaTags(MultimediaTag entity)
-		{
-			this.SendPropertyChanging();
-			entity.Club = null;
-		}
-		
 		private void attach_Matches(Match entity)
 		{
 			this.SendPropertyChanging();
@@ -1153,6 +1141,18 @@ namespace UaFDatabase
 		{
 			this.SendPropertyChanging();
 			entity.Club1 = null;
+		}
+		
+		private void attach_MultimediaTags(MultimediaTag entity)
+		{
+			this.SendPropertyChanging();
+			entity.Club = this;
+		}
+		
+		private void detach_MultimediaTags(MultimediaTag entity)
+		{
+			this.SendPropertyChanging();
+			entity.Club = null;
 		}
 	}
 	
@@ -1345,11 +1345,11 @@ namespace UaFDatabase
 		
 		private string _NationalTeamType_Cd;
 		
-		private EntitySet<MultimediaTag> _MultimediaTags;
-		
 		private EntitySet<Match> _Matches;
 		
 		private EntitySet<Match> _Matches1;
+		
+		private EntitySet<MultimediaTag> _MultimediaTags;
 		
 		private EntityRef<Country> _Country;
 		
@@ -1369,9 +1369,9 @@ namespace UaFDatabase
 		
 		public NationalTeam()
 		{
-			this._MultimediaTags = new EntitySet<MultimediaTag>(new Action<MultimediaTag>(this.attach_MultimediaTags), new Action<MultimediaTag>(this.detach_MultimediaTags));
 			this._Matches = new EntitySet<Match>(new Action<Match>(this.attach_Matches), new Action<Match>(this.detach_Matches));
 			this._Matches1 = new EntitySet<Match>(new Action<Match>(this.attach_Matches1), new Action<Match>(this.detach_Matches1));
+			this._MultimediaTags = new EntitySet<MultimediaTag>(new Action<MultimediaTag>(this.attach_MultimediaTags), new Action<MultimediaTag>(this.detach_MultimediaTags));
 			this._Country = default(EntityRef<Country>);
 			OnCreated();
 		}
@@ -1460,19 +1460,6 @@ namespace UaFDatabase
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NationalTeam_MultimediaTag", Storage="_MultimediaTags", ThisKey="NationalTeam_Id", OtherKey="NationalTeam_ID")]
-		public EntitySet<MultimediaTag> MultimediaTags
-		{
-			get
-			{
-				return this._MultimediaTags;
-			}
-			set
-			{
-				this._MultimediaTags.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NationalTeam_Match", Storage="_Matches", ThisKey="NationalTeam_Id", OtherKey="HomeNationalTeam_Id")]
 		public EntitySet<Match> Matches
 		{
@@ -1496,6 +1483,19 @@ namespace UaFDatabase
 			set
 			{
 				this._Matches1.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NationalTeam_MultimediaTag", Storage="_MultimediaTags", ThisKey="NationalTeam_Id", OtherKey="NationalTeam_ID")]
+		public EntitySet<MultimediaTag> MultimediaTags
+		{
+			get
+			{
+				return this._MultimediaTags;
+			}
+			set
+			{
+				this._MultimediaTags.Assign(value);
 			}
 		}
 		
@@ -1553,18 +1553,6 @@ namespace UaFDatabase
 			}
 		}
 		
-		private void attach_MultimediaTags(MultimediaTag entity)
-		{
-			this.SendPropertyChanging();
-			entity.NationalTeam = this;
-		}
-		
-		private void detach_MultimediaTags(MultimediaTag entity)
-		{
-			this.SendPropertyChanging();
-			entity.NationalTeam = null;
-		}
-		
 		private void attach_Matches(Match entity)
 		{
 			this.SendPropertyChanging();
@@ -1587,6 +1575,18 @@ namespace UaFDatabase
 		{
 			this.SendPropertyChanging();
 			entity.NationalTeam1 = null;
+		}
+		
+		private void attach_MultimediaTags(MultimediaTag entity)
+		{
+			this.SendPropertyChanging();
+			entity.NationalTeam = this;
+		}
+		
+		private void detach_MultimediaTags(MultimediaTag entity)
+		{
+			this.SendPropertyChanging();
+			entity.NationalTeam = null;
 		}
 	}
 	
@@ -2003,458 +2003,6 @@ namespace UaFDatabase
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MultimediaTags")]
-	public partial class MultimediaTag : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _MultimediaTag_ID;
-		
-		private int _Multimedia_ID;
-		
-		private System.Nullable<int> _Player_ID;
-		
-		private System.Nullable<int> _Match_ID;
-		
-		private System.Nullable<int> _MatchEvent_ID;
-		
-		private System.Nullable<int> _Club_ID;
-		
-		private System.Nullable<int> _NationalTeam_ID;
-		
-		private EntityRef<Club> _Club;
-		
-		private EntityRef<NationalTeam> _NationalTeam;
-		
-		private EntityRef<Player> _Player;
-		
-		private EntityRef<Match> _Match;
-		
-		private EntityRef<Multimedia> _Multimedia;
-		
-		private EntityRef<MatchEvent> _MatchEvent;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnMultimediaTag_IDChanging(int value);
-    partial void OnMultimediaTag_IDChanged();
-    partial void OnMultimedia_IDChanging(int value);
-    partial void OnMultimedia_IDChanged();
-    partial void OnPlayer_IDChanging(System.Nullable<int> value);
-    partial void OnPlayer_IDChanged();
-    partial void OnMatch_IDChanging(System.Nullable<int> value);
-    partial void OnMatch_IDChanged();
-    partial void OnMatchEvent_IDChanging(System.Nullable<int> value);
-    partial void OnMatchEvent_IDChanged();
-    partial void OnClub_IDChanging(System.Nullable<int> value);
-    partial void OnClub_IDChanged();
-    partial void OnNationalTeam_IDChanging(System.Nullable<int> value);
-    partial void OnNationalTeam_IDChanged();
-    #endregion
-		
-		public MultimediaTag()
-		{
-			this._Club = default(EntityRef<Club>);
-			this._NationalTeam = default(EntityRef<NationalTeam>);
-			this._Player = default(EntityRef<Player>);
-			this._Match = default(EntityRef<Match>);
-			this._Multimedia = default(EntityRef<Multimedia>);
-			this._MatchEvent = default(EntityRef<MatchEvent>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MultimediaTag_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int MultimediaTag_ID
-		{
-			get
-			{
-				return this._MultimediaTag_ID;
-			}
-			set
-			{
-				if ((this._MultimediaTag_ID != value))
-				{
-					this.OnMultimediaTag_IDChanging(value);
-					this.SendPropertyChanging();
-					this._MultimediaTag_ID = value;
-					this.SendPropertyChanged("MultimediaTag_ID");
-					this.OnMultimediaTag_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Multimedia_ID", DbType="Int NOT NULL")]
-		public int Multimedia_ID
-		{
-			get
-			{
-				return this._Multimedia_ID;
-			}
-			set
-			{
-				if ((this._Multimedia_ID != value))
-				{
-					if (this._Multimedia.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMultimedia_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Multimedia_ID = value;
-					this.SendPropertyChanged("Multimedia_ID");
-					this.OnMultimedia_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Player_ID", DbType="Int")]
-		public System.Nullable<int> Player_ID
-		{
-			get
-			{
-				return this._Player_ID;
-			}
-			set
-			{
-				if ((this._Player_ID != value))
-				{
-					if (this._Player.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPlayer_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Player_ID = value;
-					this.SendPropertyChanged("Player_ID");
-					this.OnPlayer_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Match_ID", DbType="Int")]
-		public System.Nullable<int> Match_ID
-		{
-			get
-			{
-				return this._Match_ID;
-			}
-			set
-			{
-				if ((this._Match_ID != value))
-				{
-					if (this._Match.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMatch_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Match_ID = value;
-					this.SendPropertyChanged("Match_ID");
-					this.OnMatch_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MatchEvent_ID", DbType="Int")]
-		public System.Nullable<int> MatchEvent_ID
-		{
-			get
-			{
-				return this._MatchEvent_ID;
-			}
-			set
-			{
-				if ((this._MatchEvent_ID != value))
-				{
-					if (this._MatchEvent.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMatchEvent_IDChanging(value);
-					this.SendPropertyChanging();
-					this._MatchEvent_ID = value;
-					this.SendPropertyChanged("MatchEvent_ID");
-					this.OnMatchEvent_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Club_ID", DbType="Int")]
-		public System.Nullable<int> Club_ID
-		{
-			get
-			{
-				return this._Club_ID;
-			}
-			set
-			{
-				if ((this._Club_ID != value))
-				{
-					if (this._Club.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnClub_IDChanging(value);
-					this.SendPropertyChanging();
-					this._Club_ID = value;
-					this.SendPropertyChanged("Club_ID");
-					this.OnClub_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NationalTeam_ID", DbType="Int")]
-		public System.Nullable<int> NationalTeam_ID
-		{
-			get
-			{
-				return this._NationalTeam_ID;
-			}
-			set
-			{
-				if ((this._NationalTeam_ID != value))
-				{
-					if (this._NationalTeam.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnNationalTeam_IDChanging(value);
-					this.SendPropertyChanging();
-					this._NationalTeam_ID = value;
-					this.SendPropertyChanged("NationalTeam_ID");
-					this.OnNationalTeam_IDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Club_MultimediaTag", Storage="_Club", ThisKey="Club_ID", OtherKey="Club_ID", IsForeignKey=true)]
-		public Club Club
-		{
-			get
-			{
-				return this._Club.Entity;
-			}
-			set
-			{
-				Club previousValue = this._Club.Entity;
-				if (((previousValue != value) 
-							|| (this._Club.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Club.Entity = null;
-						previousValue.MultimediaTags.Remove(this);
-					}
-					this._Club.Entity = value;
-					if ((value != null))
-					{
-						value.MultimediaTags.Add(this);
-						this._Club_ID = value.Club_ID;
-					}
-					else
-					{
-						this._Club_ID = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Club");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NationalTeam_MultimediaTag", Storage="_NationalTeam", ThisKey="NationalTeam_ID", OtherKey="NationalTeam_Id", IsForeignKey=true)]
-		public NationalTeam NationalTeam
-		{
-			get
-			{
-				return this._NationalTeam.Entity;
-			}
-			set
-			{
-				NationalTeam previousValue = this._NationalTeam.Entity;
-				if (((previousValue != value) 
-							|| (this._NationalTeam.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._NationalTeam.Entity = null;
-						previousValue.MultimediaTags.Remove(this);
-					}
-					this._NationalTeam.Entity = value;
-					if ((value != null))
-					{
-						value.MultimediaTags.Add(this);
-						this._NationalTeam_ID = value.NationalTeam_Id;
-					}
-					else
-					{
-						this._NationalTeam_ID = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("NationalTeam");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Player_MultimediaTag", Storage="_Player", ThisKey="Player_ID", OtherKey="Player_Id", IsForeignKey=true)]
-		public Player Player
-		{
-			get
-			{
-				return this._Player.Entity;
-			}
-			set
-			{
-				Player previousValue = this._Player.Entity;
-				if (((previousValue != value) 
-							|| (this._Player.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Player.Entity = null;
-						previousValue.MultimediaTags.Remove(this);
-					}
-					this._Player.Entity = value;
-					if ((value != null))
-					{
-						value.MultimediaTags.Add(this);
-						this._Player_ID = value.Player_Id;
-					}
-					else
-					{
-						this._Player_ID = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Player");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Match_MultimediaTag", Storage="_Match", ThisKey="Match_ID", OtherKey="Match_Id", IsForeignKey=true)]
-		public Match Match
-		{
-			get
-			{
-				return this._Match.Entity;
-			}
-			set
-			{
-				Match previousValue = this._Match.Entity;
-				if (((previousValue != value) 
-							|| (this._Match.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Match.Entity = null;
-						previousValue.MultimediaTags.Remove(this);
-					}
-					this._Match.Entity = value;
-					if ((value != null))
-					{
-						value.MultimediaTags.Add(this);
-						this._Match_ID = value.Match_Id;
-					}
-					else
-					{
-						this._Match_ID = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Match");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Multimedia_MultimediaTag", Storage="_Multimedia", ThisKey="Multimedia_ID", OtherKey="Multimedia_ID", IsForeignKey=true)]
-		public Multimedia Multimedia
-		{
-			get
-			{
-				return this._Multimedia.Entity;
-			}
-			set
-			{
-				Multimedia previousValue = this._Multimedia.Entity;
-				if (((previousValue != value) 
-							|| (this._Multimedia.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Multimedia.Entity = null;
-						previousValue.MultimediaTags.Remove(this);
-					}
-					this._Multimedia.Entity = value;
-					if ((value != null))
-					{
-						value.MultimediaTags.Add(this);
-						this._Multimedia_ID = value.Multimedia_ID;
-					}
-					else
-					{
-						this._Multimedia_ID = default(int);
-					}
-					this.SendPropertyChanged("Multimedia");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MatchEvent_MultimediaTag", Storage="_MatchEvent", ThisKey="MatchEvent_ID", OtherKey="MatchEvent_Id", IsForeignKey=true)]
-		public MatchEvent MatchEvent
-		{
-			get
-			{
-				return this._MatchEvent.Entity;
-			}
-			set
-			{
-				MatchEvent previousValue = this._MatchEvent.Entity;
-				if (((previousValue != value) 
-							|| (this._MatchEvent.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._MatchEvent.Entity = null;
-						previousValue.MultimediaTags.Remove(this);
-					}
-					this._MatchEvent.Entity = value;
-					if ((value != null))
-					{
-						value.MultimediaTags.Add(this);
-						this._MatchEvent_ID = value.MatchEvent_Id;
-					}
-					else
-					{
-						this._MatchEvent_ID = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("MatchEvent");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FIFAAssociations")]
 	public partial class FIFAAssociation : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2633,13 +2181,13 @@ namespace UaFDatabase
 		
 		private EntitySet<PlayerPosition> _PlayerPositions;
 		
-		private EntitySet<MultimediaTag> _MultimediaTags;
-		
 		private EntitySet<MatchLineup> _MatchLineups;
 		
 		private EntitySet<MatchEvent> _MatchEvents;
 		
 		private EntitySet<MatchEvent> _MatchEvents1;
+		
+		private EntitySet<MultimediaTag> _MultimediaTags;
 		
 		private EntityRef<Country> _Country;
 		
@@ -2684,10 +2232,10 @@ namespace UaFDatabase
 		public Player()
 		{
 			this._PlayerPositions = new EntitySet<PlayerPosition>(new Action<PlayerPosition>(this.attach_PlayerPositions), new Action<PlayerPosition>(this.detach_PlayerPositions));
-			this._MultimediaTags = new EntitySet<MultimediaTag>(new Action<MultimediaTag>(this.attach_MultimediaTags), new Action<MultimediaTag>(this.detach_MultimediaTags));
 			this._MatchLineups = new EntitySet<MatchLineup>(new Action<MatchLineup>(this.attach_MatchLineups), new Action<MatchLineup>(this.detach_MatchLineups));
 			this._MatchEvents = new EntitySet<MatchEvent>(new Action<MatchEvent>(this.attach_MatchEvents), new Action<MatchEvent>(this.detach_MatchEvents));
 			this._MatchEvents1 = new EntitySet<MatchEvent>(new Action<MatchEvent>(this.attach_MatchEvents1), new Action<MatchEvent>(this.detach_MatchEvents1));
+			this._MultimediaTags = new EntitySet<MultimediaTag>(new Action<MultimediaTag>(this.attach_MultimediaTags), new Action<MultimediaTag>(this.detach_MultimediaTags));
 			this._Country = default(EntityRef<Country>);
 			OnCreated();
 		}
@@ -3029,19 +2577,6 @@ namespace UaFDatabase
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Player_MultimediaTag", Storage="_MultimediaTags", ThisKey="Player_Id", OtherKey="Player_ID")]
-		public EntitySet<MultimediaTag> MultimediaTags
-		{
-			get
-			{
-				return this._MultimediaTags;
-			}
-			set
-			{
-				this._MultimediaTags.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Player_MatchLineup", Storage="_MatchLineups", ThisKey="Player_Id", OtherKey="Player_Id")]
 		public EntitySet<MatchLineup> MatchLineups
 		{
@@ -3078,6 +2613,19 @@ namespace UaFDatabase
 			set
 			{
 				this._MatchEvents1.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Player_MultimediaTag", Storage="_MultimediaTags", ThisKey="Player_Id", OtherKey="Player_ID")]
+		public EntitySet<MultimediaTag> MultimediaTags
+		{
+			get
+			{
+				return this._MultimediaTags;
+			}
+			set
+			{
+				this._MultimediaTags.Assign(value);
 			}
 		}
 		
@@ -3147,18 +2695,6 @@ namespace UaFDatabase
 			entity.Player = null;
 		}
 		
-		private void attach_MultimediaTags(MultimediaTag entity)
-		{
-			this.SendPropertyChanging();
-			entity.Player = this;
-		}
-		
-		private void detach_MultimediaTags(MultimediaTag entity)
-		{
-			this.SendPropertyChanging();
-			entity.Player = null;
-		}
-		
 		private void attach_MatchLineups(MatchLineup entity)
 		{
 			this.SendPropertyChanging();
@@ -3193,6 +2729,18 @@ namespace UaFDatabase
 		{
 			this.SendPropertyChanging();
 			entity.Player1 = null;
+		}
+		
+		private void attach_MultimediaTags(MultimediaTag entity)
+		{
+			this.SendPropertyChanging();
+			entity.Player = this;
+		}
+		
+		private void detach_MultimediaTags(MultimediaTag entity)
+		{
+			this.SendPropertyChanging();
+			entity.Player = null;
 		}
 	}
 	
@@ -3384,6 +2932,8 @@ namespace UaFDatabase
 		
 		private EntitySet<MatchEvent> _MatchEvents;
 		
+		private EntitySet<MultimediaTag> _MultimediaTags;
+		
 		private EntityRef<Country> _Country;
 		
     #region Extensibility Method Definitions
@@ -3412,6 +2962,7 @@ namespace UaFDatabase
 		{
 			this._MatchLineups = new EntitySet<MatchLineup>(new Action<MatchLineup>(this.attach_MatchLineups), new Action<MatchLineup>(this.detach_MatchLineups));
 			this._MatchEvents = new EntitySet<MatchEvent>(new Action<MatchEvent>(this.attach_MatchEvents), new Action<MatchEvent>(this.detach_MatchEvents));
+			this._MultimediaTags = new EntitySet<MultimediaTag>(new Action<MultimediaTag>(this.attach_MultimediaTags), new Action<MultimediaTag>(this.detach_MultimediaTags));
 			this._Country = default(EntityRef<Country>);
 			OnCreated();
 		}
@@ -3606,6 +3157,19 @@ namespace UaFDatabase
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Coach_MultimediaTag", Storage="_MultimediaTags", ThisKey="CoachId", OtherKey="CoachId")]
+		public EntitySet<MultimediaTag> MultimediaTags
+		{
+			get
+			{
+				return this._MultimediaTags;
+			}
+			set
+			{
+				this._MultimediaTags.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Country_Coach", Storage="_Country", ThisKey="CountryId", OtherKey="Country_ID", IsForeignKey=true)]
 		public Country Country
 		{
@@ -3683,6 +3247,18 @@ namespace UaFDatabase
 			this.SendPropertyChanging();
 			entity.Coach = null;
 		}
+		
+		private void attach_MultimediaTags(MultimediaTag entity)
+		{
+			this.SendPropertyChanging();
+			entity.Coach = this;
+		}
+		
+		private void detach_MultimediaTags(MultimediaTag entity)
+		{
+			this.SendPropertyChanging();
+			entity.Coach = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Matches")]
@@ -3733,13 +3309,13 @@ namespace UaFDatabase
 		
 		private System.Nullable<System.DateTime> _CreatedDate;
 		
-		private EntitySet<MultimediaTag> _MultimediaTags;
-		
 		private EntitySet<MatchLineup> _MatchLineups;
 		
 		private EntitySet<MatchNote> _MatchNotes;
 		
 		private EntitySet<MatchEvent> _MatchEvents;
+		
+		private EntitySet<MultimediaTag> _MultimediaTags;
 		
 		private EntityRef<Club> _Club;
 		
@@ -3809,10 +3385,10 @@ namespace UaFDatabase
 		
 		public Match()
 		{
-			this._MultimediaTags = new EntitySet<MultimediaTag>(new Action<MultimediaTag>(this.attach_MultimediaTags), new Action<MultimediaTag>(this.detach_MultimediaTags));
 			this._MatchLineups = new EntitySet<MatchLineup>(new Action<MatchLineup>(this.attach_MatchLineups), new Action<MatchLineup>(this.detach_MatchLineups));
 			this._MatchNotes = new EntitySet<MatchNote>(new Action<MatchNote>(this.attach_MatchNotes), new Action<MatchNote>(this.detach_MatchNotes));
 			this._MatchEvents = new EntitySet<MatchEvent>(new Action<MatchEvent>(this.attach_MatchEvents), new Action<MatchEvent>(this.detach_MatchEvents));
+			this._MultimediaTags = new EntitySet<MultimediaTag>(new Action<MultimediaTag>(this.attach_MultimediaTags), new Action<MultimediaTag>(this.detach_MultimediaTags));
 			this._Club = default(EntityRef<Club>);
 			this._Club1 = default(EntityRef<Club>);
 			this._Competition = default(EntityRef<Competition>);
@@ -4281,19 +3857,6 @@ namespace UaFDatabase
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Match_MultimediaTag", Storage="_MultimediaTags", ThisKey="Match_Id", OtherKey="Match_ID")]
-		public EntitySet<MultimediaTag> MultimediaTags
-		{
-			get
-			{
-				return this._MultimediaTags;
-			}
-			set
-			{
-				this._MultimediaTags.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Match_MatchLineup", Storage="_MatchLineups", ThisKey="Match_Id", OtherKey="Match_Id")]
 		public EntitySet<MatchLineup> MatchLineups
 		{
@@ -4330,6 +3893,19 @@ namespace UaFDatabase
 			set
 			{
 				this._MatchEvents.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Match_MultimediaTag", Storage="_MultimediaTags", ThisKey="Match_Id", OtherKey="Match_ID")]
+		public EntitySet<MultimediaTag> MultimediaTags
+		{
+			get
+			{
+				return this._MultimediaTags;
+			}
+			set
+			{
+				this._MultimediaTags.Assign(value);
 			}
 		}
 		
@@ -4659,18 +4235,6 @@ namespace UaFDatabase
 			}
 		}
 		
-		private void attach_MultimediaTags(MultimediaTag entity)
-		{
-			this.SendPropertyChanging();
-			entity.Match = this;
-		}
-		
-		private void detach_MultimediaTags(MultimediaTag entity)
-		{
-			this.SendPropertyChanging();
-			entity.Match = null;
-		}
-		
 		private void attach_MatchLineups(MatchLineup entity)
 		{
 			this.SendPropertyChanging();
@@ -4702,6 +4266,18 @@ namespace UaFDatabase
 		}
 		
 		private void detach_MatchEvents(MatchEvent entity)
+		{
+			this.SendPropertyChanging();
+			entity.Match = null;
+		}
+		
+		private void attach_MultimediaTags(MultimediaTag entity)
+		{
+			this.SendPropertyChanging();
+			entity.Match = this;
+		}
+		
+		private void detach_MultimediaTags(MultimediaTag entity)
 		{
 			this.SendPropertyChanging();
 			entity.Match = null;
@@ -7460,6 +7036,523 @@ namespace UaFDatabase
 		{
 			this.SendPropertyChanging();
 			entity.MatchEvent = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MultimediaTags")]
+	public partial class MultimediaTag : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _MultimediaTag_ID;
+		
+		private int _Multimedia_ID;
+		
+		private System.Nullable<int> _Player_ID;
+		
+		private System.Nullable<int> _Match_ID;
+		
+		private System.Nullable<int> _MatchEvent_ID;
+		
+		private System.Nullable<int> _Club_ID;
+		
+		private System.Nullable<int> _NationalTeam_ID;
+		
+		private System.Nullable<int> _CoachId;
+		
+		private EntityRef<Club> _Club;
+		
+		private EntityRef<Coach> _Coach;
+		
+		private EntityRef<Match> _Match;
+		
+		private EntityRef<MatchEvent> _MatchEvent;
+		
+		private EntityRef<Multimedia> _Multimedia;
+		
+		private EntityRef<NationalTeam> _NationalTeam;
+		
+		private EntityRef<Player> _Player;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnMultimediaTag_IDChanging(int value);
+    partial void OnMultimediaTag_IDChanged();
+    partial void OnMultimedia_IDChanging(int value);
+    partial void OnMultimedia_IDChanged();
+    partial void OnPlayer_IDChanging(System.Nullable<int> value);
+    partial void OnPlayer_IDChanged();
+    partial void OnMatch_IDChanging(System.Nullable<int> value);
+    partial void OnMatch_IDChanged();
+    partial void OnMatchEvent_IDChanging(System.Nullable<int> value);
+    partial void OnMatchEvent_IDChanged();
+    partial void OnClub_IDChanging(System.Nullable<int> value);
+    partial void OnClub_IDChanged();
+    partial void OnNationalTeam_IDChanging(System.Nullable<int> value);
+    partial void OnNationalTeam_IDChanged();
+    partial void OnCoachIdChanging(System.Nullable<int> value);
+    partial void OnCoachIdChanged();
+    #endregion
+		
+		public MultimediaTag()
+		{
+			this._Club = default(EntityRef<Club>);
+			this._Coach = default(EntityRef<Coach>);
+			this._Match = default(EntityRef<Match>);
+			this._MatchEvent = default(EntityRef<MatchEvent>);
+			this._Multimedia = default(EntityRef<Multimedia>);
+			this._NationalTeam = default(EntityRef<NationalTeam>);
+			this._Player = default(EntityRef<Player>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MultimediaTag_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int MultimediaTag_ID
+		{
+			get
+			{
+				return this._MultimediaTag_ID;
+			}
+			set
+			{
+				if ((this._MultimediaTag_ID != value))
+				{
+					this.OnMultimediaTag_IDChanging(value);
+					this.SendPropertyChanging();
+					this._MultimediaTag_ID = value;
+					this.SendPropertyChanged("MultimediaTag_ID");
+					this.OnMultimediaTag_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Multimedia_ID", DbType="Int NOT NULL")]
+		public int Multimedia_ID
+		{
+			get
+			{
+				return this._Multimedia_ID;
+			}
+			set
+			{
+				if ((this._Multimedia_ID != value))
+				{
+					if (this._Multimedia.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMultimedia_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Multimedia_ID = value;
+					this.SendPropertyChanged("Multimedia_ID");
+					this.OnMultimedia_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Player_ID", DbType="Int")]
+		public System.Nullable<int> Player_ID
+		{
+			get
+			{
+				return this._Player_ID;
+			}
+			set
+			{
+				if ((this._Player_ID != value))
+				{
+					if (this._Player.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPlayer_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Player_ID = value;
+					this.SendPropertyChanged("Player_ID");
+					this.OnPlayer_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Match_ID", DbType="Int")]
+		public System.Nullable<int> Match_ID
+		{
+			get
+			{
+				return this._Match_ID;
+			}
+			set
+			{
+				if ((this._Match_ID != value))
+				{
+					if (this._Match.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMatch_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Match_ID = value;
+					this.SendPropertyChanged("Match_ID");
+					this.OnMatch_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MatchEvent_ID", DbType="Int")]
+		public System.Nullable<int> MatchEvent_ID
+		{
+			get
+			{
+				return this._MatchEvent_ID;
+			}
+			set
+			{
+				if ((this._MatchEvent_ID != value))
+				{
+					if (this._MatchEvent.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMatchEvent_IDChanging(value);
+					this.SendPropertyChanging();
+					this._MatchEvent_ID = value;
+					this.SendPropertyChanged("MatchEvent_ID");
+					this.OnMatchEvent_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Club_ID", DbType="Int")]
+		public System.Nullable<int> Club_ID
+		{
+			get
+			{
+				return this._Club_ID;
+			}
+			set
+			{
+				if ((this._Club_ID != value))
+				{
+					if (this._Club.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnClub_IDChanging(value);
+					this.SendPropertyChanging();
+					this._Club_ID = value;
+					this.SendPropertyChanged("Club_ID");
+					this.OnClub_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NationalTeam_ID", DbType="Int")]
+		public System.Nullable<int> NationalTeam_ID
+		{
+			get
+			{
+				return this._NationalTeam_ID;
+			}
+			set
+			{
+				if ((this._NationalTeam_ID != value))
+				{
+					if (this._NationalTeam.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnNationalTeam_IDChanging(value);
+					this.SendPropertyChanging();
+					this._NationalTeam_ID = value;
+					this.SendPropertyChanged("NationalTeam_ID");
+					this.OnNationalTeam_IDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CoachId", DbType="Int")]
+		public System.Nullable<int> CoachId
+		{
+			get
+			{
+				return this._CoachId;
+			}
+			set
+			{
+				if ((this._CoachId != value))
+				{
+					if (this._Coach.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCoachIdChanging(value);
+					this.SendPropertyChanging();
+					this._CoachId = value;
+					this.SendPropertyChanged("CoachId");
+					this.OnCoachIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Club_MultimediaTag", Storage="_Club", ThisKey="Club_ID", OtherKey="Club_ID", IsForeignKey=true)]
+		public Club Club
+		{
+			get
+			{
+				return this._Club.Entity;
+			}
+			set
+			{
+				Club previousValue = this._Club.Entity;
+				if (((previousValue != value) 
+							|| (this._Club.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Club.Entity = null;
+						previousValue.MultimediaTags.Remove(this);
+					}
+					this._Club.Entity = value;
+					if ((value != null))
+					{
+						value.MultimediaTags.Add(this);
+						this._Club_ID = value.Club_ID;
+					}
+					else
+					{
+						this._Club_ID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Club");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Coach_MultimediaTag", Storage="_Coach", ThisKey="CoachId", OtherKey="CoachId", IsForeignKey=true)]
+		public Coach Coach
+		{
+			get
+			{
+				return this._Coach.Entity;
+			}
+			set
+			{
+				Coach previousValue = this._Coach.Entity;
+				if (((previousValue != value) 
+							|| (this._Coach.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Coach.Entity = null;
+						previousValue.MultimediaTags.Remove(this);
+					}
+					this._Coach.Entity = value;
+					if ((value != null))
+					{
+						value.MultimediaTags.Add(this);
+						this._CoachId = value.CoachId;
+					}
+					else
+					{
+						this._CoachId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Coach");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Match_MultimediaTag", Storage="_Match", ThisKey="Match_ID", OtherKey="Match_Id", IsForeignKey=true)]
+		public Match Match
+		{
+			get
+			{
+				return this._Match.Entity;
+			}
+			set
+			{
+				Match previousValue = this._Match.Entity;
+				if (((previousValue != value) 
+							|| (this._Match.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Match.Entity = null;
+						previousValue.MultimediaTags.Remove(this);
+					}
+					this._Match.Entity = value;
+					if ((value != null))
+					{
+						value.MultimediaTags.Add(this);
+						this._Match_ID = value.Match_Id;
+					}
+					else
+					{
+						this._Match_ID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Match");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MatchEvent_MultimediaTag", Storage="_MatchEvent", ThisKey="MatchEvent_ID", OtherKey="MatchEvent_Id", IsForeignKey=true)]
+		public MatchEvent MatchEvent
+		{
+			get
+			{
+				return this._MatchEvent.Entity;
+			}
+			set
+			{
+				MatchEvent previousValue = this._MatchEvent.Entity;
+				if (((previousValue != value) 
+							|| (this._MatchEvent.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._MatchEvent.Entity = null;
+						previousValue.MultimediaTags.Remove(this);
+					}
+					this._MatchEvent.Entity = value;
+					if ((value != null))
+					{
+						value.MultimediaTags.Add(this);
+						this._MatchEvent_ID = value.MatchEvent_Id;
+					}
+					else
+					{
+						this._MatchEvent_ID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("MatchEvent");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Multimedia_MultimediaTag", Storage="_Multimedia", ThisKey="Multimedia_ID", OtherKey="Multimedia_ID", IsForeignKey=true)]
+		public Multimedia Multimedia
+		{
+			get
+			{
+				return this._Multimedia.Entity;
+			}
+			set
+			{
+				Multimedia previousValue = this._Multimedia.Entity;
+				if (((previousValue != value) 
+							|| (this._Multimedia.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Multimedia.Entity = null;
+						previousValue.MultimediaTags.Remove(this);
+					}
+					this._Multimedia.Entity = value;
+					if ((value != null))
+					{
+						value.MultimediaTags.Add(this);
+						this._Multimedia_ID = value.Multimedia_ID;
+					}
+					else
+					{
+						this._Multimedia_ID = default(int);
+					}
+					this.SendPropertyChanged("Multimedia");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NationalTeam_MultimediaTag", Storage="_NationalTeam", ThisKey="NationalTeam_ID", OtherKey="NationalTeam_Id", IsForeignKey=true)]
+		public NationalTeam NationalTeam
+		{
+			get
+			{
+				return this._NationalTeam.Entity;
+			}
+			set
+			{
+				NationalTeam previousValue = this._NationalTeam.Entity;
+				if (((previousValue != value) 
+							|| (this._NationalTeam.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._NationalTeam.Entity = null;
+						previousValue.MultimediaTags.Remove(this);
+					}
+					this._NationalTeam.Entity = value;
+					if ((value != null))
+					{
+						value.MultimediaTags.Add(this);
+						this._NationalTeam_ID = value.NationalTeam_Id;
+					}
+					else
+					{
+						this._NationalTeam_ID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("NationalTeam");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Player_MultimediaTag", Storage="_Player", ThisKey="Player_ID", OtherKey="Player_Id", IsForeignKey=true)]
+		public Player Player
+		{
+			get
+			{
+				return this._Player.Entity;
+			}
+			set
+			{
+				Player previousValue = this._Player.Entity;
+				if (((previousValue != value) 
+							|| (this._Player.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Player.Entity = null;
+						previousValue.MultimediaTags.Remove(this);
+					}
+					this._Player.Entity = value;
+					if ((value != null))
+					{
+						value.MultimediaTags.Add(this);
+						this._Player_ID = value.Player_Id;
+					}
+					else
+					{
+						this._Player_ID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Player");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
