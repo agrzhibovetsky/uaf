@@ -80,7 +80,8 @@
             });
 
             $("#tbFirstNameInt").blur(function () {
-                var firstNameInt = $(this).val();
+                var firstNameInt = $(this).val().trim();
+                $(this).val(firstNameInt);
                 var lastNameInt = $("#tbLastNameInt").val().trim();
                 var firstNameParts = firstNameInt.split(" ");
                 if (firstNameParts.length == 2 && lastNameInt.length == 0) {

@@ -87,6 +87,9 @@ namespace UaFDatabase
     partial void InsertMultimediaTag(MultimediaTag instance);
     partial void UpdateMultimediaTag(MultimediaTag instance);
     partial void DeleteMultimediaTag(MultimediaTag instance);
+    partial void InsertTask(Task instance);
+    partial void UpdateTask(Task instance);
+    partial void DeleteTask(Task instance);
     #endregion
 		
 		public UaFootball_DBDataContext() : 
@@ -316,6 +319,14 @@ namespace UaFDatabase
 			get
 			{
 				return this.GetTable<MultimediaTag>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Task> Tasks
+		{
+			get
+			{
+				return this.GetTable<Task>();
 			}
 		}
 		
@@ -7531,6 +7542,164 @@ namespace UaFDatabase
 						this._Player_ID = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("Player");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tasks")]
+	public partial class Task : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Task_Id;
+		
+		private string _Description;
+		
+		private string _Status_CD;
+		
+		private string _Type_CD;
+		
+		private string _Comments;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTask_IdChanging(int value);
+    partial void OnTask_IdChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnStatus_CDChanging(string value);
+    partial void OnStatus_CDChanged();
+    partial void OnType_CDChanging(string value);
+    partial void OnType_CDChanged();
+    partial void OnCommentsChanging(string value);
+    partial void OnCommentsChanged();
+    #endregion
+		
+		public Task()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Task_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Task_Id
+		{
+			get
+			{
+				return this._Task_Id;
+			}
+			set
+			{
+				if ((this._Task_Id != value))
+				{
+					this.OnTask_IdChanging(value);
+					this.SendPropertyChanging();
+					this._Task_Id = value;
+					this.SendPropertyChanged("Task_Id");
+					this.OnTask_IdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status_CD", DbType="Char(2) NOT NULL", CanBeNull=false)]
+		public string Status_CD
+		{
+			get
+			{
+				return this._Status_CD;
+			}
+			set
+			{
+				if ((this._Status_CD != value))
+				{
+					this.OnStatus_CDChanging(value);
+					this.SendPropertyChanging();
+					this._Status_CD = value;
+					this.SendPropertyChanged("Status_CD");
+					this.OnStatus_CDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type_CD", DbType="Char(2) NOT NULL", CanBeNull=false)]
+		public string Type_CD
+		{
+			get
+			{
+				return this._Type_CD;
+			}
+			set
+			{
+				if ((this._Type_CD != value))
+				{
+					this.OnType_CDChanging(value);
+					this.SendPropertyChanging();
+					this._Type_CD = value;
+					this.SendPropertyChanged("Type_CD");
+					this.OnType_CDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comments", DbType="VarChar(5000)")]
+		public string Comments
+		{
+			get
+			{
+				return this._Comments;
+			}
+			set
+			{
+				if ((this._Comments != value))
+				{
+					this.OnCommentsChanging(value);
+					this.SendPropertyChanging();
+					this._Comments = value;
+					this.SendPropertyChanged("Comments");
+					this.OnCommentsChanged();
 				}
 			}
 		}

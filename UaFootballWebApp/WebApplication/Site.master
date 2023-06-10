@@ -37,6 +37,7 @@
                             <asp:MenuItem NavigateUrl="~/WebApplication/Admin/CoachList.aspx" Text="Тренер"></asp:MenuItem>
                             <asp:MenuItem NavigateUrl="~/WebApplication/Admin/PlayerList.aspx" Text="Футболист"></asp:MenuItem>
                             <asp:MenuItem NavigateUrl="~/WebApplication/Admin/PlayerReviewList.aspx" Text="Футболисты (ревью)"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/WebApplication/Admin/PlayersIncomplete.aspx" Text="Футболист (не полные данные)"></asp:MenuItem>
                             <asp:MenuItem NavigateUrl="~/WebApplication/Admin/Multimedia.aspx" Text="Мультимедиа"></asp:MenuItem>
                         </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/WebApplication/Public/Players.aspx" Text="Public">

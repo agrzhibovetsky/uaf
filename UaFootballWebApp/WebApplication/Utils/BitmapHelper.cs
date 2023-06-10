@@ -60,6 +60,8 @@ namespace UaFootball.WebApplication
 
                         if (sourceFilePath.ToLower().IndexOf(".jpg") > 0)
                             bmp.Save(destinationFilePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        else if (sourceFilePath.ToLower().IndexOf(".gif") > 0)
+                            bmp.Save(destinationFilePath, System.Drawing.Imaging.ImageFormat.Gif);
                         else
                             bmp.Save(destinationFilePath);
 

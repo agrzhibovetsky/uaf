@@ -16,7 +16,7 @@ namespace UaFootball.WebApplication.Controls
         {
             if (TextToHighlight.Trim().Length > 0)
             {
-                string[] wordsToHighlight = TextToHighlight.Trim().Split(' ');
+                string[] wordsToHighlight = TextToHighlight.Trim().Split(' ').Where(t=>t.Length>3).ToArray();
                 string html = Text;
                 foreach (string wordToHighlight in wordsToHighlight)
                 {

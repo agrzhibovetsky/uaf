@@ -112,6 +112,7 @@ namespace UaFootball.AppCode
                 public const int Talks = 0x20;
                 public const int FoulOfLastHope = 0x40;
                 public const int AfterFinalWhistle = 0x80;
+                public const int PlayerOnBench = 0x100;
 
                 //Goal, PenaltyShootoutScored
                 public const int LeftLeg = 0x01;
@@ -234,6 +235,7 @@ namespace UaFootball.AppCode
                 public const string Talks = "Разговоры с судьей";
                 public const string FoulOfLastHope = "Фол последней надежды";
                 public const string AfterFinalWhistle = "После финального свистка";
+                public const string PlayerOnBench = "Игроку на скамейке";
 
                 //Goal, PenaltyShootoutScored
                 public const string LeftLeg = "Левой ногой";

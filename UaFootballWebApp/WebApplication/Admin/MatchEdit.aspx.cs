@@ -45,11 +45,6 @@ namespace UaFootball.WebApplication
                 BindDropdown(db, Constants.ObjectType.Stadium, ddlStadiums, true, string.Empty);
             }
 
-            if (isNewObject)
-            {
-                tbDate.Text = FormatDate(DateTime.Now.Subtract(new TimeSpan(24,0,0)));
-            }
-
             cblMatchFlags.DataSource = UIHelper.MatchFlagsMap;
             cblMatchFlags.DataTextField = "Value"; ;
             cblMatchFlags.DataValueField = "Key";
@@ -161,7 +156,7 @@ namespace UaFootball.WebApplication
                 cbAwayCoachInCharge.Checked = (awayCoach.Flags & Constants.DB.LineupFlags.CoachInCharge) > 0;
             }
 
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 25; i++)
             {
                 if (DataItem.Events.Count < i)
                 {

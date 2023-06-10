@@ -95,10 +95,12 @@
     <Content Include="WebApplication\Admin\PlayerList.aspx" />
     <Content Include="WebApplication\Admin\PlayerEdit.aspx" />
     <Content Include="WebApplication\Admin\PlayerReviewList.aspx" />
+    <Content Include="WebApplication\Admin\PlayersIncomplete.aspx" />
     <Content Include="WebApplication\Admin\RefereeList.aspx" />
     <Content Include="WebApplication\Admin\RefereeEdit.aspx" />
     <Content Include="WebApplication\Admin\StadiumList.aspx" />
     <Content Include="WebApplication\Admin\StadiumEdit.aspx" />
+    <Content Include="WebApplication\Admin\Tasks.aspx" />
     <Content Include="WebApplication\Controls\AdminEventPopup.ascx" />
     <Content Include="WebApplication\Controls\AutocompleteTextBox.ascx" />
     <Content Include="WebApplication\Controls\MatchEvent.ascx" />
@@ -410,6 +412,20 @@
     </Compile>
     <Compile Include="WebApplication\Admin\CoachList.aspx.designer.cs">
       <DependentUpon>CoachList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\PlayersIncomplete.aspx.cs">
+      <DependentUpon>PlayersIncomplete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\PlayersIncomplete.aspx.designer.cs">
+      <DependentUpon>PlayersIncomplete.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebApplication\Admin\Tasks.aspx.cs">
+      <DependentUpon>Tasks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebApplication\Admin\Tasks.aspx.designer.cs">
+      <DependentUpon>Tasks.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebApplication\Controls\AdminEventPopup.ascx.cs">
       <DependentUpon>AdminEventPopup.ascx</DependentUpon>

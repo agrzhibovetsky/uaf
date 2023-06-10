@@ -89,6 +89,11 @@ autocompleteTextBox.prototype.init = function () {
         autocompleteObj.tb.val(ui.item.value);
 		autocompleteObj.tb.css("border", "1px solid black");
         autocompleteObj.hf.val(ui.item.id);
+
+        var nextControlId = getNextControl(autocompleteObj.autocompleteTextBoxId);
+        if (nextControlId.length > 0) {
+            $("#" + nextControlId).focus();
+        }
     });
     this.tb.autocomplete("option", "response", function (event, ui) {
 
@@ -99,6 +104,13 @@ autocompleteTextBox.prototype.init = function () {
             autocompleteObj.hf.val(ui.content[0].id);
             autocompleteObj.tb.autocomplete("close");
             autocompleteObj.tb.blur();
+
+            var nextControlId = getNextControl(autocompleteObj.autocompleteTextBoxId);
+            if (nextControlId.length > 0) {
+                $("#" + nextControlId).focus();
+                $("#" + nextControlId).attr("readonly", "true");
+                setTimeout(function () { $("#" + nextControlId).removeAttr("readonly"); }, 500);
+            }
             //debugger;
         }
 
@@ -119,6 +131,31 @@ autocompleteTextBox.prototype.init = function () {
 
 }
 
+function getNextControl(curControlId) {
+    var nextControlId = "";
+
+    if (curControlId.indexOf("tbactbEventPlayer1") == 0) {
+        var curId = curControlId.substring("tbactbEventPlayer2".length);
+        var nextId = parseInt(curId) + 1;
+        if ($("#MainContent_rptEvents_ddlEventTypeCd_" + curId)[0].selectedOptions[0].value == "S") {
+            nextControlId = curControlId.replace("tbactbEventPlayer1", "tbactbEventPlayer2");
+        }
+        else {
+            nextControlId = "MainContent_rptEvents_tbMinute_" + nextId;
+            $("#" + nextControlId).val("");
+        }
+        
+    }
+
+    if (curControlId.indexOf("tbactbEventPlayer2") == 0) {
+        var curId = curControlId.substring("tbactbEventPlayer2".length);
+        var nextId = parseInt(curId) + 1;
+        nextControlId = "MainContent_rptEvents_tbMinute_" + nextId;
+        $("#" + nextControlId).val("");
+    }
+
+    return nextControlId;
+}
 
 
 function validateAutocomplete(source, arguments) {

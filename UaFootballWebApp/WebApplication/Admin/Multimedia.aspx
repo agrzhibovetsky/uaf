@@ -117,7 +117,38 @@
                     ret = confirm("Футболист или клуб не заданы, сохранить?")
             }
 
+            if (mmMode == "MP") {
+                var checkedFlags = $("#cblMultimediaAttributes input:checkbox:checked");
+                var indexOfUA = $("#hdnCountryCodes").val().indexOf("UA");
+                if (indexOfUA >= 0) {
+                    var flag = 0;
+                    for (var i = 0; i < checkedFlags.length; i++) {
+                        flag = flag | checkedFlags[i].value;
+                    }
+                    if ((flag & 4) > 0 && (indexOfUA > 0)) { //home team photo
+                        ret = confirm("Флаг 'командное фото' правильно стоит?")
+                    }
+                    if ((flag & 2) > 0 && (indexOfUA == 0)) { //away team photo
+                        ret = confirm("Флаг 'командное фото' правильно стоит?")
+                    }
+                }
+                
+            }
+
+
             return ret;
+        }
+
+        function saveTagAttributes() {
+            var mmMode = $("#ddlMultimediaSubType").val();
+            var tagType = $("#ddlTagType").val();
+            if (mmMode == "MP" && tagType == "Матч") {
+                var countryCodesAttrbute = $("#ddlTagValue")[0].selectedOptions[0].attributes["countryCodes"];
+                if (countryCodesAttrbute != 'undefined') {
+                    $("#hdnCountryCodes").val(countryCodesAttrbute.value);
+                }
+                
+            }
         }
                
         
@@ -211,7 +242,7 @@
                     <asp:AsyncPostBackTrigger ControlID="ddlMultimediaSubType" />
                 </Triggers>
             </asp:UpdatePanel>
-            <asp:Button runat="server" ID="btnAddTag" Text="Добавить" OnClick="btnAdd_Click" />
+            <asp:Button runat="server" ID="btnAddTag" Text="Добавить" OnClick="btnAdd_Click" OnClientClick="saveTagAttributes()" />
             </td>
     </tr>
     <tr>
@@ -228,7 +259,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            Флаги: <asp:CheckBoxList ID="cbl1" runat="server">
+            Флаги: <asp:CheckBoxList ID="cblMultimediaAttributes" runat="server" ClientIDMode="Static">
                        
                    </asp:CheckBoxList>
         </td>
@@ -259,4 +290,5 @@
     <asp:Panel id="pAdminEventPopup" runat="server">
         <UaFootball:AdminEventPopup ID="evPopup1" runat="server" />
     </asp:Panel>
+    <asp:HiddenField runat="server" ID="hdnCountryCodes" ClientIDMode="Static" />
 </asp:Content>

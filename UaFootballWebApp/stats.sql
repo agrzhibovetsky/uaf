@@ -31,7 +31,7 @@ order by gc desc, Minute
 select p.Player_Id, p.First_Name, p.Last_Name, COUNT(*) as mc from MatchLineups ml
 join Matches m on ml.Match_Id = m.Match_Id
 join Players p on ml.Player_Id = p.Player_Id
-where ((IsHomeTeamPlayer=1 AND m.HomeNationalTeam_Id=1) OR (IsHomeTeamPlayer=0 AND m.AwayNationalTeam_Id=1))
+where ((IsHomeTeamPlayer=1 AND m.HomeNationalTeam_Id=1) OR (IsHomeTeamPlayer=0 AND m.AwayNationalTeam_Id=1)) --and DATEDIFF(YEAR, p.DOB, GETDATE())<23
 group by p.Player_Id, p.First_Name, p.Last_Name
 order by mc desc
 
@@ -91,7 +91,7 @@ join Matches g on mt.Match_ID = g.Match_Id
 where m.MultimediaSubType_CD = 'MP'
 group by g.Match_Id) d
 on g.Match_Id = d.Match_Id
-where g.Season_Id=30 and PhotoCount is null--29--24--19--17 
+where g.Season_Id=33 --and PhotoCount is null --30-29--24--19--17 
 order by g.Date desc
 
 /* eurocup season - goals without uploaded video or tags */
@@ -109,7 +109,7 @@ join Countries acn on act.Country_ID = acn.Country_ID
 join MatchLineups ml on ml.Match_Id = m.Match_ID and ml.Player_Id = me.Player1_Id
 where me.Match_Id in 
 (
-select Match_Id from Matches where Season_Id=30
+select Match_Id from Matches where Season_Id=33
 )
 and (Event_Cd='G' or Event_Cd='P') and ((ml.IsHomeTeamPlayer = 1 and hcn.Country_ID=1) or (ml.IsHomeTeamPlayer = 0 and acn.Country_ID=1))
 and EventFlags & 128 =0 and (MultimediaTag_ID is null or EventFlags=0)
@@ -138,8 +138,8 @@ join Competitions c on m.Competition_Id = C.Competition_Id
 --where p.Country_Id=1 and c.CompetitionLevel_Cd='C'
 ) as subq
 group by ShirtNumber
---order by c desc
-order by ShirtNumber
+order by c desc
+--order by ShirtNumber
 
 /*plaers that used shit number N */
 select distinct(p.Player_Id), p.First_Name, p.Last_Name, p.Display_Name, ml.ShirtNumber 
@@ -200,3 +200,12 @@ SELECT *
   --join dbo.Matches m on vm.Match_Id = m.Match_Id
   where Flags & 32 > 0 
   order by CompetitionLevel_Cd, Date desc
+
+
+
+  SELECT TOP 1000 m.Date, m.HomeTeam, m.AwayTeam, pm.Event_Id, p.First_Name, p.Last_Name
+  FROM [UaFootball].[dbo].[PendingMultimedia] pm
+  join vwMatches m on pm.Match_Id = m.Match_ID
+  join Players p on pm.Player_Id = p.Player_Id
+  where pm.Multimedia_Id is null and p.Country_Id = 1
+  order by [Date] desc

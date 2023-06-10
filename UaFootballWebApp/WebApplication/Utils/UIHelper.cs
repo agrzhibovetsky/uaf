@@ -193,6 +193,7 @@ namespace UaFootball.WebApplication
             _cardEventFlagsMap.Add(Constants.DB.EventFlags.Talks, Constants.UI.EventFlags.Talks);
             _cardEventFlagsMap.Add(Constants.DB.EventFlags.FoulOfLastHope, Constants.UI.EventFlags.FoulOfLastHope);
             _cardEventFlagsMap.Add(Constants.DB.EventFlags.AfterFinalWhistle, Constants.UI.EventFlags.AfterFinalWhistle);
+            _cardEventFlagsMap.Add(Constants.DB.EventFlags.PlayerOnBench, Constants.UI.EventFlags.PlayerOnBench);
 
             _substitutionEventFlagsMap = new Dictionary<int, string>();
             _substitutionEventFlagsMap.Add(Constants.DB.EventFlags.Injury, Constants.UI.EventFlags.Injury);

@@ -353,6 +353,15 @@
       <Association Name="Player_MultimediaTag" Member="Player" ThisKey="Player_ID" OtherKey="Player_Id" Type="Player" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Tasks" Member="Tasks">
+    <Type Name="Task">
+      <Column Name="Task_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Status_CD" Type="System.String" DbType="Char(2) NOT NULL" CanBeNull="false" />
+      <Column Name="Type_CD" Type="System.String" DbType="Char(2) NOT NULL" CanBeNull="false" />
+      <Column Name="Comments" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Function Name="dbo.Player_GetClubs" Method="Player_GetClubs">
     <Parameter Name="PlayerId" Parameter="playerId" Type="System.Int32" DbType="Int" />
     <ElementType Name="Player_GetClubsResult">

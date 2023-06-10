@@ -84,11 +84,11 @@ namespace UaFootball.WebApplication.Admin
                 ddlMultimediaSubType.SelectedIndex = 3;
                 ddlMultimediaSubType_SelectedIndexChanged(ddlMultimediaSubType, new EventArgs());
 
-                cbl1.Items.Add(new ListItem(Constants.UI.MultimediaTags.BadQuality, Constants.DB.MultimediaTags.BadQuality.ToString()));
-                cbl1.Items.Add(new ListItem(Constants.UI.MultimediaTags.AwayTeamPhoto, Constants.DB.MultimediaTags.AwayTeamPhoto.ToString()));
-                cbl1.Items.Add(new ListItem(Constants.UI.MultimediaTags.HomeTeamPhoto, Constants.DB.MultimediaTags.HomeTeamPhoto.ToString()));
+                cblMultimediaAttributes.Items.Add(new ListItem(Constants.UI.MultimediaTags.BadQuality, Constants.DB.MultimediaTags.BadQuality.ToString()));
 
-                
+                cblMultimediaAttributes.Items.Add(new ListItem(Constants.UI.MultimediaTags.HomeTeamPhoto, Constants.DB.MultimediaTags.HomeTeamPhoto.ToString()));
+                cblMultimediaAttributes.Items.Add(new ListItem(Constants.UI.MultimediaTags.AwayTeamPhoto, Constants.DB.MultimediaTags.AwayTeamPhoto.ToString()));
+
 
                 if (!string.IsNullOrEmpty(Request["id"]))
                 {
@@ -164,7 +164,7 @@ namespace UaFootball.WebApplication.Admin
                                 {
                                     if (mm.Flags > 0)
                                     {
-                                        foreach (ListItem li in cbl1.Items)
+                                        foreach (ListItem li in cblMultimediaAttributes.Items)
                                         {
                                             if ((long.Parse(li.Value) & mm.Flags.Value) > 0)
                                             {
@@ -352,7 +352,7 @@ namespace UaFootball.WebApplication.Admin
                         using (UaFootball_DBDataContext db = DBManager.GetDB())
                         {
                             var lst = (from match in db.vwMatches orderby match.Match_ID descending select match).Take(50);
-                            lTagValueSource = lst.Select(l => new GenericReferenceObject { Name = string.Format("{0} | {1} - {2}", l.Date.ToShortDateString(), l.HomeTeam, l.AwayTeam), Value = l.Match_ID }).ToList();
+                            lTagValueSource = lst.Select(l => new GenericReferenceObject { Name = string.Format("{0} | {1} - {2}", l.Date.ToShortDateString(), l.HomeTeam, l.AwayTeam), Value = l.Match_ID, GenericStringValue=string.Format("{0}_{1}", l.HomeTeamCountryCode, l.AwayTeamCountryCode) }).ToList();
                         }
                         break;
                     }
@@ -371,10 +371,13 @@ namespace UaFootball.WebApplication.Admin
                                 foreach (UaFDatabase.MatchEvent mEvent in events)
                                 {
                                     GenericReferenceObject go = new GenericReferenceObject();
-                                    go.Name = string.Format("{0} мин - {1} - {2}", mEvent.Minute, UIHelper.EventCodeMap[mEvent.Event_Cd], FormatName(mEvent.Player.First_Name, mEvent.Player.Last_Name, mEvent.Player.Display_Name, mEvent.Player.Country_Id));
-                                    go.Value = mEvent.MatchEvent_Id;
-                                    go.GenericStringValue = mEvent.Event_Cd;
-                                    lTagValueSource.Add(go);
+                                    if (mEvent.Event_Cd != Constants.DB.EventTypeCodes.CoachYellowCard)
+                                    {
+                                        go.Name = string.Format("{0} мин - {1} - {2}", mEvent.Minute, UIHelper.EventCodeMap[mEvent.Event_Cd], FormatName(mEvent.Player.First_Name, mEvent.Player.Last_Name, mEvent.Player.Display_Name, mEvent.Player.Country_Id));
+                                        go.Value = mEvent.MatchEvent_Id;
+                                        go.GenericStringValue = mEvent.Event_Cd;
+                                        lTagValueSource.Add(go);
+                                    }
                                 }
                             }
                             
@@ -396,7 +399,13 @@ namespace UaFootball.WebApplication.Admin
             foreach (GenericReferenceObject o in lTagValueSource)
             {
                 ListItem li = new ListItem(o.Name, o.Value.ToString());
-                li.Attributes.Add("eventType", o.GenericStringValue);
+                switch (ddlTagType.SelectedValue)
+                {
+                    case _tagTypeEvent:
+                        li.Attributes.Add("eventType", o.GenericStringValue); break;
+                    case _tagTypeGame:
+                        li.Attributes.Add("countryCodes", o.GenericStringValue); break;
+                }
                 ddlTagValue.Items.Add(li);
             }
         }
@@ -488,6 +497,7 @@ namespace UaFootball.WebApplication.Admin
                         {
                             newTagExt.Match_ID = int.Parse(ddlTagValue.SelectedValue);
                             isValid = true;
+                 
                         }
                         break;
                     }
@@ -573,7 +583,7 @@ namespace UaFootball.WebApplication.Admin
                         newMM.Source = tbSource.Text;
                         newMM.Description = tbDescription.Text;
                         newMM.Flags = 0;
-                        foreach (ListItem li in cbl1.Items)
+                        foreach (ListItem li in cblMultimediaAttributes.Items)
                         {
                             if (li.Selected)
                             {
@@ -680,7 +690,7 @@ namespace UaFootball.WebApplication.Admin
                             rptTags.DataSource = TagsCache;
                             rptTags.DataBind();
 
-                            foreach (ListItem li in cbl1.Items)
+                            foreach (ListItem li in cblMultimediaAttributes.Items)
                             {
                                 li.Selected = false;
                             }
@@ -717,7 +727,7 @@ namespace UaFootball.WebApplication.Admin
                                     }
 
                                     mm.Flags = 0;
-                                    foreach (ListItem li in cbl1.Items)
+                                    foreach (ListItem li in cblMultimediaAttributes.Items)
                                     {
                                         if (li.Selected)
                                         {

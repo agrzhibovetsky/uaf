@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UaFootball.WebApplication.Admin {
-    
-    
-    public partial class Multimedia {
-        
+namespace UaFootball.WebApplication.Admin
+{
+
+
+    public partial class Multimedia
+    {
+
         /// <summary>
         /// hfFileName control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfFileName;
-        
+
         /// <summary>
         /// ddlMultimediaSubType control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlMultimediaSubType;
-        
+
         /// <summary>
         /// afuUploader control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.AsyncFileUpload afuUploader;
-        
+
         /// <summary>
         /// upTags control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upTags;
-        
+
         /// <summary>
         /// rptTags control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rptTags;
-        
+
         /// <summary>
         /// ddlTagType control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlTagType;
-        
+
         /// <summary>
         /// ddlTagValue control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlTagValue;
-        
+
         /// <summary>
         /// tbObjectId control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbObjectId;
-        
+
         /// <summary>
         /// btnAddTag control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAddTag;
-        
+
         /// <summary>
         /// tbSource control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbSource;
-        
+
         /// <summary>
         /// tbAuthor control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbAuthor;
-        
+
         /// <summary>
         /// tbPhotoDate control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbPhotoDate;
-        
+
         /// <summary>
         /// tbDescription control.
         /// </summary>
@@ -128,16 +130,16 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbDescription;
-        
+
         /// <summary>
-        /// cbl1 control.
+        /// cblMultimediaAttributes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList cbl1;
-        
+        protected global::System.Web.UI.WebControls.CheckBoxList cblMultimediaAttributes;
+
         /// <summary>
         /// imgMultimedia control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image imgMultimedia;
-        
+
         /// <summary>
         /// btnSave control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSave;
-        
+
         /// <summary>
         /// btnDelete control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnDelete;
-        
+
         /// <summary>
         /// lblError control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblError;
-        
+
         /// <summary>
         /// lbOpenAdminEventPopup control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lbOpenAdminEventPopup;
-        
+
         /// <summary>
         /// mpe1 control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.ModalPopupExtender mpe1;
-        
+
         /// <summary>
         /// pAdminEventPopup control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pAdminEventPopup;
-        
+
         /// <summary>
         /// evPopup1 control.
         /// </summary>
@@ -209,5 +211,14 @@ namespace UaFootball.WebApplication.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::UaFootball.WebApplication.Controls.AdminEventPopup evPopup1;
+
+        /// <summary>
+        /// hdnCountryCodes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnCountryCodes;
     }
 }
