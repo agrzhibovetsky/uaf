@@ -158,7 +158,7 @@ namespace UaFootball.WebApplication
                     }
                 case Constants.ObjectType.Competition:
                     {
-                        data = db.Competitions.Select(c => new GenericReferenceObject { Name = c.Competition_Name, Value = c.Competition_Id, GenericStringValue = c.CompetitionLevel_Cd });
+                        data = db.CompetitionTypes.Select(c => new GenericReferenceObject { Name = c.CompetitionType_Name, Value = c.CompetitionType_Id, GenericStringValue = c.CompetitionTypeLevel_Cd });
                         break;
                     }
                 case Constants.ObjectType.Season:

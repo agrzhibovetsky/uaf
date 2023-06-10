@@ -20,6 +20,7 @@ namespace UaFDatabaseEF.Models
         public virtual DbSet<Coaches> Coaches { get; set; }
         public virtual DbSet<Competitions> Competitions { get; set; }
         public virtual DbSet<CompetitionStages> CompetitionStages { get; set; }
+        public virtual DbSet<CompetitionTypes> CompetitionTypes { get; set; }
         public virtual DbSet<Countries> Countries { get; set; }
         public virtual DbSet<Fifaassociations> Fifaassociations { get; set; }
         public virtual DbSet<Matches> Matches { get; set; }

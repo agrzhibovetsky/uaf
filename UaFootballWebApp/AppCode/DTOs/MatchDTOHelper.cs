@@ -20,7 +20,7 @@ namespace UaFootball.AppCode
                 AwayNationalTeam_Id = dbObj.AwayNationalTeam_Id,
                 AwayPenaltyScore = dbObj.AwayPenaltyScore,
                 AwayScore = dbObj.AwayScore,
-                Competition_Id = dbObj.Competition_Id,
+                CompetitionType_Id = dbObj.CompetitionTypeId.Value,
                 CompetitionStage_Id = dbObj.CompetitionStage_Id,
                 Date = dbObj.Date,
                 HomeClub_Id = dbObj.HomeClub_Id,
@@ -54,7 +54,7 @@ namespace UaFootball.AppCode
                 AwayNationalTeam_Id = dbObj.AwayNationalTeam_Id,
                 AwayPenaltyScore = dbObj.AwayPenaltyScore,
                 AwayScore = dbObj.AwayScore,
-                Competition_Id = dbObj.Competition_Id,
+                //Competition_Id = dbObj.Competition_Id,
                 //CompetitionStage_Id = dbObj.CompetitionStage_Id,
                 CompetitionStageName = dbObj.CompetitionStage_Name,
                 Date = dbObj.Date,
@@ -71,10 +71,10 @@ namespace UaFootball.AppCode
                 AwayTeamName = dbObj.AwayTeam,
                 HomeTeamCountryCode = dbObj.HomeTeamCountryCode,
                 AwayTeamCountryCode = dbObj.AwayTeamCountryCode,
-                CompetitionName = dbObj.Competition_Name,
+                CompetitionName = dbObj.CompetitionType_Name,
                 SeasonName = dbObj.Season_Description,
-                CompetitionLevelCode = dbObj.CompetitionLevel_Cd,
-                IsNationalTeamMatch = dbObj.CompetitionLevel_Cd.Equals(Constants.DB.CompetitionLevelCd_NationalTeam),
+                CompetitionLevelCode = dbObj.CompetitionTypeLevel_Cd,
+                IsNationalTeamMatch = dbObj.CompetitionTypeLevel_Cd.Equals(Constants.DB.CompetitionLevelCd_NationalTeam),
                 Flags = dbObj.Flags,
                 Spectators = dbObj.Spectators
             };
@@ -88,7 +88,7 @@ namespace UaFootball.AppCode
             dbObj.AwayNationalTeam_Id = dtoObj.AwayNationalTeam_Id;
             dbObj.AwayPenaltyScore = dtoObj.AwayPenaltyScore;
             dbObj.AwayScore = dtoObj.AwayScore;
-            dbObj.Competition_Id = dtoObj.Competition_Id;
+            dbObj.CompetitionTypeId = dtoObj.CompetitionType_Id;
             dbObj.CompetitionStage_Id = dtoObj.CompetitionStage_Id;
             dbObj.Date = dtoObj.Date;
             dbObj.HomeClub_Id = dtoObj.HomeClub_Id;
@@ -155,7 +155,7 @@ namespace UaFootball.AppCode
             {
                 var dbData = (from match in db.Matches
                               where match.Match_Id == objectId
-                              select new { m = match, r = match.Referee, s = match.Stadium, cn = match.Stadium.City.City_Name, compName = match.Competition.Competition_Name, compStageName = match.CompetitionStage.CompetitionStage_Name }).Single();
+                              select new { m = match, r = match.Referee, s = match.Stadium, cn = match.Stadium.City.City_Name, compName = match.CompetitionType.CompetitionType_Name, compStageName = match.CompetitionStage.CompetitionStage_Name }).Single();
                 
                 MatchDTO ret = ConvertDBObjectToDTO(dbData.m);
 
@@ -370,7 +370,7 @@ namespace UaFootball.AppCode
 
                 if (searchParam.CompetitionCode != null)
                 {
-                    dbData = dbData.Where(d => d.CompetitionLevel_Cd.Equals(searchParam.CompetitionCode));
+                    dbData = dbData.Where(d => d.CompetitionTypeLevel_Cd.Equals(searchParam.CompetitionCode));
                 }
 
                 if (searchParam.Competition_Id > 0)

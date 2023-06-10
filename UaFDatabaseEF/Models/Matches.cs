@@ -37,6 +37,7 @@ namespace UaFDatabaseEF.Models
 
         public Clubs AwayClub { get; set; }
         public NationalTeams AwayNationalTeam { get; set; }
+        public CompetitionTypes CompetitionType { get; set; }
         public Competitions Competition { get; set; }
         public CompetitionStages CompetitionStage { get; set; }
         public Clubs HomeClub { get; set; }

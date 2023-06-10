@@ -23,6 +23,10 @@
     <Compile Remove="Migrations\20210807172537_Adding coach to match events - 2.cs" />
     <Compile Remove="Migrations\20210807172904_Initial model load.cs" />
     <Compile Remove="Migrations\20210807173454_Add coaches to MatchEvents.cs" />
+    <Compile Remove="Migrations\20230610174937_Rename Competitions to CompetitionTypes %28add new entity%29 2.cs" />
+    <Compile Remove="Migrations\20230610174937_Rename Competitions to CompetitionTypes %28add new entity%29 2.Designer.cs" />
+    <Compile Remove="Migrations\20230610175841_Rename Competitions to CompetitionTypes %28add new entity%29 2.cs" />
+    <Compile Remove="Migrations\20230610175841_Rename Competitions to CompetitionTypes %28add new entity%29 2.Designer.cs" />
     <Compile Remove="Multimedia.cs" />
     <Compile Remove="MultimediaTags.cs" />
     <Compile Remove="NationalTeams.cs" />

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UaFDatabaseEF.Models;
 
 namespace UaFDatabaseEF.Migrations
 {
     [DbContext(typeof(UaFootballContext))]
-    partial class UaFootballContextModelSnapshot : ModelSnapshot
+    [Migration("20230610180042_Rename Competitions to CompetitionTypes (add new entity) 2")]
+    partial class RenameCompetitionstoCompetitionTypesaddnewentity2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -170,22 +172,18 @@ namespace UaFDatabaseEF.Migrations
                 {
                     b.Property<int>("CompetitionTypeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("CompetitionType_Id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CompetitionTypeCd")
                         .IsRequired()
-                        .HasColumnName("CompetitionType_Cd")
                         .HasMaxLength(10);
 
                     b.Property<string>("CompetitionTypeLevelCd")
                         .IsRequired()
-                        .HasColumnName("CompetitionTypeLevel_Cd")
                         .HasMaxLength(1);
 
                     b.Property<string>("CompetitionTypeName")
                         .IsRequired()
-                        .HasColumnName("CompetitionType_Name")
                         .HasMaxLength(50);
 
                     b.HasKey("CompetitionTypeId");

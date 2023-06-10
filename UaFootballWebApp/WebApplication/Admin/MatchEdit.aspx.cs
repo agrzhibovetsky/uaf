@@ -75,7 +75,7 @@ namespace UaFootball.WebApplication
                 actbReferee.Text = FormatName(dtoObj.Referee.FirstName, dtoObj.Referee.LastName, null, dtoObj.Referee.Country_Id);
                 actbReferee.Value = dtoObj.Referee.Referee_Id.ToString();
             }
-            ddlCompetitions.SelectedValue = dtoObj.Competition_Id.ToString();
+            ddlCompetitions.SelectedValue = dtoObj.CompetitionType_Id.ToString();
             ddlSeasons.SelectedValue = dtoObj.Season_Id.ToString();
             tbDate.Text = FormatDate(dtoObj.Date);
             ddlStadiums.SelectedValue = dtoObj.Stadium.Stadium_ID.ToString();
@@ -205,7 +205,7 @@ namespace UaFootball.WebApplication
                 AwayScore = short.Parse(tbAwayTeamScore.Text),
                 HomePenaltyScore = homePenScore,
                 AwayPenaltyScore = awayPenScore,
-                Competition_Id = GetDropdownValue(ddlCompetitions).Value,
+                CompetitionType_Id = GetDropdownValue(ddlCompetitions).Value,
                 Season_Id = GetDropdownValue(ddlSeasons).Value,
                 Stadium = new StadiumDTO
                 {

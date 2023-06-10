@@ -47,7 +47,7 @@ namespace UaFootball.WebApplication.Public
                                  File = multimedia,
                                  EventTypeCode = matchEvent.Event_Cd,
                                  MatchDate = vMatch.Date,
-                                 MatchType = vMatch.CompetitionLevel_Cd
+                                 MatchType = vMatch.CompetitionTypeLevel_Cd
                              }).ToList();
 
                     

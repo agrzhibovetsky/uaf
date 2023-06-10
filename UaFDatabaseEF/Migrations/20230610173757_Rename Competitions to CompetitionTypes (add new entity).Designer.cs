@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UaFDatabaseEF.Models;
 
 namespace UaFDatabaseEF.Migrations
 {
     [DbContext(typeof(UaFootballContext))]
-    partial class UaFootballContextModelSnapshot : ModelSnapshot
+    [Migration("20230610173757_Rename Competitions to CompetitionTypes (add new entity)")]
+    partial class RenameCompetitionstoCompetitionTypesaddnewentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,33 +168,6 @@ namespace UaFDatabaseEF.Migrations
                     b.ToTable("CompetitionStages");
                 });
 
-            modelBuilder.Entity("UaFDatabaseEF.Models.CompetitionTypes", b =>
-                {
-                    b.Property<int>("CompetitionTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("CompetitionType_Id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CompetitionTypeCd")
-                        .IsRequired()
-                        .HasColumnName("CompetitionType_Cd")
-                        .HasMaxLength(10);
-
-                    b.Property<string>("CompetitionTypeLevelCd")
-                        .IsRequired()
-                        .HasColumnName("CompetitionTypeLevel_Cd")
-                        .HasMaxLength(1);
-
-                    b.Property<string>("CompetitionTypeName")
-                        .IsRequired()
-                        .HasColumnName("CompetitionType_Name")
-                        .HasMaxLength(50);
-
-                    b.HasKey("CompetitionTypeId");
-
-                    b.ToTable("CompetitionTypes");
-                });
-
             modelBuilder.Entity("UaFDatabaseEF.Models.Countries", b =>
                 {
                     b.Property<int>("CountryId")
@@ -271,8 +246,6 @@ namespace UaFDatabaseEF.Migrations
                     b.Property<int?>("CompetitionStageId")
                         .HasColumnName("CompetitionStage_Id");
 
-                    b.Property<int?>("CompetitionTypeId");
-
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime");
 
@@ -319,8 +292,6 @@ namespace UaFDatabaseEF.Migrations
                     b.HasIndex("CompetitionId");
 
                     b.HasIndex("CompetitionStageId");
-
-                    b.HasIndex("CompetitionTypeId");
 
                     b.HasIndex("HomeClubId");
 
@@ -920,10 +891,6 @@ namespace UaFDatabaseEF.Migrations
                         .WithMany("Matches")
                         .HasForeignKey("CompetitionStageId")
                         .HasConstraintName("FK_Matches_CompetitionStages");
-
-                    b.HasOne("UaFDatabaseEF.Models.CompetitionTypes", "CompetitionType")
-                        .WithMany("Matches")
-                        .HasForeignKey("CompetitionTypeId");
 
                     b.HasOne("UaFDatabaseEF.Models.Clubs", "HomeClub")
                         .WithMany("MatchesHomeClub")
