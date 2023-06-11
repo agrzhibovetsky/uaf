@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UaFDatabaseEF.Models;
 
 namespace UaFDatabaseEF.Migrations
 {
     [DbContext(typeof(UaFootballContext))]
-    partial class UaFootballContextModelSnapshot : ModelSnapshot
+    [Migration("20230611114948_Go back CompetitionType to Competition")]
+    partial class GobackCompetitionTypetoCompetition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,6 +150,9 @@ namespace UaFDatabaseEF.Migrations
                     b.Property<int>("CompetitionEditionId")
                         .HasColumnName("CompetitionEdition_Id");
 
+                    b.Property<int>("CompetitionEditionStageRuleId")
+                        .HasColumnName("CompetitionStageRule_Id");
+
                     b.Property<int>("CompetitionStageBranch")
                         .HasColumnName("CompetitionStage_Branch");
 
@@ -161,8 +166,7 @@ namespace UaFDatabaseEF.Migrations
                     b.Property<int>("CompetitionStageOrder")
                         .HasColumnName("CompetitionStage_Order");
 
-                    b.Property<int>("CompetitionStageRuleId")
-                        .HasColumnName("CompetitionStageRule_Id");
+                    b.Property<int?>("CompetitionStageRuleId");
 
                     b.HasKey("CompetitionEditionStageId");
 
@@ -232,9 +236,6 @@ namespace UaFDatabaseEF.Migrations
                         .IsRequired()
                         .HasColumnName("CompetitionStage_Name")
                         .HasMaxLength(50);
-
-                    b.Property<int?>("DefaultStageRuleId")
-                        .HasColumnName("DefaultStageRule_Id");
 
                     b.HasKey("CompetitionStageId");
 
@@ -972,8 +973,7 @@ namespace UaFDatabaseEF.Migrations
 
                     b.HasOne("UaFDatabaseEF.Models.CompetitionStageRules", "CompetitionStageRule")
                         .WithMany()
-                        .HasForeignKey("CompetitionStageRuleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CompetitionStageRuleId");
                 });
 
             modelBuilder.Entity("UaFDatabaseEF.Models.Countries", b =>

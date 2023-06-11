@@ -20,7 +20,6 @@ namespace UaFDatabaseEF.Models
         public virtual DbSet<Coaches> Coaches { get; set; }
         public virtual DbSet<Competitions> Competitions { get; set; }
         public virtual DbSet<CompetitionStages> CompetitionStages { get; set; }
-        public virtual DbSet<CompetitionTypes> CompetitionTypes { get; set; }
         public virtual DbSet<Countries> Countries { get; set; }
         public virtual DbSet<Fifaassociations> Fifaassociations { get; set; }
         public virtual DbSet<Matches> Matches { get; set; }
@@ -39,6 +38,9 @@ namespace UaFDatabaseEF.Models
         public virtual DbSet<Stadiums> Stadiums { get; set; }
         public virtual DbSet<Tasks> Tasks { get; set; }
 
+        public virtual DbSet<CompetitionEditions> CompetitionEditions { get; set; }
+        public virtual DbSet<CompetitionEditionStages> CompetitionEditionStages { get; set; }
+        public virtual DbSet<CompetitionStageRules> CompetitionStageRules { get; set; }
         // Unable to generate entity type for table 'dbo.MatchLineups_Backup'. Please see the warning messages.
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

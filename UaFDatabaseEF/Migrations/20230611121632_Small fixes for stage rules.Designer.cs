@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UaFDatabaseEF.Models;
 
 namespace UaFDatabaseEF.Migrations
 {
     [DbContext(typeof(UaFootballContext))]
-    partial class UaFootballContextModelSnapshot : ModelSnapshot
+    [Migration("20230611121632_Small fixes for stage rules")]
+    partial class Smallfixesforstagerules
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

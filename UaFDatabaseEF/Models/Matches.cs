@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UaFDatabaseEF.Models
 {
@@ -23,6 +24,10 @@ namespace UaFDatabaseEF.Models
         public short? HomePenaltyScore { get; set; }
         public short? AwayPenaltyScore { get; set; }
         public int CompetitionId { get; set; }
+        [Column("CompetitionEdition_Id")]
+        public int? CompetitionEditionId { get; set; }
+        [Column("CompetitionEditionStage_Id")]
+        public int? CompetitionEditionStageId { get; set; }
         public int? CompetitionStageId { get; set; }
         public int SeasonId { get; set; }
         public int StadiumId { get; set; }
@@ -37,8 +42,12 @@ namespace UaFDatabaseEF.Models
 
         public Clubs AwayClub { get; set; }
         public NationalTeams AwayNationalTeam { get; set; }
-        public CompetitionTypes CompetitionType { get; set; }
+        
         public Competitions Competition { get; set; }
+
+        public CompetitionEditions CompetitionEdition { get; set; }
+       
+        public CompetitionEditionStages CompetitionEditionStage { get; set; }
         public CompetitionStages CompetitionStage { get; set; }
         public Clubs HomeClub { get; set; }
         public NationalTeams HomeNationalTeam { get; set; }

@@ -52,12 +52,12 @@ namespace UaFootball.AppCode
                             using (UaFootball_DBDataContext db = DBManager.GetDB())
                             {
                                 DataLoadOptions dlo = new DataLoadOptions();
-                                dlo.LoadWith<UaFDatabase.Match>(m => m.CompetitionType);
+                                dlo.LoadWith<UaFDatabase.Match>(m => m.Competition);
                                 dlo.LoadWith<UaFDatabase.Match>(m => m.Season);
                                 UaFDatabase.Match match = db.Matches.Single(m => m.Match_Id == matchId);
                                 string clubTypeString = match.HomeNationalTeam_Id.HasValue ? "NationalTeam" : "Eurocups";
 
-                                path = string.Format("\\{0}\\{1}\\{2}\\{3}\\", "Matches", clubTypeString, match.Season.Season_Cd, match.CompetitionType.CompetitionType_Cd);
+                                path = string.Format("\\{0}\\{1}\\{2}\\{3}\\", "Matches", clubTypeString, match.Season.Season_Cd, match.Competition.Competition_Cd);
                             }
                         }
                         break;

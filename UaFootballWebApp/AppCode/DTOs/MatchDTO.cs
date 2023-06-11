@@ -32,8 +32,8 @@ namespace UaFootball.AppCode
 
         public short? AwayPenaltyScore { get; set; }
 
-        public int CompetitionType_Id { get; set; }
-        //public int Competition_Id { get; set; }
+        
+        public int Competition_Id { get; set; }
 
         public string CompetitionName { get; set; }
 
